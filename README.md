@@ -1,6 +1,6 @@
-#### 🇬🇧 ENGLISH
+##### 🇬🇧 ENGLISH
 
-## 📌 Table of Contents (EN)
+## 📌 Table of Contents
 - [💛 Support this project](#-support-this-project)
 - [1) What is ReaSet?](#1-what-is-reaset)
 - [2) Main features](#2-main-features)
@@ -8,8 +8,9 @@
 - [4) Requirements](#4-requirements)
 - [5) Installation](#5-installation)
 - [6) Usage setup](#6-usage-setup)
-- [7) Quick troubleshooting](#7-quick-troubleshooting)
-
+- [7) Usage Manual](#7-interactive-usage-manual)
+- [8) Keyboard Shortcuts](#8-keyboard-shortcuts)
+- [9) Quick troubleshooting](#9-quick-troubleshooting)
 
 ---
 
@@ -176,7 +177,50 @@ Copy to REAPER web folder (where `main.js` is located):
 
 ---
 
-## 7) Quick troubleshooting
+## 7) Usage Manual
+### Top Bar & Visualization
+- **Grid View**: Toggles between a detailed hierarchical list or large card blocks for touch-friendly usage.
+- **Hide Skipped**: Visually removes currently "skipped" songs from the view (great for decluttering during a show).
+- **Auto-Scroll**: Automatically locks and scrolls the viewport to the currently playing active region/song.
+- **Edit Sets**: Opens the administrative management panel for creating, renaming, cloning, or deleting Setlists.
+
+### Display Modes & Canvas
+- **Live View**: Triggers a performance-focused layout showing a gigantic track name, progress bar, time remaining, the next queued song, and localized transport controls.
+- **Lyrics & Chords (Floating Widgets)**: You can overlay floating widgets dynamically synced to the `Lyrics` and `Chords` text tracks on REAPER. They contain a contextual toolbar to adjust font sizes, typeface, and colors mapping locally on your screen.
+
+### Track List Interaction
+- Tracks containing sub-sections will display a dropdown button (Chevron). Expanding it allows individual targeting of nested sub-regions (e.g. Intro, Chorus, Outro).
+- The progress bar backing each track will dynamically map to the closest UI-color assigned to its native REAPER Region.
+- **PLAY NEXT**: Actively loads the specified song under the REAPER playhead cue and stops playback, eagerly awaiting you to hit Play.
+
+### Action Commands
+- **&#9632; / &#8677; (Follow Action)**: Toggles whether playback stops at the end of the song or flows seamlessly into the next un-skipped track.
+- **&#8635; (Loop)**: Activates infinite looping over the bounded region or currently selected sub-section segment.
+- **&#10005; (Skip)**: Strikethroughs the track, completely ignoring it from linear continuous playback chains.
+
+---
+
+## 8) Keyboard Shortcuts
+ReaSet inherently supports the following global keyboard bindings to streamline command operations in rigid setups:
+
+| Key | Action |
+| --- | --- |
+| **`Space`** | Play / Pause (Global transport toggle) |
+| **`Enter`** | Smart Stop (Puts playhead at the beginning of the current active region) |
+| **`Escape`** | Closes Live View overlay. If already closed, it immediately aborts an active 'Loop' state. |
+| **`V`** | Toggles Live View overlay open/close |
+| **`L`** | Toggles Lyrics floating widget visibility |
+| **`C`** | Toggles Chords floating widget visibility |
+| **`G`** | Toggles between List View and Grid View |
+| **`O`** | Toggles Loop state over the currently playing Region/Sub-Region |
+| **`Right Arrow`** | Cues the next valid (unskipped) track in the list |
+| **`Left Arrow`** | Jumps playhead to the direct start locus of the currently playing track |
+| **`Up Arrow`** | Cues the previous valid track in the list |
+| **`Down Arrow`** | Resets cue to the very first song in the setlist |
+
+---
+
+## 9) Quick troubleshooting
 ### ❌ Lyrics not showing
 - Check exact track name `lyrics`.
 - Check item notes.
@@ -196,9 +240,8 @@ Copy to REAPER web folder (where `main.js` is located):
 
 ---
 
+# 🇪🇸 SECCIÓN EN ESPAÑOL (INICIO)
 
-#### ESPAÑOL
----
 ## 📌 Índice (ES)
 - [💛 Apoya el proyecto](#-apoya-el-proyecto)
 - [1) ¿Qué es ReaSet?](#1-qué-es-reaset)
@@ -207,7 +250,9 @@ Copy to REAPER web folder (where `main.js` is located):
 - [4) Requisitos](#4-requisitos)
 - [5) Instalación](#5-instalación)
 - [6) Configuración de uso](#6-configuración-de-uso)
-- [7) Solución rápida de problemas](#7-solución-rápida-de-problemas)
+- [7) Manual de uso](#7-manual-de-uso-interactivo)
+- [8) Atajos de teclado](#8-atajos-de-teclado)
+- [9) Solución rápida de problemas](#9-solución-rápida-de-problemas)
 
 ---
 
@@ -217,6 +262,7 @@ Si este proyecto te sirve, puedes apoyar su desarrollo aquí:
 <a href="https://ko-fi.com/W7W81VLW05" target="_blank">
   <img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Invítame un café en Ko-fi" height="36" style="border:0px;height:36px;" />
 </a>
+
 
 ---
 
@@ -373,7 +419,50 @@ Copiar en la carpeta web de REAPER (donde existe `main.js`):
 
 ---
 
-## 7) Solución rápida de problemas
+## 7) Manual de uso
+### Barra superior y visualización
+- **Grid View (Cuadrícula)**: Alterna entre diseño de lista detallada o tarjetas grandes para uso rápido.
+- **Hide Skipped**: Oculta visualmente las canciones marcadas para "saltar" (útil en vivo para no confundirse).
+- **Auto-Scroll**: Centra automáticamente la región/canción activa a medida que avanza la reproducción.
+- **Edit Sets**: Abre el panel de administración donde puedes crear, renombrar, duplicar y eliminar Setlists.
+
+### Modos y herramientas (Canvas)
+- **Live View (Modo Directo)**: Activa una interfaz enfocada para performance con nombre gigante de la canción actual, progreso, siguiente canción y botones de transporte.
+- **Letras y Acordes (Widgets fltantes)**: Puedes activar la visión superpuesta de pistas de Letras (`Lyrics`) y Acordes (`Chords`). En la esquina superior derecha del widget dispones de un selector de fuentes, tamaño, y personalización de color para adaptarlo a tu pantalla. 
+
+### Interacción de Canciones (Filas)
+- Canciones con sub-secciones mostrarán un botón desplegable (Chevrón). Expándelo para ver/operar sobre las sub-regiones individualmente (Intro, Coro, etc.).
+- La barra de progreso de cada canción heredará dinámicamente el color configurado a esa Región dentro del archivo de REAPER.
+- **PLAY NEXT**: Activa una canción específica en la cola de REAPER y detiene la reproducción allí, esperando a que presiones Play.
+
+### Comandos de región
+- **&#9632; / &#8677; (Follow Action)**: Alterna si la canción se detiene al final o continúa sin pausas hacia la siguiente en la lista.
+- **&#8635; (Loop)**: Bloquea un ciclo infinito sobre la región actual o la sub-sección seleccionada.
+- **&#10005; (Skip)**: Marca la canción con una línea tachada y se la saltará de la lista de reproducción continua.
+
+---
+
+## 8) Atajos de teclado
+ReaSet soporta los siguientes comandos de teclado globales para mejorar el control en entornos rígidos:
+
+| Tecla | Acción |
+| --- | --- |
+| **`Space`** | Play / Pause (Alternar estado general) |
+| **`Enter`** | Smart Stop (Detiene en el inicio de la región activa actual) |
+| **`Escape`** | Cierra la vista Live View. Si ya está cerrada, desactiva un "Loop" activo temporalmente. |
+| **`V`** | Alterna abrir/cerrar la vista "Live View" |
+| **`L`** | Alterna abrir/cerrar el widget flotante de Letras (Lyrics) |
+| **`C`** | Alterna abrir/cerrar el widget flotante de Acordes (Chords) |
+| **`G`** | Alterna entre vista de Lista (List View) y Cuadrícula (Grid View) |
+| **`O`** | Activa/Desactiva Loop en la Región/Sub-región en curso en vivo |
+| **`Flecha Derecha`** | Carga la siguiente canción válida en la cola (Cue) |
+| **`Flecha Izquierda`** | Salta directamente al punto de reproducción de la canción actual en curso |
+| **`Flecha Arriba`** | Carga la canción válida anterior en la cola |
+| **`Flecha Abajo`** | Reinicia la cola a la primera canción del Setlist completo |
+
+---
+
+## 9) Solución rápida de problemas
 ### ❌ No aparecen letras
 - Revisar nombre exacto de pista `lyrics`.
 - Revisar notas en items.
@@ -390,5 +479,3 @@ Copiar en la carpeta web de REAPER (donde existe `main.js`):
 ### ❌ Interfaz sin datos/control
 - Verificar Web Interface habilitada y accesible.
 - Verificar carga correcta de `main.js` en la misma carpeta.
-
----
