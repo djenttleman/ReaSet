@@ -1,0 +1,3939 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <title>ReaSet</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="main.js"></script>
+    <script src="Sortable.min.js"></script>
+    <style>
+        /* === THEMES === */
+        :root {
+            --bg: #000000;
+            --bg2: #000000;
+            --bg3: #0a0a0a;
+            --bg4: #141414;
+            --card: rgba(20, 20, 20, 0.95);
+            --card2: rgba(30, 30, 30, 0.95);
+            --text: #ffffff;
+            --text2: #bbbbbb;
+            --text3: #777777;
+            --accent: #00e676;
+            --accent2: #2196F3;
+            --accent3: #ffcf33;
+            --border: rgba(255, 255, 255, 0.2);
+            --border2: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.9);
+        }
+
+        [data-theme="neon"] {
+            --bg: #050510;
+            --bg2: #0a0a20;
+            --bg3: #080818;
+            --bg4: #0d0d30;
+            --card: rgba(10, 10, 30, 0.95);
+            --card2: rgba(15, 15, 35, 0.95);
+            --text: #d0ffd0;
+            --text2: #60cc60;
+            --text3: #308030;
+            --accent: #00ffaa;
+            --accent2: #00ff88;
+            --accent3: #ffff44;
+            --border: rgba(0, 255, 128, 0.2);
+            --border2: rgba(0, 255, 128, 0.07);
+            --shadow: rgba(0, 255, 128, 0.1);
+        }
+
+        [data-theme="minimal"] {
+            --bg: #f2f2f2;
+            --bg2: #e8e8e8;
+            --bg3: #ddd;
+            --bg4: #bbb;
+            --card: rgba(255, 255, 255, 0.95);
+            --card2: rgba(245, 245, 245, 0.95);
+            --text: #111;
+            --text2: #555;
+            --text3: #888;
+            --accent: #1565C0;
+            --accent2: #2e7d32;
+            --accent3: #f57f17;
+            --border: rgba(0, 0, 0, 0.12);
+            --border2: rgba(0, 0, 0, 0.06);
+            --shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="retro"] {
+            --bg: #1a0e00;
+            --bg2: #251500;
+            --bg3: #200f00;
+            --bg4: #3a2200;
+            --card: rgba(55, 30, 0, 0.9);
+            --card2: rgba(45, 22, 0, 0.9);
+            --text: #ffcc66;
+            --text2: #cc9933;
+            --text3: #996622;
+            --accent: #ff9900;
+            --accent2: #ffcc00;
+            --accent3: #ff6600;
+            --border: rgba(255, 153, 0, 0.2);
+            --border2: rgba(255, 153, 0, 0.07);
+            --shadow: rgba(0, 0, 0, 0.7);
+        }
+
+        /* === GLOBAL === */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 120px;
+            user-select: none;
+            -webkit-user-select: none;
+            min-height: 100vh;
+        }
+
+        /* === CONTROLS === */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            padding: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 8px 32px var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .setlist-row {
+            display: flex;
+            gap: 6px;
+            background: rgba(42, 42, 42, 0.4);
+            padding: 10px;
+            border-radius: 12px;
+            align-items: center;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        [data-theme="minimal"] .setlist-row {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-theme="retro"] .setlist-row {
+            background: rgba(55, 30, 0, 0.5);
+        }
+
+        .setlist-select {
+            flex-grow: 1;
+            padding: 9px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            min-width: 80px;
+        }
+
+        [data-theme="minimal"] .setlist-select {
+            background: #fff;
+            color: #111;
+        }
+
+        .btn-mini {
+            padding: 9px 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: rgba(51, 51, 51, 0.8);
+            color: var(--text2);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            color: #fff;
+        }
+
+        .btn-del {
+            background: linear-gradient(135deg, #c62828, #f44336);
+            color: #fff;
+        }
+
+        .btn-exp {
+            background: linear-gradient(135deg, #1565C0, #2196F3);
+            color: #fff;
+        }
+
+        .btn-imp {
+            background: linear-gradient(135deg, #EF6C00, #FF9800);
+            color: #fff;
+        }
+
+        /* Theme dots */
+        .theme-selector {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .theme-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .theme-dot.active {
+            border-color: var(--text);
+            transform: scale(1.2);
+        }
+
+        .theme-dot[data-theme="dark"] {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            border: 2px solid #444;
+        }
+
+        .theme-dot[data-theme="neon"] {
+            background: linear-gradient(135deg, #050510, #00ffaa);
+        }
+
+        .theme-dot[data-theme="minimal"] {
+            background: linear-gradient(135deg, #f2f2f2, #1565C0);
+        }
+
+        .theme-dot[data-theme="retro"] {
+            background: linear-gradient(135deg, #1a0e00, #ff9900);
+        }
+
+        /* Hamburger button */
+        .hamburger-btn {
+            padding: 8px 12px;
+            background: rgba(51, 51, 51, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .hamburger-btn:active {
+            background: var(--accent);
+        }
+
+        /* Sidebar overlay */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 400;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        /* Sidebar panel */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            max-width: 85vw;
+            height: 100%;
+            background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+            border-right: 1px solid var(--border);
+            z-index: 410;
+            display: flex;
+            flex-direction: column;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        #sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .sidebar-close {
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text2);
+            padding: 4px 8px;
+        }
+
+        .sidebar-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border2);
+        }
+
+        .sidebar-section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text2);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* Theme dots in sidebar */
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .theme-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-dot.active {
+            border-color: var(--text);
+            transform: scale(1.15);
+        }
+
+        .theme-dot[data-theme="dark"] {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            border-color: #444;
+        }
+
+        .theme-dot[data-theme="neon"] {
+            background: linear-gradient(135deg, #050510, #00ffaa);
+        }
+
+        .theme-dot[data-theme="minimal"] {
+            background: linear-gradient(135deg, #f2f2f2, #1565C0);
+        }
+
+        .theme-dot[data-theme="retro"] {
+            background: linear-gradient(135deg, #1a0e00, #ff9900);
+        }
+
+        /* Sidebar action buttons */
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 13px 16px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .sidebar-btn:active {
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+
+        .sidebar-btn .sb-icon {
+            font-size: 20px;
+            width: 28px;
+            text-align: center;
+        }
+
+        .sidebar-btn.sb-lyrics {
+            background: linear-gradient(135deg, #004D40, #00796B);
+        }
+
+        .sidebar-btn.sb-chords {
+            background: linear-gradient(135deg, #4A148C, #7B1FA2);
+        }
+
+        .sidebar-btn.sb-live {
+            background: linear-gradient(135deg, #7F0000, #D50000);
+        }
+
+        .sidebar-btn.sb-sync {
+            background: linear-gradient(135deg, #37474f, #546e7a);
+        }
+
+        .sidebar-btn.panel-open {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) inset;
+        }
+
+        /* Font picker */
+        .font-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .font-btn {
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.18s;
+            flex: 1 1 auto;
+        }
+
+        .font-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .font-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* Size slider */
+        .size-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border);
+            outline: none;
+            margin: 10px 0 14px;
+            cursor: pointer;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .size-presets {
+            display: flex;
+            gap: 8px;
+        }
+
+        .size-preset {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+
+        .size-preset:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        /* 3-dot menu */
+        .dotmenu-wrap {
+            position: relative;
+        }
+        .dotmenu-btn {
+            padding: 7px 13px;
+            background: rgba(51, 51, 51, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            letter-spacing: 3px;
+            transition: all 0.2s;
+        }
+        .dotmenu-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .dotmenu-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-width: 155px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            z-index: 999;
+            overflow: hidden;
+        }
+        .dotmenu-dropdown.open {
+            display: block;
+        }
+        .dotmenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.15s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+        .dotmenu-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .dotmenu-item.item-danger:hover {
+            background: rgba(211, 47, 47, 0.18);
+            color: #ef5350;
+        }
+        .dotmenu-item .dm-icon {
+            font-size: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* App-internal modals */
+        .app-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .app-modal-overlay.open {
+            display: flex;
+        }
+        .app-modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            min-width: 300px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+        }
+        .app-modal-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .app-modal-body {
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 20px;
+            line-height: 1.55;
+        }
+        .app-modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .app-modal-btn {
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .app-modal-btn.btn-cancel {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text2);
+            border: 1px solid var(--border);
+        }
+        .app-modal-btn.btn-cancel:hover { background: rgba(255, 255, 255, 0.13); }
+        .app-modal-btn.btn-confirm {
+            background: var(--accent);
+            color: #fff;
+        }
+        .app-modal-btn.btn-confirm:hover { opacity: 0.85; }
+        .app-modal-btn.btn-danger {
+            background: #c62828;
+            color: #fff;
+        }
+        .app-modal-btn.btn-danger:hover { background: #ef5350; }
+        .app-modal-input {
+            width: 100%;
+            padding: 9px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 13px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        /* View toggle */
+        .view-toggle {
+            padding: 7px 11px;
+            background: rgba(51, 51, 51, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text2);
+            cursor: pointer;
+            font-size: 17px;
+            transition: all 0.2s;
+        }
+
+        .view-toggle.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Toggles row */
+        .toggles-row {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(37, 37, 37, 0.4);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border2);
+            gap: 6px;
+        }
+
+        [data-theme="minimal"] .toggles-row {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text2);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--bg4);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background: var(--accent);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(18px);
+        }
+
+        .help-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg4);
+            color: var(--text);
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        /* Info row */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 14px;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: bold;
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .show-timer {
+            color: var(--accent3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .timer-reset {
+            font-size: 10px;
+            padding: 2px 5px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text2);
+        }
+
+        /* === SETLIST === */
+        #setlist {
+            list-style: none;
+            padding: 16px;
+            margin: 0;
+            counter-reset: song-counter;
+            touch-action: pan-y;
+        }
+
+        /* ═══════════ HIERARCHICAL SETLIST ═══════════ */
+
+        /* Song container handles layout spacing */
+        .song-container {
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        /* Song row (level 1) */
+        .song-row {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 0;
+            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-left: 6px solid #444;
+            /* Thicker left bar for status */
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            user-select: none;
+            min-height: 64px;
+            /* Larger hit target */
+        }
+
+        .song-row:hover {
+            background: var(--card2);
+        }
+
+        .song-row.active {
+            border-left-color: var(--accent);
+            border-left-width: 8px;
+            /* Extra thick when active */
+            box-shadow: 0 0 0 1px rgba(0, 230, 118, 0.3);
+            /* NO background here — card-bg-fill handles the progress tint */
+        }
+
+        .song-row.expanded {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-color: transparent;
+        }
+
+        .song-row.skipped {
+            opacity: 0.38;
+            filter: grayscale(70%);
+        }
+
+        .song-row.queued {
+            border-left-color: var(--accent3);
+            animation: pulse-queued 1.2s ease-in-out infinite;
+        }
+
+        .section-row.queued {
+            border-left-color: var(--accent3);
+            animation: pulse-queued 1.2s ease-in-out infinite;
+        }
+
+        /* Card BG fill — progress indicator, filled left-to-right via JS */
+        .card-bg-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: rgba(0, 230, 118, 0.35);
+            /* Increased opacity for stage visibility */
+            /* SOLIDO (sin degradado) */
+            transition: width 0.1s linear;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .song-row>*:not(.card-bg-fill) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Drag handle */
+        .drag-handle {
+            font-size: 18px;
+            color: var(--text3);
+            padding: 16px 10px 16px 14px;
+            cursor: grab;
+            touch-action: none;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+            color: var(--accent);
+        }
+
+        /* Chevron expand button */
+        .song-chevron {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text2);
+            transition: transform 0.2s, color 0.2s;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+
+        .song-chevron.has-sections {
+            color: var(--accent);
+        }
+
+        .song-chevron.open {
+            transform: rotate(90deg);
+        }
+
+        /* Color dot for region color */
+        .song-color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-left: 6px;
+            background: var(--text3);
+        }
+
+        /* Song text area */
+        .song-title-area {
+            flex: 1;
+            min-width: 0;
+            padding: 14px 8px 14px 6px;
+        }
+
+        .song-name {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 1.25em;
+            /* Larger base font for stage */
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .song-row.active .song-name {
+            color: var(--accent);
+            font-weight: 900;
+            font-size: 1.35em;
+            /* Even larger when active */
+        }
+
+        /* Duration */
+        .song-duration {
+            font-family: monospace;
+            color: var(--text2);
+            font-size: 1.05em;
+            /* Larger duration */
+            font-weight: bold;
+            padding: 0 16px 0 8px;
+            flex-shrink: 0;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .song-duration.live-time {
+            color: var(--accent2);
+            font-weight: 900;
+            font-size: 1.15em;
+        }
+
+        /* Song controls row (shown when expanded) */
+        .song-controls {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            padding: 0 10px 10px 52px;
+        }
+
+        .song-row.expanded+.section-list .song-controls,
+        .song-controls.visible {
+            display: flex;
+        }
+
+        .song-controls-inner {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        /* Section list */
+        .section-list {
+            display: none;
+            padding: 8px 12px 0 36px;
+            animation: slideDown 0.3s ease-out;
+            position: relative;
+        }
+
+        .section-list.open {
+            display: block;
+        }
+
+        .section-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            /* More padding */
+            background: rgba(255, 255, 255, 0.05);
+            /* Lighter bg so it pops from pure black */
+            border-left: 4px solid var(--border);
+            /* Thicker left border */
+            margin-bottom: 8px;
+            /* More spacing */
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            /* para el bg-fill */
+            overflow: hidden;
+            z-index: 1;
+            min-height: 48px;
+        }
+
+        .section-row.active {
+            background: rgba(33, 150, 243, 0.15);
+            /* Stronger active bg */
+            border-left-color: #2196F3;
+        }
+
+        .section-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .section-row-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text2);
+            margin-right: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-row.active .section-row-dot {
+            background: #2196F3;
+            box-shadow: 0 0 8px rgba(33, 150, 243, 0.6);
+        }
+
+        .section-row-name {
+            flex-grow: 1;
+            font-size: 1.05em;
+            /* Larger size */
+            color: var(--text);
+            /* Brighter base text */
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-row.active .section-row-name {
+            color: #2196F3;
+            font-weight: 900;
+            font-size: 1.15em;
+        }
+
+        .section-row-dur {
+            font-family: monospace;
+            font-size: 0.95em;
+            color: var(--text2);
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            margin-right: 14px;
+        }
+
+        /* Controles inline para sub-secciones */
+        .section-actions {
+            display: flex;
+            gap: 4px;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-actions button {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            /* Softer, larger buttons */
+            padding: 4px;
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .section-actions .chain-btn {
+            display: none;
+            /* subregions don't have chain */
+        }
+
+        .section-actions .loop-btn.looping {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: #e1bee7;
+        }
+
+        .section-actions .skip-btn.skipped {
+            background: rgba(211, 47, 47, 0.8);
+            color: #ef9a9a;
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        .section-actions .stop-btn {
+            color: #ef9a9a;
+        }
+
+        .section-row.active .section-row-dur {
+            color: var(--accent2);
+        }
+
+        /* Controls area at bottom of expanded section */
+        .expanded-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px 10px 52px;
+            border-top: 1px solid var(--border2);
+            flex-wrap: wrap;
+        }
+
+        /* Sortable */
+        .sortable-fallback {
+            opacity: 1 !important;
+            background: var(--card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+        }
+
+        .sortable-ghost {
+            opacity: 0.4 !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 2px dashed #666 !important;
+        }
+
+        /* Action buttons shared styles */
+        .song-actions-inline {
+            display: flex;
+            gap: 4px;
+            padding-right: 12px;
+            z-index: 2;
+        }
+
+        .song-actions-inline button {
+            background: rgba(51, 51, 51, 0.5);
+            color: var(--text2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .song-actions-inline .chain-btn.linked {
+            background: rgba(46, 125, 50, 0.8);
+            color: #a5d6a7;
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
+        .song-actions-inline .loop-btn.looping {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: #e1bee7;
+        }
+
+        .song-actions-inline .skip-btn.skipped {
+            background: rgba(211, 47, 47, 0.8);
+            color: #ef9a9a;
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        .chain-btn,
+        .skip-btn,
+        .loop-btn {
+            background: rgba(51, 51, 51, 0.5);
+            color: var(--text2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px;
+            width: 34px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .chain-btn.linked {
+            background: rgba(46, 125, 50, 0.8);
+            color: #a5d6a7;
+        }
+
+        .loop-btn.looping {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: #e1bee7;
+        }
+
+        .skip-btn.skipped {
+            background: rgba(211, 47, 47, 0.8);
+            color: #ef9a9a;
+        }
+
+        .load-btn {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.18), rgba(33, 150, 243, 0.06));
+            color: #64b5f6;
+            border: 1px solid rgba(33, 150, 243, 0.4);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* === GRID VIEW === */
+        #setlist.grid-mode {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            padding: 16px;
+        }
+
+        #setlist.grid-mode .region-item {
+            flex-direction: column;
+            margin-bottom: 0;
+            padding: 12px;
+            text-align: center;
+            gap: 6px;
+            cursor: pointer;
+            align-items: center;
+        }
+
+        #setlist.grid-mode .drag-handle,
+        #setlist.grid-mode .song-actions,
+        #setlist.grid-mode .sub-regions {
+            display: none;
+        }
+
+        #setlist.grid-mode .song-info {
+            width: 100%;
+        }
+
+        #setlist.grid-mode .song-header {
+            flex-direction: column;
+            gap: 4px;
+            text-align: center;
+        }
+
+        #setlist.grid-mode .song-name {
+            font-size: 0.88em;
+        }
+
+        #setlist.grid-mode .song-duration {
+            min-width: unset;
+            text-align: center;
+        }
+
+        #setlist.grid-mode .region-index {
+            font-size: 22px;
+        }
+
+        /* === TRANSPORT === */
+        .transport-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, var(--bg2), var(--bg3));
+            padding: 10px;
+            padding-bottom: calc(10px + env(safe-area-inset-bottom));
+            border-top: 2px solid var(--bg4);
+            z-index: 500;
+            display: flex;
+            gap: 5px;
+            box-shadow: 0 -4px 20px var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-transport {
+            flex: 1;
+            padding: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            color: #fff;
+            transition: all 0.2s;
+            min-width: 0;
+        }
+
+        .btn-transport:active {
+            transform: scale(0.97);
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            flex: 1.5;
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hold-mode fill animation on main stop button */
+        .btn-stop::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.28);
+            width: 0%;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .btn-stop.stop-holding::before {
+            animation: stop-fill 3s linear forwards;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, #37474f, #546e7a);
+        }
+
+        .btn-loop-transport {
+            background: linear-gradient(135deg, #424242, #616161);
+            color: #aaa;
+        }
+
+        .btn-loop-transport.active {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: #fff;
+        }
+
+        .btn-lyrics {
+            background: linear-gradient(135deg, #004D40, #00796B);
+            font-size: 12px;
+        }
+
+        .btn-chords {
+            background: linear-gradient(135deg, #4A148C, #7B1FA2);
+            font-size: 12px;
+        }
+
+        .btn-live {
+            background: linear-gradient(135deg, #7F0000, #D50000);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .btn-lyrics.panel-open,
+        .btn-chords.panel-open {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* === LYRICS PANEL === */
+        #lyrics-panel {
+            position: fixed;
+            inset: 0;
+            bottom: 60px;
+            background: rgba(0, 0, 8, 0.97);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+
+        #lyrics-panel.open {
+            display: flex;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-size: 1.05em;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .panel-close {
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text2);
+            padding: 4px 10px;
+        }
+
+        .lyrics-content {
+            font-size: 42px;
+            /* Increased from 36px for stage */
+            line-height: 1.6;
+            color: var(--text);
+            white-space: pre-wrap;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            /* Increased to bold */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px 40px;
+        }
+
+        .lyrics-no-data {
+            color: var(--text2);
+            font-style: italic;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .lyrics-next {
+            display: block;
+            font-size: 0.65em;
+            opacity: 0.45;
+            margin-top: 12px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* === CHORDS PANEL === */
+        #chords-panel {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 60px;
+            height: 200px;
+            background: rgba(40, 0, 60, 0.97);
+            z-index: 210;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid rgba(156, 39, 176, 0.5);
+            backdrop-filter: blur(20px);
+        }
+
+        #chords-panel.open {
+            display: flex;
+        }
+
+        .chords-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text2);
+        }
+
+        #chord-display {
+            font-size: 100px;
+            /* Increased from 80px */
+            font-weight: 900;
+            color: #ce93d8;
+            font-family: Georgia, serif;
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(206, 147, 216, 0.4);
+            transition: all 0.15s;
+        }
+
+        .chord-label {
+            font-size: 11px;
+            color: rgba(206, 147, 216, 0.5);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* === LIVE VIEW === */
+        #live-view {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 28px;
+        }
+
+        #live-view.open {
+            display: flex;
+        }
+
+        .live-header {
+            position: absolute;
+            top: 14px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live-setlist-name {
+            font-size: 11px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .live-show-time {
+            font-family: monospace;
+            font-size: 15px;
+            color: var(--accent3);
+            font-weight: bold;
+        }
+
+        .live-exit {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 14px;
+            cursor: pointer;
+            color: var(--text2);
+            font-size: 12px;
+        }
+
+        #live-song-name {
+            font-size: clamp(32px, 8vw, 78px);
+            font-weight: 900;
+            color: var(--text);
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        #live-sub-region {
+            font-size: 16px;
+            color: var(--accent2);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            min-height: 26px;
+            text-align: center;
+        }
+
+        #live-progress-bar {
+            width: 100%;
+            max-width: 700px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #live-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent2), #00c853);
+            transition: width 0.1s linear;
+        }
+
+        #live-time-rem {
+            font-family: monospace;
+            font-size: 18px;
+            color: var(--accent2);
+            font-weight: bold;
+        }
+
+        .live-next-wrap {
+            text-align: center;
+        }
+
+        .live-next-label {
+            font-size: 10px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        #live-next-name {
+            font-size: clamp(16px, 4vw, 30px);
+            color: var(--text2);
+        }
+
+        .live-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .live-btn {
+            padding: 16px 22px;
+            font-size: 18px;
+            font-weight: 900;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        .live-btn:active {
+            transform: scale(0.95);
+        }
+
+        .lb-prev {
+            background: linear-gradient(135deg, #37474f, #546e7a);
+        }
+
+        .lb-play {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            min-width: 110px;
+        }
+
+        .lb-stop {
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            position: relative;
+            overflow: hidden;
+            transition: color 0.1s;
+        }
+
+        /* Fill animation overlay for Hold mode */
+        .lb-stop::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.28);
+            width: 0%;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            transform-origin: left;
+            border-radius: inherit;
+            pointer-events: none;
+            transition: none;
+        }
+
+        .lb-stop.stop-holding::before {
+            animation: stop-fill 3s linear forwards;
+        }
+
+        @keyframes stop-fill {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .lb-next {
+            background: linear-gradient(135deg, #1565C0, #2196F3);
+        }
+
+        /* === CANVAS MODE === */
+        #canvas-mode {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 900;
+            display: none;
+            overflow: hidden;
+        }
+
+        #canvas-mode.open {
+            display: block;
+        }
+
+        .canvas-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 920;
+            display: flex;
+            gap: 10px;
+            transition: opacity 0.3s;
+        }
+
+        #canvas-workspace {
+            position: absolute;
+            inset: 0;
+        }
+
+        #canvas-mode.edit-mode #canvas-workspace {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .canvas-widget {
+            position: absolute;
+            border: 1px solid transparent;
+            touch-action: none;
+        }
+
+        #canvas-mode.edit-mode .canvas-widget {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            resize: both;
+            overflow: hidden;
+            cursor: move;
+        }
+
+        .cw-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 900;
+            flex-direction: column;
+            pointer-events: none;
+            /* Let drag events pass to widget */
+        }
+
+        #canvas-mode.edit-mode .cw-content {
+            opacity: 0.5;
+        }
+
+        /* Canvas internal styling */
+        #cw-content-songname {
+            font-size: clamp(32px, 6vw, 80px);
+            color: var(--accent);
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        #cw-songname-title {
+            font-size: clamp(32px, 6vw, 80px);
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        #cw-songname-section {
+            font-size: clamp(18px, 3.5vw, 52px);
+            font-weight: 700;
+            color: var(--text2);
+            line-height: 1.1;
+        }
+
+        #cw-songname-next {
+            font-size: clamp(14px, 2.8vw, 42px);
+            font-weight: 600;
+            color: var(--text3);
+            opacity: 0.75;
+        }
+
+        #cw-content-lyrics {
+            font-size: 104px;
+            color: var(--text);
+            white-space: pre-wrap;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #cw-content-chords {
+            font-size: 110px;
+            color: #ce93d8;
+            font-family: Georgia, serif;
+        }
+
+        .cw-transport-wrapper {
+            pointer-events: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 8px;
+        }
+
+        .cw-transport-wrapper .live-btn {
+            flex: 1;
+            min-width: 60px;
+            font-size: clamp(11px, 1.5vw, 16px);
+        }
+
+        /* Canvas widget toolbar (edit mode) */
+        .cw-toolbar {
+            display: none;
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 4px 6px;
+            gap: 4px;
+            flex-wrap: wrap;
+            pointer-events: auto;
+        }
+
+        #canvas-mode.edit-mode .cw-toolbar {
+            display: flex;
+        }
+
+        .cw-tool-btn {
+            padding: 4px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .cw-tool-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .cw-tool-btn.active {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* HSL color picker compact */
+        .cw-color-row {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .cw-color-row input[type=range] {
+            width: 70px;
+            height: 4px;
+            cursor: pointer;
+        }
+
+        .cw-color-preview {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        /* Top tabs bar — sticky full-width at the very top */
+        .top-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            display: flex;
+            background: rgba(8, 8, 8, 0.97);
+            border-bottom: 2px solid var(--border);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 16px var(--shadow);
+        }
+
+        .top-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .top-tab-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text2);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: -2px;
+        }
+
+        /* Sidebar hamburger in tabs bar — bigger for touch */
+        .top-tab-menu {
+            font-size: 24px;
+            padding: 10px 20px;
+            flex: 0 0 auto;
+        }
+
+        .top-tab-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .top-tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .top-tab-icon {
+            font-size: 16px;
+        }
+
+        /* cw-toolbar font dropdown */
+        .cw-font-select {
+            padding: 3px 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            max-width: 90px;
+        }
+
+        /* native color input compact */
+        .cw-color-input {
+            width: 28px;
+            height: 22px;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+        }
+
+        .lb-loop {
+            background: linear-gradient(135deg, #424242, #616161);
+            color: #aaa;
+        }
+
+        .lb-loop.active {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: #fff;
+        }
+
+        .live-size-ctrl {
+            position: absolute;
+            bottom: 80px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-size-label {
+            font-size: 10px;
+            color: var(--text2);
+        }
+
+        .live-size-btn {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text2);
+            font-size: 12px;
+        }
+
+        @keyframes pulse-queued {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: brightness(1);
+                background-color: transparent;
+            }
+
+            50% {
+                opacity: 0.75;
+                transform: scale(1.015);
+                filter: brightness(1.4);
+                background-color: rgba(255, 207, 51, 0.15);
+                /* discreto blink en BG */
+            }
+        }
+
+        @media(max-width:600px) {
+            .controls {
+                padding: 8px;
+                gap: 7px;
+            }
+
+            .toggles-row {
+                padding: 7px 4px;
+                gap: 3px;
+            }
+
+            .toggle-wrapper {
+                flex-direction: column;
+                flex: 1;
+                gap: 2px;
+                text-align: center;
+            }
+
+            .toggle-wrapper span {
+                font-size: 9px;
+                white-space: nowrap;
+            }
+
+            .switch {
+                transform: scale(0.8);
+            }
+
+            .help-icon {
+                display: none;
+            }
+
+            .region-item {
+                padding: 10px;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+
+            .drag-handle {
+                padding: 8px;
+                font-size: 20px;
+            }
+
+            .load-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+
+            .btn-transport {
+                padding: 11px 0;
+                font-size: 11px;
+            }
+
+            #chord-display {
+                font-size: 54px;
+            }
+
+            .info-row {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- F14: Top Tabs — full-width sticky top bar -->
+    <div class="top-tabs">
+        <button class="top-tab-btn top-tab-menu" onclick="openSidebar()" title="Menu">&#9776;</button>
+        <button class="top-tab-btn active" id="tab-btn-show" onclick="showMainView()">
+            <span class="top-tab-icon">&#9654;</span> Show
+        </button>
+        <button class="top-tab-btn" id="tab-btn-lyrics" onclick="toggleLyricsPanel()">
+            <span class="top-tab-icon">&#9834;</span> Lyrics
+        </button>
+        <button class="top-tab-btn" id="tab-btn-chords" onclick="toggleChordsPanel()">
+            <span class="top-tab-icon">&#9837;</span> Chords
+        </button>
+        <button class="top-tab-btn" id="tab-btn-live" onclick="openLiveView()">
+            <span class="top-tab-icon">&#9654;</span> Live View
+        </button>
+        <button class="top-tab-btn" id="tab-btn-canvas" onclick="openCanvasMode()">
+            <span class="top-tab-icon">&#9635;</span> Canvas
+        </button>
+    </div>
+
+    <div class="controls">
+        <div class="setlist-row">
+
+            <select id="setlistSelect" class="setlist-select" onchange="changeSetlist()"></select>
+            <button class="btn-mini btn-add" onclick="createSetlist()" title="New">+</button>
+            <div class="dotmenu-wrap" id="dotMenuWrap">
+                <button class="dotmenu-btn" onclick="toggleDotMenu(event)" title="Options">&#xB7;&#xB7;&#xB7;</button>
+                <div class="dotmenu-dropdown" id="dotMenuDropdown">
+                    <button class="dotmenu-item" onclick="exportSetlists();closeDotMenu()">
+                        <span class="dm-icon">&#8595;</span> Export
+                    </button>
+                    <button class="dotmenu-item" onclick="triggerImport();closeDotMenu()">
+                        <span class="dm-icon">&#8593;</span> Import
+                    </button>
+                    <button class="dotmenu-item item-danger" onclick="deleteSetlist();closeDotMenu()">
+                        <span class="dm-icon">&#10005;</span> Delete
+                    </button>
+                </div>
+            </div>
+            <input type="file" id="importInput" style="display:none" accept=".json" onchange="importSetlists(this)">
+        </div>
+
+        <div class="info-row">
+            <span id="song-count">Active: 0</span>
+            <span id="total-time">Playtime: 0:00</span>
+            <span class="show-timer">SHOW: <span id="show-timer-display">00:00</span> <span class="timer-reset"
+                    onclick="resetShowTimer()">&#8635;</span></span>
+        </div>
+    </div>
+
+    <ul id="setlist"></ul>
+
+    <div class="transport-footer">
+        <button class="btn-transport btn-play" id="main-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
+        <button class="btn-transport btn-stop" id="main-stop-btn" onmousedown="handleMainStopPress()"
+            onmouseup="handleMainStopRelease()" ontouchstart="handleMainStopPress()"
+            ontouchend="handleMainStopRelease()" style="user-select:none;-webkit-user-select:none">&#9632; STOP</button>
+        <button id="footer-loop-btn" class="btn-transport btn-loop-transport" onclick="toggleCurrentLoop()">&#8635;
+            Loop</button>
+        <button class="btn-transport btn-refresh" onclick="wwr_start()">SYNC</button>
+    </div>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:var(--accent)">ReaSet</span>
+            <span class="sidebar-close" onclick="closeSidebar()">&#10005;</span>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Show Options</div>
+            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="autoScrollToggle" checked><span
+                        class="slider"></span></label><span>Auto-Scroll</span><span class="help-icon"
+                    onclick="showHelp('scroll')">?</span></div>
+            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="queueModeToggle"><span
+                        class="slider"></span></label><span>Queue Mode</span><span class="help-icon"
+                    onclick="showHelp('queue')">?</span></div>
+            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="autoStopToggle" checked><span
+                        class="slider"></span></label><span>Auto-Stop</span><span class="help-icon"
+                    onclick="showHelp('stop')">?</span></div>
+            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="hideSkippedToggle"
+                        onchange="toggleHideSkipped()"><span class="slider"></span></label><span>Hide Skips</span><span
+                    class="help-icon" onclick="showHelp('hide')">?</span></div>
+            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="initSongMidiToggle"
+                        checked><span class="slider"></span></label><span>MIDI Init</span><span class="help-icon"
+                    onclick="showHelp('initsongmidi')">?</span></div>
+
+            <!-- Stop mode toggle -->
+            <div class="toggle-wrapper" style="margin-top:4px;">
+                <label class="switch"><input type="checkbox" id="stopHoldToggle"
+                        onchange="setStopMode(this.checked ? 'hold' : 'tap')"><span class="slider"></span></label>
+                <span>Stop Hold (3s)</span>
+                <span class="help-icon" onclick="showHelp('stophold')">?</span>
+            </div>
+
+            <!-- Grid view toggle -->
+            <div class="toggle-wrapper" style="margin-top:4px;">
+                <label class="switch"><input type="checkbox" id="gridViewToggle"
+                        onchange="setGridView(this.checked)"><span class="slider"></span></label>
+                <span>Grid View</span>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Settings &mdash; Theme</div>
+            <div class="theme-selector">
+                <div class="theme-dot active" data-theme="dark" onclick="setTheme('dark')" title="Dark"></div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Lyrics &mdash; Font</div>
+            <div class="font-options">
+                <button class="font-btn active" data-font="'Helvetica Neue', Helvetica, Arial, sans-serif"
+                    onclick="applyLyricsFont(this)">Helvetica</button>
+                <button class="font-btn" data-font="Arial, sans-serif" onclick="applyLyricsFont(this)">Arial</button>
+                <button class="font-btn" data-font="Impact, 'Arial Narrow', sans-serif"
+                    onclick="applyLyricsFont(this)">Gothic</button>
+                <button class="font-btn" data-font="Verdana, Geneva, sans-serif"
+                    onclick="applyLyricsFont(this)">Verdana</button>
+                <button class="font-btn" data-font="'Trebuchet MS', sans-serif"
+                    onclick="applyLyricsFont(this)">Trebuchet</button>
+                <button class="font-btn" data-font="'Courier New', Courier, monospace"
+                    onclick="applyLyricsFont(this)">Mono</button>
+                <button class="font-btn" data-font="Georgia, 'Times New Roman', serif"
+                    onclick="applyLyricsFont(this)">Georgia</button>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Lyrics &mdash; Size <span id="font-size-label"
+                    style="color:var(--accent);float:right">36px</span></div>
+            <input type="range" id="font-size-slider" class="size-slider" min="16" max="144" step="2" value="36"
+                oninput="applyLyricsSize(this.value)">
+            <div class="size-presets" style="display:flex; flex-wrap:wrap; gap:4px">
+                <button class="size-preset" onclick="applyLyricsSize(20)">S</button>
+                <button class="size-preset" onclick="applyLyricsSize(36)">M</button>
+                <button class="size-preset" onclick="applyLyricsSize(52)">L</button>
+                <button class="size-preset" onclick="applyLyricsSize(72)">XL</button>
+                <button class="size-preset" onclick="applyLyricsSize(96)">XXL</button>
+                <button class="size-preset" onclick="applyLyricsSize(120)">3XL</button>
+                <button class="size-preset" onclick="applyLyricsSize(144)">4XL</button>
+            </div>
+        </div>
+
+        <!-- F11: Chords prefs -->
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Chords &mdash; Font</div>
+            <div class="font-options" id="chords-font-options">
+                <button class="font-btn active" data-font="Georgia, serif"
+                    onclick="applyChordsFont(this)">Georgia</button>
+                <button class="font-btn" data-font="'Helvetica Neue', Helvetica, Arial, sans-serif"
+                    onclick="applyChordsFont(this)">Helvetica</button>
+                <button class="font-btn" data-font="Impact, 'Arial Narrow', sans-serif"
+                    onclick="applyChordsFont(this)">Impact</button>
+                <button class="font-btn" data-font="'Courier New', Courier, monospace"
+                    onclick="applyChordsFont(this)">Mono</button>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Chords &mdash; Size <span id="chords-size-label"
+                    style="color:var(--accent);float:right">110px</span></div>
+            <input type="range" id="chords-size-slider" class="size-slider" min="40" max="220" step="4" value="110"
+                oninput="applyChordsSize(this.value)">
+            <div class="size-presets" style="display:flex; flex-wrap:wrap; gap:4px">
+                <button class="size-preset" onclick="applyChordsSize(60)">S</button>
+                <button class="size-preset" onclick="applyChordsSize(110)">M</button>
+                <button class="size-preset" onclick="applyChordsSize(160)">L</button>
+                <button class="size-preset" onclick="applyChordsSize(200)">XL</button>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Chords &mdash; Color</div>
+            <div id="chords-color-selector" style="display:flex;flex-wrap:wrap;gap:8px;">
+                <div class="theme-dot" style="background:#ce93d8" onclick="applyChordsColor('#ce93d8')" title="Lilac">
+                </div>
+                <div class="theme-dot" style="background:#80cbc4" onclick="applyChordsColor('#80cbc4')" title="Teal">
+                </div>
+                <div class="theme-dot" style="background:#ffcc80" onclick="applyChordsColor('#ffcc80')" title="Amber">
+                </div>
+                <div class="theme-dot" style="background:#ef9a9a" onclick="applyChordsColor('#ef9a9a')" title="Red">
+                </div>
+                <div class="theme-dot" style="background:#ffffff" onclick="applyChordsColor('#ffffff')" title="White">
+                </div>
+                <div class="theme-dot" style="background:#00e676" onclick="applyChordsColor('#00e676')" title="Green">
+                </div>
+                <div class="theme-dot" style="background:#64b5f6" onclick="applyChordsColor('#64b5f6')" title="Blue">
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Data &mdash; Backup</div>
+            <button class="sidebar-btn sb-sync" onclick="exportAllData()">
+                <span class="sb-icon">&#8595;</span> Export Settings JSON
+            </button>
+            <button class="sidebar-btn sb-sync"
+                style="background:linear-gradient(135deg,#BF360C,#E64A19);margin-top:8px"
+                onclick="document.getElementById('importAllInput').click()">
+                <span class="sb-icon">&#8593;</span> Import Settings JSON
+            </button>
+            <input type="file" id="importAllInput" style="display:none" accept=".json" onchange="importAllData(this)">
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">REAPER Connection</div>
+            <button class="sidebar-btn sb-sync" onclick="wwr_start();closeSidebar()">
+                <span class="sb-icon">&#8635;</span> Sync
+            </button>
+        </div>
+    </div>
+
+    <!-- LYRICS PANEL -->
+    <div id="lyrics-panel">
+        <div class="panel-header">
+            <span class="panel-title" id="lyrics-song-title">Lyrics</span>
+            <span class="panel-close" onclick="toggleLyricsPanel()">&#10005;</span>
+        </div>
+        <div class="lyrics-content" id="lyrics-content">
+            <div class="lyrics-no-data">Enable the "X-Raym Convert Lyrics" Lua script in REAPER to see live lyrics.</div>
+        </div>
+    </div>
+
+    <!-- CHORDS PANEL -->
+    <div id="chords-panel">
+        <span class="chords-close" onclick="toggleChordsPanel()">&#10005;</span>
+        <div id="chord-display">&#9834;</div>
+        <div class="chord-label" id="chord-label">Enable the Lua chords script in REAPER</div>
+    </div>
+
+    <!-- LIVE VIEW -->
+    <div id="live-view">
+        <div class="live-header">
+            <span class="live-setlist-name" id="live-setlist-name"></span>
+            <span class="live-show-time" id="live-show-time">00:00</span>
+            <span class="live-exit" onclick="closeLiveView()">&#10005; SALIR</span>
+        </div>
+        <div id="live-song-name">&#8212;</div>
+        <div id="live-sub-region"></div>
+        <div id="live-progress-bar">
+            <div id="live-progress-fill"></div>
+        </div>
+        <div id="live-time-rem">&#8212;</div>
+        <div class="live-next-wrap">
+            <div class="live-next-label">Up Next</div>
+            <div id="live-next-name">&#8212;</div>
+        </div>
+        <div class="live-controls">
+            <button class="live-btn lb-prev" onclick="liveNav('prev')">&#9664;&#9664;</button>
+            <button class="live-btn lb-stop" onclick="smartStop()">&#9632;</button>
+            <button class="live-btn lb-play" id="live-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
+            <button class="live-btn lb-next" onclick="liveNav('next')">&#9654;&#9654;</button>
+            <button class="live-btn lb-loop" id="live-loop-btn" onclick="toggleCurrentLoop()">&#8635;</button>
+        </div>
+        <div class="live-size-ctrl">
+            <span class="live-size-label">SIZE</span>
+            <span class="live-size-btn" onclick="adjustLiveSize(-1)">A&#8722;</span>
+            <span class="live-size-btn" onclick="adjustLiveSize(1)">A+</span>
+        </div>
+    </div>
+
+    <!-- APP CONFIRM MODAL -->
+    <div class="app-modal-overlay" id="appConfirmOverlay">
+        <div class="app-modal">
+            <div class="app-modal-title" id="appConfirmTitle"></div>
+            <div class="app-modal-body" id="appConfirmBody"></div>
+            <div class="app-modal-actions">
+                <button class="app-modal-btn btn-cancel" onclick="closeAppConfirm(false)">Cancel</button>
+                <button class="app-modal-btn btn-danger" id="appConfirmOk" onclick="closeAppConfirm(true)">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP ALERT MODAL -->
+    <div class="app-modal-overlay" id="appAlertOverlay">
+        <div class="app-modal">
+            <div class="app-modal-title" id="appAlertTitle">Notification</div>
+            <div class="app-modal-body" id="appAlertBody"></div>
+            <div class="app-modal-actions">
+                <button class="app-modal-btn btn-confirm" onclick="closeAppAlert()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPORT MODAL -->
+    <div class="app-modal-overlay" id="exportModalOverlay">
+        <div class="app-modal">
+            <div class="app-modal-title">Export Setlists</div>
+            <div class="app-modal-body">Download all your setlists as a JSON file.</div>
+            <input class="app-modal-input" id="exportFilename" type="text" value="reaper_setlists.json">
+            <div class="app-modal-actions">
+                <button class="app-modal-btn btn-cancel" onclick="closeExportModal()">Cancel</button>
+                <button class="app-modal-btn btn-confirm" onclick="doExportDownload()">&#8595; Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CANVAS MODE -->
+    <div id="canvas-mode">
+        <div class="canvas-header" id="canvas-header">
+            <button class="btn-mini btn-del" onclick="closeCanvasMode()">Exit</button>
+            <button class="btn-mini btn-imp" id="canvas-edit-btn" onclick="toggleCanvasEdit()">Edit Canvas</button>
+        </div>
+
+        <div id="canvas-workspace">
+            <!-- Song Name widget -->
+            <div class="canvas-widget" id="cw-songname" style="left: 5%; top: 5%; width: 90%; height: 180px;">
+                <div class="cw-content" id="cw-content-songname">
+                    <span id="cw-songname-title">Song</span>
+                    <span id="cw-songname-section">Current section</span>
+                    <span id="cw-songname-next">Next: &mdash;</span>
+                </div>
+                <div class="cw-toolbar">
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-title', -4)">Title&minus;</button>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-title', 4)">Title+</button>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-section', -4)">Section&minus;</button>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-section', 4)">Section+</button>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-next', -4)">Next&minus;</button>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-songname-next', 4)">Next+</button>
+                </div>
+            </div>
+            <!-- Lyrics widget -->
+            <div class="canvas-widget" id="cw-lyrics" style="left: 5%; top: 25%; width: 90%; height: 42%;">
+                <div class="cw-content" id="cw-content-lyrics">Lyrics on Canvas</div>
+                <div class="cw-toolbar">
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-content-lyrics', -4)">A&minus;</button>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-content-lyrics', 4)">A+</button>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-lyrics', this.value)"
+                        title="Font">
+                        <option value="'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica</option>
+                        <option value="Georgia,serif">Georgia</option>
+                        <option value="Impact,'Arial Narrow',sans-serif">Impact</option>
+                        <option value="'Courier New',Courier,monospace">Mono</option>
+                        <option value="Verdana,Geneva,sans-serif">Verdana</option>
+                        <option value="'Trebuchet MS',sans-serif">Trebuchet</option>
+                    </select>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <input type="color" class="cw-color-input" value="#ffffff"
+                        oninput="cwApplyColor('cw-content-lyrics', this.value)" title="Text color">
+                </div>
+            </div>
+            <!-- Chords widget -->
+            <div class="canvas-widget" id="cw-chords" style="left: 5%; top: 72%; width: 42%; height: 24%;">
+                <div class="cw-content" id="cw-content-chords">Am</div>
+                <div class="cw-toolbar">
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-content-chords', -8)">A&minus;</button>
+                    <button class="cw-tool-btn" onclick="cwFontSize('cw-content-chords', 8)">A+</button>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-chords', this.value)"
+                        title="Font">
+                        <option value="Georgia,serif" selected>Georgia</option>
+                        <option value="'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica</option>
+                        <option value="Impact,'Arial Narrow',sans-serif">Impact</option>
+                        <option value="'Courier New',Courier,monospace">Mono</option>
+                        <option value="Verdana,Geneva,sans-serif">Verdana</option>
+                    </select>
+                    <span style="color:#888;font-size:10px;padding:0 2px">|</span>
+                    <input type="color" class="cw-color-input" value="#ce93d8"
+                        oninput="cwApplyColor('cw-content-chords', this.value)" title="Text color">
+                </div>
+            </div>
+            <!-- Transport widget -->
+            <div class="canvas-widget" id="cw-transport" style="left: 52%; top: 72%; width: 43%; height: 24%;">
+                <div class="cw-content" id="cw-content-transport">
+                    <div class="cw-transport-wrapper">
+                        <button class="live-btn lb-prev" onclick="canvasNav('prev')">&#9664;&#9664;</button>
+                        <button class="live-btn lb-play" id="cw-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
+                        <button class="live-btn lb-next" onclick="canvasNav('next')">&#9654;&#9654;</button>
+                        <button class="live-btn lb-stop" id="cw-stop-btn" onmousedown="handleStopPress()"
+                            onmouseup="handleStopRelease()" ontouchstart="handleStopPress()"
+                            ontouchend="handleStopRelease()" style="user-select:none;-webkit-user-select:none">STOP
+                            (Hold)</button>
+                    </div>
+                </div>
+                <div class="cw-toolbar">
+                    <button class="cw-tool-btn" id="cw-stop-mode-btn" onclick="toggleStopMode()"
+                        title="Stop button mode">Mode: Hold</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // --- 0. POLYFILLS (Android 5 compat) ---
+        (function () {
+            if (!Array.from) { Array.from = (function () { return function from(al) { var A = []; for (var k = 0; k < al.length; k++)A[k] = al[k]; return A; }; }()); }
+            if (typeof Object.assign !== 'function') { Object.assign = function (t) { if (t == null) throw new TypeError(); t = Object(t); for (var i = 1; i < arguments.length; i++) { var s = arguments[i]; if (s != null) for (var k in s) if (Object.prototype.hasOwnProperty.call(s, k)) t[k] = s[k]; } return t; }; }
+            if (!Element.prototype.matches) Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+            if (!Element.prototype.closest) { Element.prototype.closest = function (s) { var el = this; do { if (el.matches(s)) return el; el = el.parentElement || el.parentNode; } while (el && el.nodeType === 1); return null; }; }
+            if (!Array.prototype.find) { Array.prototype.find = function (fn) { for (var i = 0; i < this.length; i++)if (fn(this[i], i, this)) return this[i]; return undefined; }; }
+            if (!Array.prototype.findIndex) { Array.prototype.findIndex = function (fn) { for (var i = 0; i < this.length; i++)if (fn(this[i], i, this)) return i; return -1; }; }
+        })();
+
+        function parseFloatDigits(value, digits) {
+            digits = digits || 6; var d = Math.pow(10, digits);
+            return Math.round(parseFloat(value) * d) / d;
+        }
+
+        // --- 1. REAPER CONNECTION ---
+        // Batched recur like X-Raym: lyrics+chords+regions each on their own poll
+        wwr_req_recur("TRANSPORT", 100);
+        wwr_req_recur("REGION", 1000);
+        // X-Raym exact approach: poll PROJEXTSTATE every 10ms batched
+        wwr_req_recur("GET/PROJEXTSTATE/XR_Lyrics/text;GET/PROJEXTSTATE/XR_Lyrics/next", 10);
+        wwr_req_recur("GET/PROJEXTSTATE/XR_Chords/text", 200);
+        wwr_start();
+
+        // --- 2. STATE ---
+        var g_regions = [];
+        var displayList = [];
+        var g_subRegionMap = {};   // { "Song Name": [{id,name,sectionName,start,end},...] }
+        var isPlaying = false;
+        var currentPos = 0.0;
+        var queuedRegion = null;
+        var lastActiveID = null;
+        var lastRenderChecksum = "";
+        var isDragging = false;
+        var initialized = false;
+        var expandedSongs = {}; // { songId: true/false }
+
+        // View state
+        var hideSkippedMode = (localStorage.getItem("reaper_hide_skipped") === "true");
+        var isGridView = false;
+
+        // Lyrics state — X-Raym engine variables (exact port)
+        var xr_lyrics_text = "";
+        var xr_lyrics_last = "";
+        var xr_lyrics_next = "";
+        var xr_lyrics_last_next = "";
+        var lyricsVisible = false;
+
+        // Chords state
+        var chordsText = "";
+        var chordsVisible = false;
+        var chordsLastRaw = "";
+
+        // Show timer state
+        var showStartTime = null;         // Date.now() when show first started
+        var showAccumulatedMs = 0;        // ms accumulated before last pause
+        var showTimerInterval = null;
+        var wasPlayingLast = false;
+
+        // Live view state
+        var liveViewOpen = false;
+        var liveFontScale = 1.0;
+
+        // Storage
+        var STORAGE_KEY = "reaper_setlists_v9";
+        var CURRENT_KEY = "reaper_current_setlist";
+        var setlists = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { "Default": [] };
+        var currentSetlistName = localStorage.getItem(CURRENT_KEY) || "Default";
+        if (!setlists["Default"]) setlists["Default"] = [];
+        if (!setlists[currentSetlistName]) currentSetlistName = "Default";
+
+        // Init UI
+        document.getElementById("hideSkippedToggle").checked = hideSkippedMode;
+        updateSetlistDropdown();
+        (function () { var t = localStorage.getItem("reasetlist_theme") || "dark"; setTheme(t, true); })();
+
+        // --- 3. REAPER REPLY HANDLER ---
+        function wwr_onreply(results) {
+            if (isDragging) return;
+            var ar = results.split("\n");
+            var x;
+            for (x = 0; x < ar.length; x++) {
+                var tok = ar[x].split("\t");
+
+                // === X-RAYM LYRICS ENGINE (exact port) ===
+                // Check tok[1]/tok[2] WITHOUT checking tok[0] — same as X-Raym_Lyrics.html
+                if (tok.length > 1 && tok[1] === "XR_Lyrics" && tok[2] === "text") {
+                    xr_lyrics_text = tok.slice(3).join('\t') || "";
+                }
+                if (tok.length > 1 && tok[1] === "XR_Lyrics" && tok[2] === "next") {
+                    xr_lyrics_next = tok.slice(3).join('\t') || "";
+                }
+                if (tok.length > 1 && tok[1] === "XR_Chords" && tok[2] === "text") {
+                    var newChord = tok.slice(3).join('\t') || "";
+                    if (newChord !== chordsLastRaw) { chordsLastRaw = newChord; updateChordsDisplay(newChord); }
+                }
+
+                // === TRANSPORT & REGION handling ===
+                if (!tok.length) continue;
+                switch (tok[0]) {
+                    case "TRANSPORT":
+                        var nowPlaying = (parseInt(tok[1]) & 1) === 1;
+                        currentPos = parseFloat(tok[2]);
+                        if (nowPlaying && !wasPlayingLast) {
+                            if (!showStartTime) { showStartTime = Date.now() - showAccumulatedMs; }
+                            else if (showTimerInterval === null) { showStartTime = Date.now() - showAccumulatedMs; }
+                            startShowTimerTick();
+                        } else if (!nowPlaying && wasPlayingLast) {
+                            showAccumulatedMs = Date.now() - showStartTime;
+                            stopShowTimerTick();
+                        }
+                        wasPlayingLast = nowPlaying;
+                        isPlaying = nowPlaying;
+                        updatePlaybackUI();
+                        break;
+                    case "REGION_LIST":
+                        g_regions = [];
+                        break;
+                    case "REGION":
+                        g_regions.push(tok);
+                        break;
+                    case "REGION_LIST_END":
+                        syncRegions();
+                        break;
+                }
+            }
+
+            // === X-RAYM LYRICS DISPLAY (exact logic from X-Raym_Lyrics.html) ===
+            var lyricsContent = document.getElementById("lyrics-content");
+            if (lyricsContent) {
+                var t = xr_lyrics_text;
+                var n = xr_lyrics_next;
+                if (t === "--XR-NO-TEXT--") t = "";
+                if (n === "--XR-NO-TEXT--") n = "";
+                if (t !== xr_lyrics_last || n !== xr_lyrics_last_next) {
+                    if (t === "") {
+                        lyricsContent.innerHTML = '<div class="lyrics-no-data">Sin datos de letra.<br><small>Activa el script Lua <b>X-Raym Convert Lyrics</b> en REAPER<br>con un track llamado <b>"lyrics"</b> con notas en los items.</small></div>';
+                    } else {
+                        // Exact X-Raym method: split on \\n, join with <br>
+                        var lines = t.split("\\n");
+                        var nextBlock = "";
+                        if (n !== "") nextBlock = '<br><span class="lyrics-next">' + n + '</span>';
+                        lyricsContent.innerHTML = lines.join('<br>') + nextBlock;
+                    }
+                    xr_lyrics_last = t;
+                    xr_lyrics_last_next = n;
+
+                    // --- Canvas lyrics sync (same source, same format) ---
+                    if (canvasOpen) {
+                        var cwLyrics = document.getElementById('cw-content-lyrics');
+                        if (cwLyrics) {
+                            if (t === '') {
+                                cwLyrics.innerHTML = '<span style="opacity:0.3;font-size:0.4em">No active lyrics</span>';
+                            } else {
+                                cwLyrics.innerHTML = lines.join('<br>');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // --- MOCK INJECTION ---
+        window.addEventListener('load', function () {
+            if (location.protocol === 'file:') {
+                window.g_regions = [
+                    ["REGION", "Main Song", "id1", "10.0", "60.0", "16711680"],
+                    ["REGION", "Intro", "id2", "10.0", "20.0", "65280"],
+                    ["REGION", "Verse 1", "id3", "20.0", "40.0", "65280"],
+                    ["REGION", "Chorus", "id4", "40.0", "60.0", "65280"],
+                    ["REGION", "Second Song", "id5", "70.0", "120.0", "16711680"]
+                ];
+                window.displayList = [];
+                window.subStates = {};
+                window.syncRegions();
+            }
+        });
+
+        // Global state for nested sections: loop, skipped
+        var subStates = {};
+
+        // --- 4. SYNC ---
+        function syncRegions() {
+            if (isDragging) return;
+            var mainMap = {};
+            var subMap = {};
+            var allEntries = [];
+
+            for (var i = 0; i < g_regions.length; i++) {
+                var r = g_regions[i];
+                if (r.length <= 4) continue;
+                var rawColor = r.length > 5 ? parseInt(r[5]) : 0;
+                var cssColor = null;
+                if (rawColor > 0) {
+                    cssColor = '#' + (rawColor & 0xFFFFFF).toString(16);
+                    while (cssColor.length < 7) cssColor = "#0" + cssColor.substr(1);
+                }
+                allEntries.push({
+                    name: r[1],
+                    id: r[2],
+                    start: parseFloatDigits(r[3]),
+                    end: parseFloatDigits(r[4]),
+                    duration: parseFloat(r[4]) - parseFloat(r[3]),
+                    color: cssColor
+                });
+            }
+
+            // Detect REAPER nested/overlapping regions by containment
+            // Sort by duration descending (largest regions first -> songs)
+            allEntries.sort(function (a, b) { return b.duration - a.duration; });
+
+            for (var k = 0; k < allEntries.length; k++) {
+                var entry = allEntries[k];
+                var isSub = false;
+                // Find if this region fits entirely inside an already-registered song
+                for (var key in mainMap) {
+                    if (mainMap.hasOwnProperty(key)) {
+                        var parent = mainMap[key];
+                        // If fully contained in parent (and strictly smaller)
+                        if (entry.start >= parent.start && entry.end <= parent.end && entry.duration < parent.duration) {
+                            if (!subMap[parent.name]) subMap[parent.name] = [];
+                            entry.sectionName = entry.name;
+                            entry.parentName = parent.name;
+                            if (!subStates[entry.id]) subStates[entry.id] = { loop: false, skipped: false };
+                            entry.loop = subStates[entry.id].loop;
+                            entry.skipped = subStates[entry.id].skipped;
+
+                            subMap[parent.name].push(entry);
+                            isSub = true;
+                            break;
+                        }
+                    }
+                }
+                if (!isSub) {
+                    mainMap[entry.id] = entry;
+                }
+            }
+
+            // Sort sub-regions of each song by their start time
+            for (var key in subMap) {
+                if (subMap.hasOwnProperty(key)) {
+                    subMap[key].sort(function (a, b) { return a.start - b.start; });
+                }
+            }
+
+            g_subRegionMap = subMap;
+
+            if (displayList.length === 0 && !initialized) {
+                var saved = setlists[currentSetlistName];
+                for (var j = 0; j < saved.length; j++) {
+                    var item = saved[j];
+                    if (mainMap.hasOwnProperty(item.id)) {
+                        var d = mainMap[item.id];
+                        d.chain = item.chain; d.skipped = (item.skipped === true); d.loop = (item.loop === true);
+                        displayList.push(d); delete mainMap[item.id];
+                    }
+                }
+                var newItems = [];
+                for (var k in mainMap) { if (mainMap.hasOwnProperty(k)) newItems.push(mainMap[k]); }
+                newItems.sort(function (a, b) { return a.start - b.start; });
+                for (var n = 0; n < newItems.length; n++) { newItems[n].chain = false; newItems[n].skipped = false; newItems[n].loop = false; displayList.push(newItems[n]); }
+                if (displayList.length > 0 && !isPlaying) wwr_req("SET/POS/" + displayList[0].start);
+                initialized = true;
+            } else {
+                var activeIDs = {};
+                for (var m = 0; m < displayList.length; m++) {
+                    var itm = displayList[m];
+                    if (mainMap.hasOwnProperty(itm.id)) {
+                        var rd = mainMap[itm.id];
+                        itm.name = rd.name; itm.start = rd.start; itm.end = rd.end; itm.duration = rd.duration; itm.color = rd.color;
+                        activeIDs[itm.id] = true; delete mainMap[itm.id];
+                    }
+                }
+                var filtered = [];
+                for (var p = 0; p < displayList.length; p++) { if (activeIDs[displayList[p].id]) filtered.push(displayList[p]); }
+                displayList = filtered;
+                var newItems2 = [];
+                for (var k2 in mainMap) { if (mainMap.hasOwnProperty(k2)) newItems2.push(mainMap[k2]); }
+                newItems2.sort(function (a, b) { return a.start - b.start; });
+                for (var n2 = 0; n2 < newItems2.length; n2++) { newItems2[n2].chain = false; newItems2[n2].skipped = false; newItems2[n2].loop = false; displayList.push(newItems2[n2]); }
+            }
+            saveCurrentState();
+            var cs = JSON.stringify(displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop, name: r.name, color: r.color }; })) + (hideSkippedMode ? 1 : 0) + JSON.stringify(g_subRegionMap);
+            if (cs !== lastRenderChecksum) { lastRenderChecksum = cs; renderSetlist(); updatePlaybackUI(); }
+        }
+
+        function saveCurrentState() {
+            var fmt = displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop }; });
+            setlists[currentSetlistName] = fmt;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(setlists));
+            localStorage.setItem(CURRENT_KEY, currentSetlistName);
+        }
+
+        // --- 5. HELPERS ---
+        function formatTime(s) { var m = Math.floor(s / 60); var sc = Math.round(s % 60); return m + ":" + (sc < 10 ? '0' : '') + sc; }
+        function formatTotalTime(s) { var h = Math.floor(s / 3600); var m = Math.floor((s % 3600) / 60); var sc = Math.round(s % 60); return (h > 0 ? h + ":" : "") + (h > 0 && m < 10 ? "0" : "") + m + ":" + (sc < 10 ? "0" : "") + sc; }
+
+        // --- 6. RENDER ---
+        // Toggle expand/collapse for a song
+        function toggleExpand(id, hasSections) {
+            if (!hasSections) {
+                // No sections: just play directly
+                for (var k = 0; k < displayList.length; k++) {
+                    if (displayList[k].id == id) { playRegion(displayList[k].start, id); return; }
+                }
+                return;
+            }
+            expandedSongs[id] = !expandedSongs[id];
+            var sl = document.getElementById("slist-" + id);
+            var chev = document.getElementById("chev-" + id);
+            var row = document.getElementById("row-" + id);
+            if (sl) sl.classList.toggle("open", !!expandedSongs[id]);
+            if (chev) chev.classList.toggle("open", !!expandedSongs[id]);
+            if (row) row.classList.toggle("expanded", !!expandedSongs[id]);
+        }
+
+        function renderSetlist() {
+            var listEl = document.getElementById('setlist');
+            var scrollPos = listEl.scrollTop;
+            listEl.innerHTML = "";
+            var totalDur = 0; var activeCount = 0;
+
+            if (isGridView) {
+                // ---- GRID MODE (compact cards) ----
+                for (var i = 0; i < displayList.length; i++) {
+                    var r = displayList[i];
+                    if (!r.skipped) { totalDur += r.duration; activeCount++; }
+                    if (hideSkippedMode && r.skipped) continue;
+                    var li = document.createElement("li");
+                    li.className = "song-row" + (r.skipped ? " skipped" : "");
+                    li.id = "row-" + r.id; li.setAttribute("data-id", r.id);
+                    li.setAttribute("onclick", "playRegion(" + r.start + ",'" + r.id + "')");
+                    var dotStyle = r.color ? 'background:' + r.color + ';' : '';
+                    li.innerHTML = '<div class="card-bg-fill" id="bg-' + r.id + '"></div>'
+                        + '<span class="song-index" style="width:25px;text-align:right;color:var(--text2);font-size:0.9em;cursor:pointer;padding:0 4px" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')" title="Click para mover">' + (i + 1) + '.</span>'
+                        + '<span class="song-color-dot" style="' + dotStyle + 'margin-left:5px;"></span>'
+                        + '<span class="song-name" style="padding:12px 8px;font-size:0.95em">' + r.name + '</span>'
+                        + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
+                    listEl.appendChild(li);
+                }
+            } else {
+                // ---- LIST MODE (hierarchical) ----
+                for (var i = 0; i < displayList.length; i++) {
+                    var r = displayList[i];
+                    if (!r.skipped) { totalDur += r.duration; activeCount++; }
+                    if (hideSkippedMode && r.skipped) continue;
+
+                    var subs = g_subRegionMap[r.name] || [];
+                    var hasSubs = subs.length > 0;
+                    var isExp = !!expandedSongs[r.id];
+
+                    var chainIcon = r.chain ? "&#10140;" : "&#9632;";
+                    var chainClass = r.chain ? "chain-btn linked" : "chain-btn";
+                    var loopClass = r.loop ? "loop-btn looping" : "loop-btn";
+                    var skipIcon = r.skipped ? "&#10004;" : "&#10006;";
+                    var skipClass = r.skipped ? "skip-btn skipped" : "skip-btn";
+                    var dotStyle = r.color ? 'background:' + r.color + ';' : '';
+                    var chevClass = "song-chevron" + (hasSubs ? " has-sections" : "") + (isExp ? " open" : "");
+                    var chevIcon = hasSubs ? "&#9658;" : "&#8226;";
+
+                    // --- Song container ---
+                    var li = document.createElement("li");
+                    li.className = "song-container";
+                    li.setAttribute("data-id", r.id);
+
+                    // --- Song row ---
+                    var rowDiv = document.createElement("div");
+                    rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "");
+                    rowDiv.id = "row-" + r.id;
+
+                    rowDiv.innerHTML =
+                        '<div class="card-bg-fill" id="bg-' + r.id + '"></div>'
+                        + '<div class="drag-handle">&#9776;</div>'
+                        + '<div class="song-index" style="width:25px;text-align:right;color:var(--text2);font-size:0.9em;cursor:pointer" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')" title="Click para mover a posici\u00f3n x">' + (i + 1) + '.</div>'
+                        + '<div class="' + chevClass + '" id="chev-' + r.id + '" onclick="event.stopPropagation();toggleExpand(\'' + r.id + '\',' + hasSubs + ')">' + chevIcon + '</div>'
+                        + '<div class="song-color-dot" style="' + dotStyle + '"></div>'
+                        + '<div class="song-title-area" onclick="playRegion(' + r.start + ',\'' + r.id + '\')">'
+                        + '  <span class="song-name">' + r.name + '</span>'
+                        + '</div>'
+                        + '<div class="song-actions-inline">'
+                        + '  <button class="' + chainClass + '" onclick="event.stopPropagation(); toggleChain(\'' + r.id + '\')" title="Action (Cont./Stop)">' + chainIcon + '</button>'
+                        + '  <button class="' + loopClass + '" onclick="event.stopPropagation(); toggleLoop(\'' + r.id + '\')" title="Loop">&#8635;</button>'
+                        + '  <button class="' + skipClass + '" onclick="event.stopPropagation(); toggleSkip(\'' + r.id + '\')" title="Eliminar/Skip">' + skipIcon + '</button>'
+                        + '</div>'
+                        + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
+
+                    li.appendChild(rowDiv);
+
+                    // --- Section list (always rendered but hidden unless expanded) ---
+                    var slDiv = document.createElement("div");
+                    slDiv.className = "section-list" + (isExp ? " open" : "");
+                    slDiv.id = "slist-" + r.id;
+
+                    var slHtml = "";
+                    // Sections (sub-regions)
+                    for (var s = 0; s < subs.length; s++) {
+                        var sub = subs[s];
+                        var subDur = (sub.end - sub.start);
+
+                        var scloop = sub.loop ? "loop-btn looping" : "loop-btn";
+                        var scskip = sub.skipped ? "skip-btn skipped" : "skip-btn";
+                        // A progress bill specifically for the section row uses the same card-bg-fill class but with lower z-index 0
+                        slHtml += '<div class="section-row" id="subrow-' + sub.id + '"'
+                            + ' onclick="playRegion(' + sub.start + ',\'' + sub.id + '\')">'
+                            + '<div class="card-bg-fill" id="bg-' + sub.id + '"></div>'
+                            + '<div class="section-row-dot"></div>'
+                            + '<span class="section-row-name">' + sub.sectionName + '</span>'
+                            + '<span class="section-row-dur">' + formatTime(subDur) + '</span>'
+                            + '<div class="section-actions" onclick="event.stopPropagation()">'
+                            + '  <button class="stop-btn" onclick="smartStop()" title="Stop">&#9632;</button>'
+                            + '  <button class="' + scloop + '" onclick="toggleSubLoop(\'' + sub.id + '\')" title="Loop">&#8635;</button>'
+                            + '  <button class="' + scskip + '" onclick="toggleSubSkip(\'' + sub.id + '\')" title="Eliminar/Skip">&#10006;</button>'
+                            + '</div>'
+                            + '</div>';
+                    }
+
+                    // Expanded bottom controls
+                    if (hasSubs) {
+                        slHtml += '<div class="expanded-controls">'
+                            + '<button class="load-btn" onclick="playRegion(' + r.start + ',\'' + r.id + '\')" style="margin-left:auto">&#9654; REPRODUCIR CANCIÓN</button>'
+                            + '</div>';
+                    }
+
+                    slDiv.innerHTML = slHtml;
+                    li.appendChild(slDiv);
+
+                    listEl.appendChild(li);
+                }
+            }
+
+            listEl.scrollTop = scrollPos;
+            document.getElementById('song-count').innerText = "Active: " + activeCount;
+            document.getElementById('total-time').innerText = "Playtime: " + formatTotalTime(totalDur);
+        }
+
+        // --- 7. ACTIONS ---
+        // F9: Reorder by number prompt (global regions only)
+        function reorderPrompt(id) {
+            var item, i;
+            for (i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { item = displayList[i]; break; } }
+            if (!item) return;
+            var newPos = parseInt(prompt('Nueva posici\u00f3n para "' + item.name + '"?'));
+            if (!newPos || newPos < 1 || newPos > displayList.length) return;
+            displayList.splice(newPos - 1, 0, displayList.splice(i, 1)[0]);
+            var newOrder = [];
+            lastRenderChecksum = JSON.stringify(displayList.map(function (r) {
+                newOrder.push({ id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop });
+                return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop, name: r.name, color: r.color };
+            })) + (hideSkippedMode ? 1 : 0) + JSON.stringify(g_subRegionMap);
+            setlists[currentSetlistName] = newOrder;
+            saveCurrentState();
+            renderSetlist();
+        }
+
+        function toggleHideSkipped() {
+            hideSkippedMode = document.getElementById("hideSkippedToggle").checked;
+            localStorage.setItem("reaper_hide_skipped", hideSkippedMode);
+            lastRenderChecksum = ""; syncRegions();
+        }
+        function toggleChain(id) {
+            for (var i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { displayList[i].chain = !displayList[i].chain; break; } }
+            saveCurrentState(); lastRenderChecksum = ""; syncRegions();
+        }
+        function toggleLoop(id) {
+            for (var i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { displayList[i].loop = !displayList[i].loop; break; } }
+            saveCurrentState(); lastRenderChecksum = ""; syncRegions();
+        }
+        function toggleCurrentLoop() {
+            var activeIdx = -1;
+            for (var i = 0; i < displayList.length; i++) {
+                var r = displayList[i];
+                if (currentPos >= r.start && currentPos <= r.end) {
+                    var subs = g_subRegionMap[r.name] || [];
+                    var activeSub = null;
+                    for (var s = 0; s < subs.length; s++) {
+                        if (currentPos >= subs[s].start && currentPos <= subs[s].end) { activeSub = subs[s]; break; }
+                    }
+                    if (activeSub) {
+                        toggleSubLoop(activeSub.id); return;
+                    }
+                    r.loop = !r.loop; saveCurrentState(); lastRenderChecksum = ""; syncRegions(); return;
+                }
+            }
+        }
+        function toggleSubLoop(id) {
+            if (subStates[id]) { subStates[id].loop = !subStates[id].loop; lastRenderChecksum = ""; syncRegions(); }
+        }
+        function toggleSubSkip(id) {
+            if (subStates[id]) { subStates[id].skipped = !subStates[id].skipped; lastRenderChecksum = ""; syncRegions(); }
+        }
+        function toggleSkip(id) {
+            for (var i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { displayList[i].skipped = !displayList[i].skipped; break; } }
+            saveCurrentState(); lastRenderChecksum = ""; syncRegions();
+        }
+        function findNextValidSong(startIdx) {
+            for (var i = startIdx + 1; i < displayList.length; i++) { if (!displayList[i].skipped) return displayList[i]; }
+            return null;
+        }
+        function findPrevValidSong(startIdx) {
+            for (var i = startIdx - 1; i >= 0; i--) { if (!displayList[i].skipped) return displayList[i]; }
+            return null;
+        }
+        function flashRow(id) {
+            var btn = document.querySelector("#row-" + id + " .load-btn");
+            if (btn) { btn.style.backgroundColor = "#2196F3"; btn.style.color = "#fff"; setTimeout(function () { btn.style.backgroundColor = ""; btn.style.color = ""; }, 200); }
+        }
+
+        // --- 8. PLAYBACK UI ---
+        function updatePlaybackUI() {
+            if (isDragging) return;
+            // Clear active state on song rows
+            var prev = document.querySelector('.song-row.active');
+            if (prev) prev.classList.remove('active');
+            // Clear active section rows
+            var prevSubs = document.querySelectorAll('.section-row.active');
+            for (var p = 0; p < prevSubs.length; p++) prevSubs[p].classList.remove('active');
+
+            var activeIdx = -1;
+            for (var j = 0; j < displayList.length; j++) {
+                var r = displayList[j];
+                if (currentPos >= r.start && currentPos <= r.end) { activeIdx = j; break; }
+            }
+            var activeRegion = (activeIdx !== -1) ? displayList[activeIdx] : null;
+
+            // Loop button
+            var loopBtn = document.getElementById("footer-loop-btn");
+            if (activeRegion && activeRegion.loop) loopBtn.classList.add("active");
+            else loopBtn.classList.remove("active");
+
+            // Play button text
+            var playBtn = document.getElementById("main-play-btn");
+            if (playBtn) playBtn.innerHTML = isPlaying ? "&#9646;&#9646; PAUSE" : "&#9654; PLAY";
+
+            // Reset old song duration display
+            if (lastActiveID && (!activeRegion || activeRegion.id !== lastActiveID)) {
+                var oldDur = document.getElementById("dur-" + lastActiveID);
+                if (oldDur) { oldDur.innerText = oldDur.getAttribute("data-length"); oldDur.classList.remove("live-time"); }
+                var oldBg = document.getElementById("bg-" + lastActiveID);
+                if (oldBg) oldBg.style.width = "0%";
+            }
+
+            if (activeRegion) {
+                // Skip logic
+                if (activeRegion.skipped) {
+                    var nxt = findNextValidSong(activeIdx);
+                    if (nxt) { wwr_req("SET/POS/" + nxt.start); return; }
+                }
+                var row = document.getElementById("row-" + activeRegion.id);
+                if (row) {
+                    row.classList.add('active');
+                    if (activeRegion.id !== lastActiveID) {
+                        lastActiveID = activeRegion.id;
+                        // Auto-expand active song if it has sections
+                        var subs2 = g_subRegionMap[activeRegion.name] || [];
+                        if (subs2.length > 0 && !expandedSongs[activeRegion.id]) {
+                            toggleExpand(activeRegion.id, true);
+                        }
+                        if (document.getElementById('autoScrollToggle').checked && row.scrollIntoView) {
+                            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        // Update lyrics panel title
+                        document.getElementById("lyrics-song-title").innerText = activeRegion.name;
+                        document.getElementById("chord-label").innerText = activeRegion.name;
+                        document.getElementById("live-setlist-name").innerText = currentSetlistName;
+                    }
+                }
+                // Progress percentage
+                var pct = ((currentPos - activeRegion.start) / activeRegion.duration) * 100;
+                pct = Math.min(100, Math.max(0, pct));
+                // Card BG fill
+                var bgFill = document.getElementById("bg-" + activeRegion.id);
+                if (bgFill) bgFill.style.width = pct + "%";
+                // Duration countdown
+                var durEl = document.getElementById("dur-" + activeRegion.id);
+                if (durEl) {
+                    var rem = activeRegion.end - currentPos; if (rem < 0) rem = 0;
+                    durEl.innerText = "-" + formatTime(rem); durEl.classList.add("live-time");
+                }
+                // Section row highlight & sub-region progress
+                var subs = g_subRegionMap[activeRegion.name];
+                var activeSub = null;
+                if (subs) {
+                    for (var s = 0; s < subs.length; s++) {
+                        var sub = subs[s];
+                        if (currentPos >= sub.start && currentPos < sub.end) { activeSub = sub; break; }
+                    }
+                    if (activeSub && activeSub.skipped) {
+                        wwr_req("SET/POS/" + activeSub.end);
+                        return;
+                    }
+                    for (var s2 = 0; s2 < subs.length; s2++) {
+                        var subObj = subs[s2];
+                        var subEl = document.getElementById("subrow-" + subObj.id);
+                        var isThisActive = (activeSub && subObj.id === activeSub.id);
+                        if (subEl) subEl.classList.toggle("active", !!isThisActive);
+
+                        var subBg = document.getElementById("bg-" + subObj.id);
+                        if (subBg) {
+                            if (isThisActive) {
+                                var pctSub = ((currentPos - activeSub.start) / activeSub.duration) * 100;
+                                subBg.style.width = Math.min(100, Math.max(0, pctSub)) + "%";
+                            } else {
+                                subBg.style.width = "0%";
+                            }
+                        }
+                    }
+                }
+
+                // Live view update
+                if (liveViewOpen) updateLiveView(activeRegion, activeIdx, pct);
+
+                // Sub-region End-of-region logic
+                if (activeSub && isPlaying) {
+                    var subTimeRem = activeSub.end - currentPos;
+                    if (subTimeRem <= 0.2 && subTimeRem > -1) {
+                        if (activeSub.loop) { wwr_req("SET/POS/" + activeSub.start); return; }
+                        if (queuedRegion) {
+                            wwr_req("SET/POS/" + queuedRegion.start); queuedRegion = null;
+                            var qEls = document.querySelectorAll('.queued');
+                            for (var q = 0; q < qEls.length; q++) qEls[q].classList.remove('queued');
+                            return;
+                        }
+                    }
+                }
+
+                // End-of-region logic
+                var timeRem = activeRegion.end - currentPos;
+                if (timeRem <= 0.2 && timeRem > -1 && isPlaying) {
+                    if (activeRegion.loop) { wwr_req("SET/POS/" + activeRegion.start); return; }
+                    if (queuedRegion) {
+                        wwr_req("SET/POS/" + queuedRegion.start); queuedRegion = null;
+                        var qEls = document.querySelectorAll('.queued');
+                        for (var q = 0; q < qEls.length; q++) qEls[q].classList.remove('queued');
+                        return;
+                    }
+                    var shouldPlayNext = activeRegion.chain || !document.getElementById('autoStopToggle').checked;
+                    if (shouldPlayNext) {
+                        var nextR = findNextValidSong(activeIdx);
+                        if (nextR) { wwr_req("SET/POS/" + nextR.start); return; }
+                    }
+                    if (document.getElementById('autoStopToggle').checked && !activeRegion.chain) {
+                        wwr_req(1016);
+                        var nextR2 = findNextValidSong(activeIdx);
+                        if (nextR2) { setTimeout(function () { wwr_req("SET/POS/" + nextR2.start); triggerMidi(); }, 100); }
+                    }
+                }
+
+                // Canvas mode sync
+                if (typeof canvasOpen !== "undefined" && canvasOpen) {
+                    var cTitle = document.getElementById('cw-songname-title');
+                    var cSection = document.getElementById('cw-songname-section');
+                    var cNext = document.getElementById('cw-songname-next');
+                    var cNameFallback = document.getElementById('cw-content-songname');
+                    var songName = (activeIdx >= 0) ? displayList[activeIdx].name : '\u2014';
+                    var subName = activeSub ? activeSub.sectionName : '';
+                    var nextSong = findNextValidSong(activeIdx);
+                    var nextName = nextSong ? nextSong.name : '(End)';
+                    if (cTitle) cTitle.innerText = songName;
+                    if (cSection) cSection.innerText = subName;
+                    if (cNext) cNext.innerText = 'Next\u2192 ' + nextName;
+                    if (cNameFallback && !cTitle) cNameFallback.innerText = songName;
+                    // Play button sync
+                    var cwPlay = document.getElementById('cw-play-btn');
+                    if (cwPlay) cwPlay.innerHTML = isPlaying ? '&#9646;&#9646; PAUSE' : '&#9654; PLAY';
+                }
+            } else {
+                // No active region
+                if (liveViewOpen) {
+                    document.getElementById("live-song-name").innerText = "—";
+                    document.getElementById("live-sub-region").innerText = "";
+                    document.getElementById("live-next-name").innerText = "—";
+                    document.getElementById("live-progress-fill").style.width = "0%";
+                    document.getElementById("live-time-rem").innerText = "—";
+                }
+                // Canvas mode sync — no active region
+                if (typeof canvasOpen !== "undefined" && canvasOpen) {
+                    var cTitle = document.getElementById('cw-songname-title');
+                    var cSection = document.getElementById('cw-songname-section');
+                    var cNext = document.getElementById('cw-songname-next');
+                    if (cTitle) cTitle.innerText = '\u2014';
+                    if (cSection) cSection.innerText = '';
+                    if (cNext) cNext.innerText = 'Next\u2192 \u2014';
+                    var cwPlay = document.getElementById('cw-play-btn');
+                    if (cwPlay) cwPlay.innerHTML = isPlaying ? '&#9646;&#9646; PAUSE' : '&#9654; PLAY';
+                }
+            }
+        }
+
+        // --- 9. CANVAS MODE ---
+        var canvasOpen = false;
+        var canvasEditMode = false;
+        var activeWidget = null;
+        var initialX, initialY, currentX, currentY;
+
+        function openCanvasMode() {
+            canvasOpen = true;
+            document.getElementById("canvas-mode").classList.add("open");
+            var tabBtn = document.getElementById('tab-btn-canvas'); if (tabBtn) tabBtn.classList.add('active');
+            updatePlaybackUI();
+        }
+
+        function closeCanvasMode() {
+            canvasOpen = false;
+            document.getElementById("canvas-mode").classList.remove("open");
+            var tabBtn = document.getElementById('tab-btn-canvas'); if (tabBtn) tabBtn.classList.remove('active');
+            toggleCanvasEdit(false);
+        }
+
+        function toggleCanvasEdit(forceState) {
+            canvasEditMode = (typeof forceState === 'boolean') ? forceState : !canvasEditMode;
+            document.getElementById("canvas-mode").classList.toggle("edit-mode", canvasEditMode);
+            var editBtn = document.getElementById("canvas-edit-btn");
+            if (editBtn) {
+                if (canvasEditMode) {
+                    editBtn.innerText = 'Done';
+                    editBtn.style.background = '#fff';
+                    editBtn.style.color = '#000';
+                } else {
+                    editBtn.innerText = 'Edit Canvas';
+                    editBtn.style.background = '';
+                    editBtn.style.color = '';
+                }
+            }
+
+            var widgets = document.querySelectorAll('.canvas-widget');
+            for (var wi = 0; wi < widgets.length; wi++) {
+                var widget = widgets[wi];
+                if (canvasEditMode) {
+                    widget.addEventListener('touchstart', dragStart, { passive: false });
+                    widget.addEventListener('mousedown', dragStart);
+                } else {
+                    widget.removeEventListener('touchstart', dragStart);
+                    widget.removeEventListener('mousedown', dragStart);
+                }
+            }
+        }
+
+        function dragStart(e) {
+            if (!canvasEditMode) return;
+            // Don't start drag if clicking a toolbar control
+            if (e.target.closest('.cw-toolbar')) return;
+            e.preventDefault();
+
+            activeWidget = e.target.closest('.canvas-widget');
+            if (!activeWidget) return;
+
+            if (e.type === "touchstart") {
+                initialX = e.touches[0].clientX - activeWidget.getBoundingClientRect().left;
+                initialY = e.touches[0].clientY - activeWidget.getBoundingClientRect().top;
+                document.addEventListener('touchmove', drag, { passive: false });
+                document.addEventListener('touchend', dragEnd);
+            } else {
+                initialX = e.clientX - activeWidget.getBoundingClientRect().left;
+                initialY = e.clientY - activeWidget.getBoundingClientRect().top;
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', dragEnd);
+            }
+            activeWidget.style.cursor = 'grabbing';
+        }
+
+        function drag(e) {
+            if (!activeWidget) return;
+            e.preventDefault(); // Prevent scrolling on touch devices
+
+            if (e.type === "touchmove") {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+
+            activeWidget.style.left = currentX + 'px';
+            activeWidget.style.top = currentY + 'px';
+        }
+
+        function dragEnd() {
+            if (!activeWidget) return;
+
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', dragEnd);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', dragEnd);
+
+            activeWidget.style.cursor = 'grab';
+            activeWidget = null;
+            saveCanvasPrefs(); // Persist widget positions
+        }
+
+        function playRegion(start, id) {
+            var queueMode = document.getElementById('queueModeToggle').checked;
+            if (!isPlaying || !queueMode) {
+                wwr_req("SET/POS/" + start); wwr_req(1007); queuedRegion = null;
+                var all = document.querySelectorAll('.queued');
+                for (var i = 0; i < all.length; i++) all[i].classList.remove('queued');
+            } else {
+                queuedRegion = null;
+                var isSub = false;
+                for (var j = 0; j < displayList.length; j++) {
+                    if (displayList[j].id == id) { queuedRegion = displayList[j]; break; }
+                }
+                if (!queuedRegion) {
+                    for (var prop in g_subRegionMap) {
+                        for (var xs = 0; xs < g_subRegionMap[prop].length; xs++) {
+                            if (g_subRegionMap[prop][xs].id == id) {
+                                queuedRegion = g_subRegionMap[prop][xs];
+                                isSub = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                var all2 = document.querySelectorAll('.queued');
+                for (var k = 0; k < all2.length; k++) all2[k].classList.remove('queued');
+                var rowId = isSub ? "subrow-" + id : "row-" + id;
+                var row = document.getElementById(rowId);
+                if (row) row.classList.add('queued');
+            }
+        }
+        function triggerMidi() {
+            if (!document.getElementById('initSongMidiToggle').checked) return;
+            wwr_req(1007); setTimeout(function () { wwr_req(1016); }, 100);
+        }
+        function cueRegion(start, id) { wwr_req(1016); wwr_req("SET/POS/" + start); flashRow(id); triggerMidi(); }
+        function smartStop() {
+            var activeIdx = -1;
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            var target = null;
+            if (activeIdx !== -1) target = displayList[activeIdx].start;
+            else if (displayList.length > 0) target = displayList[0].start;
+            wwr_req(1016); if (target !== null) setTimeout(function () { wwr_req("SET/POS/" + target); }, 150);
+        }
+        function togglePlay() {
+            if (isPlaying) { wwr_req(1008); }
+            else {
+                var activeIdx = -1;
+                for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+                if (activeIdx === -1 && displayList.length > 0) playRegion(displayList[0].start, displayList[0].id);
+                else wwr_req(1007);
+            }
+        }
+        // --- 9. SHOW TIMER ---
+        function startShowTimerTick() {
+            if (showTimerInterval) return;
+            if (!showStartTime) showStartTime = Date.now() - showAccumulatedMs;
+            showTimerInterval = setInterval(function () {
+                var elapsed = showStartTime ? Date.now() - showStartTime : showAccumulatedMs;
+                var totalSec = Math.floor(elapsed / 1000);
+                var h = Math.floor(totalSec / 3600); var m = Math.floor((totalSec % 3600) / 60); var s = totalSec % 60;
+                var str = (h > 0 ? (h + ":" + (m < 10 ? "0" : "")) : "") + m + ":" + (s < 10 ? "0" : "") + s;
+                document.getElementById("show-timer-display").innerText = str;
+                if (liveViewOpen) { var lv = document.getElementById("live-show-time"); if (lv) lv.innerText = str; }
+            }, 1000);
+        }
+        function stopShowTimerTick() { if (showTimerInterval) { clearInterval(showTimerInterval); showTimerInterval = null; } }
+        function resetShowTimer() {
+            stopShowTimerTick(); showStartTime = null; showAccumulatedMs = 0; wasPlayingLast = false;
+            document.getElementById("show-timer-display").innerText = "00:00";
+            var lv = document.getElementById("live-show-time"); if (lv) lv.innerText = "00:00";
+        }
+
+        // --- 10. LYRICS PANEL (via X-Raym Lua bridge) ---
+        function toggleLyricsPanel() {
+            lyricsVisible = !lyricsVisible;
+            var panel = document.getElementById("lyrics-panel");
+            var btn = document.getElementById("lyrics-btn");
+            if (lyricsVisible) {
+                panel.classList.add("open"); if (btn) btn.classList.add("panel-open");
+                wwr_req("GET/EXTSTATE/XR_Lyrics/text");
+            } else {
+                panel.classList.remove("open"); if (btn) btn.classList.remove("panel-open");
+            }
+            updateTopTabs();
+        }
+
+        function updateLyricsDisplay(raw) {
+            var content = document.getElementById("lyrics-content");
+            if (!content) return;
+            if (!raw || raw === "--XR-NO-TEXT--" || raw === "") {
+                content.innerHTML = '<div class="lyrics-no-data">Sin datos de letra.<br><small>Asegurate de tener el script Lua corriendo en REAPER<br>con un track llamado <b>"lyrics"</b> y notas en los items.</small></div>';
+                return;
+            }
+            // X-Raym stores newlines as literal \n sequences — split on them
+            // The Lua gsub replaces \r?\n with <br>, so raw contains literal "<br>" strings
+            var lines = raw.split("<br>");
+            var htmlLines = lines.map(function (l) {
+                return '<span>' + l.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>';
+            }).join('<br>');
+            content.innerHTML = htmlLines;
+            if (typeof canvasOpen !== "undefined" && canvasOpen && document.getElementById("cw-content-lyrics")) {
+                document.getElementById("cw-content-lyrics").innerHTML = htmlLines;
+            }
+        }
+
+        // --- 11. CHORDS PANEL (via XR_Chords extstate) ---
+        function toggleChordsPanel() {
+            chordsVisible = !chordsVisible;
+            var panel = document.getElementById("chords-panel");
+            var btn = document.getElementById("chords-btn");
+            if (chordsVisible) {
+                panel.classList.add("open"); if (btn) btn.classList.add("panel-open");
+            } else {
+                panel.classList.remove("open"); if (btn) btn.classList.remove("panel-open");
+            }
+            updateTopTabs();
+        }
+
+        function updateChordsDisplay(raw) {
+            var disp = document.getElementById("chord-display");
+            if (!disp) return;
+            if (!raw || raw === "--XR-NO-TEXT--" || raw === "") {
+                disp.innerText = "♪";
+                document.getElementById("chord-label").innerText = "Enable the Lua chords script in REAPER";
+                if (typeof canvasOpen !== "undefined" && canvasOpen && document.getElementById("cw-content-chords")) {
+                    document.getElementById("cw-content-chords").innerText = "♪";
+                }
+                return;
+            }
+            // Lua returns \r?\n as <br>
+            // JS split them with \t because REAPER separates by \t in wwr_req text. 
+            // Normalize them to spaces.
+            var chords = raw.replace(/<br>/gi, " ").replace(/\t/g, " ").trim();
+            // Show just the first chord for now as the "current" one
+            var parts = chords.split(/[|, -]+/);
+            var first = (parts[0] || chords).trim();
+            disp.innerText = first || "♪";
+            document.getElementById("chord-label").innerText = "Chords: " + chords;
+            if (typeof canvasOpen !== "undefined" && canvasOpen && document.getElementById("cw-content-chords")) {
+                document.getElementById("cw-content-chords").innerText = first || "♪";
+            }
+        }
+
+        // --- 12. THEME SELECTOR ---
+        function setTheme(theme, silent) {
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem("reasetlist_theme", theme);
+            var dots = document.querySelectorAll(".theme-dot");
+            for (var i = 0; i < dots.length; i++) {
+                if (dots[i].getAttribute("data-theme") === theme) dots[i].classList.add("active");
+                else dots[i].classList.remove("active");
+            }
+        }
+
+        // --- SIDEBAR ---
+        function openSidebar() {
+            document.getElementById("sidebar").classList.add("open");
+            document.getElementById("sidebar-overlay").classList.add("open");
+        }
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("open");
+            document.getElementById("sidebar-overlay").classList.remove("open");
+        }
+
+        // --- LYRICS FONT PREFS ---
+        function applyLyricsFont(btn) {
+            var font = btn.getAttribute("data-font");
+            document.getElementById("lyrics-content").style.fontFamily = font;
+            localStorage.setItem("lyrics_font", font);
+            var btns = document.querySelectorAll(".font-btn");
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove("active");
+            btn.classList.add("active");
+        }
+        function applyLyricsSize(val) {
+            val = parseInt(val);
+            document.getElementById("lyrics-content").style.fontSize = val + "px";
+            localStorage.setItem("lyrics_size", val);
+            var lbl = document.getElementById("font-size-label");
+            if (lbl) lbl.innerText = val + "px";
+            var slider = document.getElementById("font-size-slider");
+            if (slider) slider.value = val;
+        }
+        function initLyricsPrefs() {
+            var savedFont = localStorage.getItem("lyrics_font");
+            var savedSize = parseInt(localStorage.getItem("lyrics_size")) || 36;
+            if (savedFont) {
+                document.getElementById("lyrics-content").style.fontFamily = savedFont;
+                // Mark matching button as active
+                var btns = document.querySelectorAll(".font-btn");
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].classList.remove("active");
+                    if (btns[i].getAttribute("data-font") === savedFont) btns[i].classList.add("active");
+                }
+            }
+            applyLyricsSize(savedSize);
+        }
+        initLyricsPrefs();
+
+        // --- 13. GRID VIEW TOGGLE ---
+        function setGridView(enabled) {
+            isGridView = !!enabled;
+            var sl = document.getElementById("setlist");
+            var toggle = document.getElementById("gridViewToggle");
+            if (isGridView) { sl.classList.add("grid-mode"); }
+            else { sl.classList.remove("grid-mode"); }
+            if (toggle) toggle.checked = isGridView;
+            lastRenderChecksum = ""; renderSetlist(); updatePlaybackUI();
+        }
+        function toggleGridView() {
+            setGridView(!isGridView);
+        }
+
+        // F14: Update top tab active state
+        function showMainView() {
+            // Close any open panels/overlays and return to main show view
+            if (lyricsVisible) toggleLyricsPanel();
+            if (chordsVisible) toggleChordsPanel();
+            // Live View and Canvas are fullscreen modals — they have their own close buttons
+            updateTopTabs();
+        }
+
+        function updateTopTabs() {
+            var lyricsOpen = document.getElementById('lyrics-panel').classList.contains('open');
+            var chordsOpen = document.getElementById('chords-panel').classList.contains('open');
+            var noneOpen = !lyricsOpen && !chordsOpen && !liveViewOpen && !canvasOpen;
+            var showBtn = document.getElementById('tab-btn-show');
+            var lbtn = document.getElementById('tab-btn-lyrics');
+            var cbtn = document.getElementById('tab-btn-chords');
+            if (showBtn) showBtn.classList.toggle('active', noneOpen);
+            if (lbtn) lbtn.classList.toggle('active', lyricsOpen);
+            if (cbtn) cbtn.classList.toggle('active', chordsOpen);
+        }
+
+        // F11: Chords font/size/color prefs
+        function applyChordsFont(btn) {
+            var font = btn.getAttribute('data-font');
+            document.getElementById('chord-display').style.fontFamily = font;
+            var cwCh = document.getElementById('cw-content-chords'); if (cwCh) cwCh.style.fontFamily = font;
+            localStorage.setItem('reaset_chords_font', font);
+            var btns = document.querySelectorAll('#chords-font-options .font-btn');
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+            btn.classList.add('active');
+        }
+        function applyChordsSize(val) {
+            val = parseInt(val);
+            document.getElementById('chord-display').style.fontSize = val + 'px';
+            var cwCh = document.getElementById('cw-content-chords'); if (cwCh) cwCh.style.fontSize = val + 'px';
+            localStorage.setItem('reaset_chords_size', val);
+            var lbl = document.getElementById('chords-size-label'); if (lbl) lbl.innerText = val + 'px';
+            var slider = document.getElementById('chords-size-slider'); if (slider) slider.value = val;
+        }
+        function applyChordsColor(color) {
+            document.getElementById('chord-display').style.color = color;
+            var cwCh = document.getElementById('cw-content-chords'); if (cwCh) cwCh.style.color = color;
+            localStorage.setItem('reaset_chords_color', color);
+            var dots = document.querySelectorAll('#chords-color-selector .theme-dot');
+            for (var i = 0; i < dots.length; i++) { dots[i].classList.toggle('active', dots[i].style.backgroundColor === color || dots[i].title.toLowerCase() === color.toLowerCase()); }
+        }
+        function initChordsPrefs() {
+            var sf = localStorage.getItem('reaset_chords_font');
+            var ss = parseInt(localStorage.getItem('reaset_chords_size')) || 110;
+            var sc = localStorage.getItem('reaset_chords_color');
+            if (sf) {
+                document.getElementById('chord-display').style.fontFamily = sf;
+                var cwCh = document.getElementById('cw-content-chords'); if (cwCh) cwCh.style.fontFamily = sf;
+                var btns = document.querySelectorAll('#chords-font-options .font-btn');
+                for (var i = 0; i < btns.length; i++) { btns[i].classList.toggle('active', btns[i].getAttribute('data-font') === sf); }
+            }
+            applyChordsSize(ss);
+            if (sc) { applyChordsColor(sc); }
+        }
+        initChordsPrefs();
+
+        // F9: Export/Import all app data to/from JSON
+        function exportAllData() {
+            var allData = {};
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                allData[key] = localStorage.getItem(key);
+            }
+            var dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(allData, null, 2));
+            var a = document.createElement('a');
+            a.setAttribute('href', dataStr);
+            a.setAttribute('download', 'reaset_backup_' + new Date().toISOString().slice(0, 10) + '.json');
+            document.body.appendChild(a); a.click(); a.remove();
+        }
+        function importAllData(input) {
+            var file = input.files[0]; if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    var data = JSON.parse(e.target.result);
+                    for (var key in data) { if (data.hasOwnProperty(key)) localStorage.setItem(key, data[key]); }
+                    alert('Settings imported. The app will reload.');
+                    location.reload();
+                } catch (err) { alert('Error reading JSON file.'); }
+            };
+            reader.readAsText(file); input.value = '';
+        }
+
+        // F12: Canvas navigation helper
+        function canvasNav(dir) {
+            var activeIdx = -1;
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            var target = null;
+            if (dir === 'next') { target = findNextValidSong(activeIdx); }
+            else if (dir === 'prev') {
+                if (activeIdx !== -1 && currentPos - displayList[activeIdx].start > 2) target = displayList[activeIdx];
+                else target = findPrevValidSong(activeIdx);
+            }
+            if (target) cueRegion(target.start, target.id);
+        }
+
+        // F12: Canvas Stop hold (3s)
+        var _stopHoldTimer = null;
+        function startStopHold() {
+            _stopHoldTimer = setTimeout(function () { smartStop(); _stopHoldTimer = null; }, 3000);
+        }
+        function cancelStopHold() {
+            if (_stopHoldTimer) { clearTimeout(_stopHoldTimer); _stopHoldTimer = null; }
+        }
+
+        // F12: Canvas widget font size adjuster
+        var _cwFontMap = {}; // { elementId: currentPx }
+        function cwFontSize(id, delta) {
+            var el = document.getElementById(id); if (!el) return;
+            var cs = window.getComputedStyle(el).fontSize;
+            var cur = parseFloat(cs) || 48;
+            if (!_cwFontMap[id]) _cwFontMap[id] = cur;
+            _cwFontMap[id] = Math.max(10, _cwFontMap[id] + delta);
+            el.style.fontSize = _cwFontMap[id] + 'px';
+            saveCanvasPrefs();
+        }
+        function cwApplyFont(id, val) {
+            var el = document.getElementById(id); if (!el) return;
+            el.style.fontFamily = val;
+            saveCanvasPrefs();
+        }
+        function cwApplyColor(id, val) {
+            var el = document.getElementById(id); if (!el) return;
+            el.style.color = val;
+            saveCanvasPrefs();
+        }
+
+        // Stop button Tap/Hold toggle
+        var _stopMode = localStorage.getItem('reaset_stop_mode') || 'hold'; // 'hold' | 'tap'
+        function toggleStopMode() {
+            _stopMode = (_stopMode === 'hold') ? 'tap' : 'hold';
+            localStorage.setItem('reaset_stop_mode', _stopMode);
+            var btn = document.getElementById('cw-stop-mode-btn');
+            var stopBtn = document.getElementById('cw-stop-btn');
+            if (btn) btn.innerText = 'Mode: ' + (_stopMode === 'hold' ? 'Hold' : 'Tap');
+            if (stopBtn) stopBtn.innerText = (_stopMode === 'hold') ? 'STOP (Hold)' : 'STOP';
+        }
+        function handleStopPress() {
+            if (_stopMode === 'tap') { smartStop(); return; }
+            var stopBtn = document.getElementById('cw-stop-btn');
+            if (stopBtn) {
+                // Force animation restart in case it was recently removed
+                stopBtn.classList.remove('stop-holding');
+                void stopBtn.offsetWidth; // trigger reflow to restart animation
+                stopBtn.classList.add('stop-holding');
+            }
+            _stopHoldTimer = setTimeout(function () {
+                _stopHoldTimer = null;
+                var sb = document.getElementById('cw-stop-btn');
+                if (sb) sb.classList.remove('stop-holding');
+                smartStop();
+            }, 3000);
+        }
+        function handleStopRelease() {
+            if (_stopMode === 'tap') return;
+            var stopBtn = document.getElementById('cw-stop-btn');
+            if (stopBtn) stopBtn.classList.remove('stop-holding');
+            cancelStopHold();
+        }
+        // Initialise stop mode UI
+        (function initStopMode() {
+            var btn = document.getElementById('cw-stop-mode-btn');
+            var stopBtn = document.getElementById('cw-stop-btn');
+            if (btn) btn.innerText = 'Mode: ' + (_stopMode === 'hold' ? 'Hold' : 'Tap');
+            if (stopBtn) stopBtn.innerText = (_stopMode === 'hold') ? 'STOP (Hold)' : 'STOP';
+            // Sync sidebar toggle
+            var sidebarToggle = document.getElementById('stopHoldToggle');
+            if (sidebarToggle) sidebarToggle.checked = (_stopMode === 'hold');
+        })();
+
+        // Unified setStopMode — called by sidebar toggle & canvas toggle
+        function setStopMode(mode) {
+            _stopMode = mode;
+            localStorage.setItem('reaset_stop_mode', _stopMode);
+            // Sync canvas widget
+            var cwBtn = document.getElementById('cw-stop-mode-btn');
+            var cwStop = document.getElementById('cw-stop-btn');
+            if (cwBtn) cwBtn.innerText = 'Mode: ' + (_stopMode === 'hold' ? 'Hold' : 'Tap');
+            if (cwStop) cwStop.innerText = (_stopMode === 'hold') ? 'STOP (Hold)' : 'STOP';
+            // Sync sidebar checkbox
+            var sidebarToggle = document.getElementById('stopHoldToggle');
+            if (sidebarToggle) sidebarToggle.checked = (_stopMode === 'hold');
+        }
+
+        // Main bottom-bar Stop button Tap/Hold handlers
+        var _mainStopTimer = null;
+        function handleMainStopPress() {
+            if (_stopMode === 'tap') { smartStop(); return; }
+            var btn = document.getElementById('main-stop-btn');
+            if (btn) {
+                btn.classList.remove('stop-holding');
+                void btn.offsetWidth; // reflow to restart animation
+                btn.classList.add('stop-holding');
+            }
+            _mainStopTimer = setTimeout(function () {
+                _mainStopTimer = null;
+                var b = document.getElementById('main-stop-btn');
+                if (b) b.classList.remove('stop-holding');
+                smartStop();
+            }, 3000);
+        }
+        function handleMainStopRelease() {
+            if (_stopMode === 'tap') return;
+            if (_mainStopTimer) { clearTimeout(_mainStopTimer); _mainStopTimer = null; }
+            var btn = document.getElementById('main-stop-btn');
+            if (btn) btn.classList.remove('stop-holding');
+        }
+
+        // Canvas widget prefs persistence
+        function saveCanvasPrefs() {
+            var prefs = {};
+            var ids = ['cw-songname-title', 'cw-songname-section', 'cw-songname-next', 'cw-content-lyrics', 'cw-content-chords'];
+            ids.forEach(function (id) {
+                var el = document.getElementById(id); if (!el) return;
+                prefs[id] = { fontSize: el.style.fontSize, fontFamily: el.style.fontFamily, color: el.style.color };
+            });
+            // Widget positions
+            var widgets = ['cw-songname', 'cw-lyrics', 'cw-chords', 'cw-transport'];
+            widgets.forEach(function (id) {
+                var el = document.getElementById(id); if (!el) return;
+                prefs[id + '_pos'] = { left: el.style.left, top: el.style.top, width: el.style.width, height: el.style.height };
+            });
+            localStorage.setItem('reaset_canvas_prefs', JSON.stringify(prefs));
+        }
+        function loadCanvasPrefs() {
+            var raw = localStorage.getItem('reaset_canvas_prefs'); if (!raw) return;
+            try {
+                var prefs = JSON.parse(raw);
+                var ids = ['cw-songname-title', 'cw-songname-section', 'cw-songname-next', 'cw-content-lyrics', 'cw-content-chords'];
+                ids.forEach(function (id) {
+                    if (!prefs[id]) return;
+                    var el = document.getElementById(id); if (!el) return;
+                    if (prefs[id].fontSize) el.style.fontSize = prefs[id].fontSize;
+                    if (prefs[id].fontFamily) el.style.fontFamily = prefs[id].fontFamily;
+                    if (prefs[id].color) el.style.color = prefs[id].color;
+                });
+                // Widget positions
+                var widgets = ['cw-songname', 'cw-lyrics', 'cw-chords', 'cw-transport'];
+                widgets.forEach(function (id) {
+                    if (!prefs[id + '_pos']) return;
+                    var el = document.getElementById(id); if (!el) return;
+                    var p = prefs[id + '_pos'];
+                    if (p.left) el.style.left = p.left;
+                    if (p.top) el.style.top = p.top;
+                    if (p.width) el.style.width = p.width;
+                    if (p.height) el.style.height = p.height;
+                });
+                // Sync color inputs
+                var lyricsColor = prefs['cw-content-lyrics'] && prefs['cw-content-lyrics'].color;
+                var chordsColor = prefs['cw-content-chords'] && prefs['cw-content-chords'].color;
+                if (lyricsColor) { var lci = document.querySelector('#cw-lyrics .cw-color-input'); if (lci) lci.value = rgbToHex(lyricsColor); }
+                if (chordsColor) { var cci = document.querySelector('#cw-chords .cw-color-input'); if (cci) cci.value = rgbToHex(chordsColor); }
+            } catch (e) { }
+        }
+        function rgbToHex(color) {
+            if (color && color[0] === '#') return color;
+            var m = color.match(/\d+/g); if (!m || m.length < 3) return '#ffffff';
+            return '#' + [m[0], m[1], m[2]].map(function (v) { return ('0' + parseInt(v).toString(16)).slice(-2); }).join('');
+        }
+        loadCanvasPrefs();
+
+        // --- 14. LIVE VIEW ---
+        function openLiveView() {
+            liveViewOpen = true;
+            document.getElementById("live-view").classList.add("open");
+            document.getElementById("live-setlist-name").innerText = currentSetlistName;
+            var tl = document.getElementById('tab-btn-live'); if (tl) tl.classList.add('active');
+            updatePlaybackUI();
+        }
+        function closeLiveView() {
+            liveViewOpen = false;
+            document.getElementById("live-view").classList.remove("open");
+            var tl = document.getElementById('tab-btn-live'); if (tl) tl.classList.remove('active');
+            updateTopTabs();
+        }
+        function updateLiveView(activeRegion, activeIdx, pct) {
+            document.getElementById("live-song-name").style.fontSize = Math.round(78 * liveFontScale) + "px";
+            document.getElementById("live-song-name").innerText = activeRegion.name;
+            // Sub-region in live view
+            var subs = g_subRegionMap[activeRegion.name];
+            var activeSub = "";
+            if (subs) { for (var s = 0; s < subs.length; s++) { if (currentPos >= subs[s].start && currentPos < subs[s].end) { activeSub = subs[s].sectionName; break; } } }
+            document.getElementById("live-sub-region").innerText = activeSub;
+            // Progress
+            document.getElementById("live-progress-fill").style.width = pct + "%";
+            var rem = activeRegion.end - currentPos; if (rem < 0) rem = 0;
+            document.getElementById("live-time-rem").innerText = "-" + formatTime(rem);
+            // Next song
+            var nxt = findNextValidSong(activeIdx);
+            document.getElementById("live-next-name").innerText = nxt ? nxt.name : "(end of setlist)";
+            // Play btn
+            var lp = document.getElementById("live-play-btn");
+            if (lp) lp.innerHTML = isPlaying ? "&#9646;&#9646; PAUSE" : "&#9654; PLAY";
+            // Loop btn
+            var ll = document.getElementById("live-loop-btn");
+            if (ll) { if (activeRegion.loop) ll.classList.add("active"); else ll.classList.remove("active"); }
+        }
+        function liveNav(dir) {
+            var activeIdx = -1;
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            var target = null;
+            if (dir === "next") { target = findNextValidSong(activeIdx); }
+            else if (dir === "prev") {
+                if (activeIdx !== -1 && currentPos - displayList[activeIdx].start > 2) { target = displayList[activeIdx]; }
+                else { target = findPrevValidSong(activeIdx); }
+            }
+            if (target) cueRegion(target.start, target.id);
+        }
+        function adjustLiveSize(delta) {
+            liveFontScale = Math.max(0.4, Math.min(2.0, liveFontScale + delta * 0.15));
+            var sn = document.getElementById("live-song-name");
+            if (sn) sn.style.fontSize = Math.round(78 * liveFontScale) + "px";
+        }
+
+        // --- 15. FILE I/O ---
+        function updateSetlistDropdown() {
+            var sel = document.getElementById("setlistSelect"); sel.innerHTML = "";
+            for (var name in setlists) {
+                if (setlists.hasOwnProperty(name)) {
+                    var opt = document.createElement("option"); opt.value = name; opt.text = name;
+                    if (name === currentSetlistName) opt.selected = true; sel.appendChild(opt);
+                }
+            }
+        }
+        function createSetlist() {
+            var name = prompt("New setlist name:");
+            if (name && !setlists[name]) {
+                setlists[name] = displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop }; });
+                currentSetlistName = name; saveCurrentState(); updateSetlistDropdown(); displayList = []; initialized = false; syncRegions();
+            }
+        }
+        // --- 3-DOT MENU ---
+        function toggleDotMenu(e) {
+            e.stopPropagation();
+            document.getElementById('dotMenuDropdown').classList.toggle('open');
+        }
+        function closeDotMenu() {
+            document.getElementById('dotMenuDropdown').classList.remove('open');
+        }
+        document.addEventListener('click', function () { closeDotMenu(); });
+
+        // --- APP MODALS ---
+        var _confirmCallback = null;
+        function showAppConfirm(title, body, onConfirm, okLabel, danger) {
+            document.getElementById('appConfirmTitle').textContent = title;
+            document.getElementById('appConfirmBody').textContent = body;
+            var okBtn = document.getElementById('appConfirmOk');
+            okBtn.textContent = okLabel || 'Confirmar';
+            okBtn.className = 'app-modal-btn ' + (danger !== false ? 'btn-danger' : 'btn-confirm');
+            _confirmCallback = onConfirm;
+            document.getElementById('appConfirmOverlay').classList.add('open');
+        }
+        function closeAppConfirm(run) {
+            document.getElementById('appConfirmOverlay').classList.remove('open');
+            if (run && _confirmCallback) _confirmCallback();
+            _confirmCallback = null;
+        }
+        function showAppAlert(body, title) {
+            document.getElementById('appAlertTitle').textContent = title || 'Notification';
+            document.getElementById('appAlertBody').textContent = body;
+            document.getElementById('appAlertOverlay').classList.add('open');
+        }
+        function closeAppAlert() {
+            document.getElementById('appAlertOverlay').classList.remove('open');
+        }
+
+        // --- SETLIST FILE I/O ---
+        function deleteSetlist() {
+            if (currentSetlistName === "Default") {
+                showAppAlert("The Default setlist cannot be deleted.");
+                return;
+            }
+            showAppConfirm(
+                "Delete Setlist",
+                "Delete '" + currentSetlistName + "'? This action cannot be undone.",
+                function () {
+                    delete setlists[currentSetlistName]; currentSetlistName = "Default";
+                    saveCurrentState(); updateSetlistDropdown(); displayList = []; initialized = false; syncRegions();
+                },
+                "Delete"
+            );
+        }
+        function changeSetlist() {
+            currentSetlistName = document.getElementById("setlistSelect").value;
+            localStorage.setItem(CURRENT_KEY, currentSetlistName); displayList = []; initialized = false; syncRegions();
+        }
+        function exportSetlists() {
+            document.getElementById('exportFilename').value = 'reaper_setlists.json';
+            document.getElementById('exportModalOverlay').classList.add('open');
+        }
+        function closeExportModal() {
+            document.getElementById('exportModalOverlay').classList.remove('open');
+        }
+        function doExportDownload() {
+            var filename = document.getElementById('exportFilename').value.trim() || 'reaper_setlists.json';
+            var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(setlists, null, 2));
+            var a = document.createElement('a'); a.setAttribute("href", data); a.setAttribute("download", filename);
+            document.body.appendChild(a); a.click(); a.remove();
+            closeExportModal();
+        }
+        function triggerImport() { document.getElementById('importInput').click(); }
+        function importSetlists(input) {
+            var file = input.files[0]; if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    var data = JSON.parse(e.target.result);
+                    if (data && typeof data === "object" && data["Default"]) {
+                        showAppConfirm(
+                            "Import Setlists",
+                            "Overwrite all local setlists with the imported file?",
+                            function () {
+                                setlists = data; if (!setlists[currentSetlistName]) currentSetlistName = "Default";
+                                localStorage.setItem(STORAGE_KEY, JSON.stringify(setlists)); localStorage.setItem(CURRENT_KEY, currentSetlistName);
+                                updateSetlistDropdown(); displayList = []; initialized = false; syncRegions();
+                                showAppAlert("Import successful.", "Done ✓");
+                            },
+                            "Import"
+                        );
+                    } else { showAppAlert("Invalid file format."); }
+                } catch (err) { showAppAlert("Error reading file."); }
+            };
+            reader.readAsText(file); input.value = '';
+        }
+
+        // --- 16. DRAG & DROP ---
+        document.addEventListener('touchmove', function (e) { if (isDragging) e.preventDefault(); }, { passive: false });
+        new Sortable(document.getElementById('setlist'), {
+            animation: 0, handle: '.drag-handle', forceFallback: true, fallbackOnBody: true,
+            delay: 250, delayOnTouchOnly: true, touchStartThreshold: 5, scroll: true, scrollSensitivity: 50,
+            ghostClass: 'sortable-ghost', fallbackClass: 'sortable-fallback',
+            onStart: function () { isDragging = true; document.body.style.overflow = 'hidden'; },
+            onEnd: function (evt) {
+                isDragging = false; document.body.style.overflow = '';
+                var items = document.querySelectorAll("#setlist .song-container");
+                var newOrder = []; var sortedDisplay = [];
+                for (var i = 0; i < items.length; i++) {
+                    var id = items[i].getAttribute("data-id");
+                    for (var k = 0; k < displayList.length; k++) {
+                        if (displayList[k].id == id) {
+                            newOrder.push({ id: id, chain: displayList[k].chain, skipped: displayList[k].skipped, loop: displayList[k].loop });
+                            sortedDisplay.push(displayList[k]); break;
+                        }
+                    }
+                }
+                setlists[currentSetlistName] = newOrder; saveCurrentState(); displayList = sortedDisplay;
+                lastRenderChecksum = JSON.stringify(displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop, name: r.name, color: r.color }; }));
+            }
+        });
+
+        // --- 17. KEYBOARD ---
+        document.addEventListener('keydown', function (event) {
+            var activeIdx = -1;
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            switch (event.code) {
+                case 'Escape':
+                    event.preventDefault();
+                    if (liveViewOpen) { closeLiveView(); return; }
+                    if (activeIdx !== -1 && displayList[activeIdx].loop) toggleLoop(displayList[activeIdx].id);
+                    break;
+                case 'Space': event.preventDefault(); togglePlay(); break;
+                case 'Enter': event.preventDefault(); smartStop(); break;
+                case 'KeyL': event.preventDefault(); toggleLyricsPanel(); break;
+                case 'KeyO':
+                    event.preventDefault();
+                    toggleCurrentLoop();
+                    break;
+                case 'KeyC': event.preventDefault(); toggleChordsPanel(); break;
+                case 'KeyG': event.preventDefault(); toggleGridView(); break;
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    if (activeIdx !== -1) { playRegion(displayList[activeIdx].start, displayList[activeIdx].id); flashRow(displayList[activeIdx].id); }
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    var tnext = (activeIdx === -1) ? (displayList.find(function (x) { return !x.skipped; }) || null) : findNextValidSong(activeIdx);
+                    if (tnext) cueRegion(tnext.start, tnext.id);
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    if (activeIdx > 0) { var tp = findPrevValidSong(activeIdx); if (tp) cueRegion(tp.start, tp.id); }
+                    break;
+                case 'ArrowDown':
+                    event.preventDefault();
+                    if (displayList.length > 0) cueRegion(displayList[0].start, displayList[0].id);
+                    break;
+            }
+        });
+
+        // --- 18. HELP ---
+        function showHelp(topic) {
+            var msgs = {
+                scroll: "Auto-Scroll keeps the active song visible.",
+                queue: "Queue ON = seamless transition.\nQueue OFF = immediate jump.",
+                stop: "Auto-Stop ON = stops at the end of the region.\n(Use Chain to override per song).",
+                hide: "Hide Skips = removes inactive songs from the view.",
+                initsongmidi: "Briefly fires play/stop at the start of each region to initialize MIDI.\nOnly works with Auto-Stop enabled."
+            };
+            alert(msgs[topic] || "");
+        }
+    </script>
+</body>
+
+</html>
