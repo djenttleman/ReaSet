@@ -1,71 +1,91 @@
-# ReaSet
-ReaSet is a REAPER web interface focused on live performance: it manages setlists, reorders songs, controls transport, and displays real-time lyrics/chords. It is based on ReaSetlistManager (suckyble) and extended with lyrics/chords integration inspired by X-Raym scripts.
+#### 🇬🇧 ENGLISH
+
+## 📌 Table of Contents (EN)
+- [💛 Support this project](#-support-this-project)
+- [1) What is ReaSet?](#1-what-is-reaset)
+- [2) Main features](#2-main-features)
+- [3) Credits and acknowledgements](#3-credits-and-acknowledgements)
+- [4) Requirements](#4-requirements)
+- [5) Installation](#5-installation)
+- [6) Usage setup](#6-usage-setup)
+- [7) Quick troubleshooting](#7-quick-troubleshooting)
+
+
+---
+
+## 💛 Support this project
+If this project helps you, you can support development here:
+
+<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
+  <img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="36" style="border:0px;height:36px;" />
+</a>
+
+
+---
 
 ## 1) What is ReaSet?
-**ReaSet** is a web interface for **REAPER**, designed as a live setlist manager.
+**ReaSet** is a web interface for **REAPER**, designed for live setlist management.
 
 Project foundation:
-- Inspired by **ReaSetlistManager** by @suckyble.
+- Inspired by **ReaSetlistManager** by `suckyble`.
 - Extended with **lyrics and chords** display based on **X-Raym** scripts/logic.
 
 Main goals:
 - Organize and run songs (regions) during live shows.
 - Control transport (play/stop/cue/next).
 - Manage multiple setlists with local persistence.
-- Display synced lyrics and chords from dedicated REAPER tracks.
+- Display synced lyrics/chords from dedicated tracks.
 
-## Support this project
-
-If this project helps you, you can support development here:
-
-<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
-<img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="36" style="border:0px;height:36px;" />
-</a>
+---
 
 ## 2) Main features
-- Setlist management (create/delete/switch).
-- Drag & drop song reordering.
-- Song states: active, queued, skipped, loop, chain.
-- On-screen transport controls.
-- JSON export/import for backups.
-- Local persistence through `localStorage`.
-- Lyrics panel and chords panel.
-- Visual customization (themes, fonts, sizes, chord color).
+- ✅ Setlist management (create/delete/switch).
+- 🔀 Drag & drop song reordering.
+- 🎯 Song states: active, queued, skipped, loop, chain.
+- ⏯️ On-screen transport controls.
+- 💾 JSON export/import.
+- 🧠 Local persistence via `localStorage`.
+- 🎤 Lyrics panel + 🎸 chords panel.
+- 🎨 Visual customization (themes/fonts/sizes/chord color).
 
-Main project file:
+Main file:
 - `ReaSet.html`
 
 Included dependencies:
 - `Sortable.min.js`
-- Lua bridge scripts for lyrics/chords in `Requirements/`
+- Lua bridge scripts under `Requirements/`
+
+---
 
 ## 3) Credits and acknowledgements
 ### Base project
-- **@suckyble / ReaSetlistManager**
-- Repository: https://github.com/suckyble/ReaSetlistManager
+- **suckyble / ReaSetlistManager**  
+- https://github.com/suckyble/ReaSetlistManager
 
-### Lyrics and chords integration (Web Interface)
-- **@X-Raym / REAPER-ReaScripts**
-- Repository: https://github.com/X-Raym/REAPER-ReaScripts/tree/master/Web%20Interfaces
-- Reference script:
-  - `Convert Lyrics track items notes for the dedicated web browser interface.lua`
+### Lyrics/chords integration
+- **X-Raym / REAPER-ReaScripts**  
+- https://github.com/X-Raym/REAPER-ReaScripts/tree/master/Web%20Interfaces
+- Reference script:  
+  `Convert Lyrics track items notes for the dedicated web browser interface.lua`
 
 ### Sorting library
 - **SortableJS** (`Sortable.min.js`)
 
 ### AI-assisted development process
-This script and integration were built/tested using an AI-assisted workflow to speed up iteration, debugging, and code testing:
+This project was iterated, debugged, and tested with:
 - **Claude (cowork)**
 - **Google (Antigravity)**
 
-Functional design, final adjustments, and real-world validation were done directly in REAPER during practical setlist testing.
+Final functional validation was performed in REAPER with real setlist usage tests.
 
-> Note: Keep and respect original licenses of reused components (e.g., GPL v3 for X-Raym scripts when applicable).
+> ⚖️ Legal note: keep and respect original licenses of reused components (e.g., GPL v3 where applicable).
+
+---
 
 ## 4) Requirements
 ### Software
-1. **REAPER** (v5+ recommended; latest version preferred).
-2. A web browser (desktop/tablet/mobile) to open the interface.
+1. **REAPER** (v5+ recommended; latest preferred).
+2. A web browser (desktop/tablet/mobile).
 3. A REAPER project with regions (typically one region per song).
 
 ### Minimum files
@@ -75,311 +95,302 @@ Functional design, final adjustments, and real-world validation were done direct
   - `X-Raym_Convert Lyrics track items notes for dedicated web browser interface.lua`
   - `X-Raym_Convert Chords track items notes for dedicated web browser interface.lua`
 
-### Track requirements (lyrics/chords)
+### Required tracks for lyrics/chords
 - Track named exactly: `lyrics`
 - Track named exactly: `chords`
 - Each item must contain text in **Item Notes**.
 
 ### Script compatibility
 Scripts use `reaper.ULT_GetMediaItemNote`.
-- If your REAPER build does not recognize that function, install the compatible scripting/API environment (e.g., Ultraschall API) or adapt note reading to an alternative method.
+- If your REAPER build does not recognize it, install a compatible scripting/API environment (e.g., Ultraschall API) or adapt note reading.
+
+---
 
 ## 5) Installation
 ### Step 1 — Copy web interface files
-Place these files in REAPER’s web interface folder (same place where `main.js` is located):
+Copy to REAPER web folder (where `main.js` is located):
 - `ReaSet.html`
 - `Sortable.min.js`
 
 #### Default paths (REAPER Resource Path)
-> If unsure, in REAPER go to: **Options > Show REAPER resource path in explorer/finder**.
+> In REAPER: **Options > Show REAPER resource path in explorer/finder**.
 
 **macOS**
 - Resource Path: `~/Library/Application Support/REAPER/`
-- Web interface root (typical): `~/Library/Application Support/REAPER/Plugins/reaper_www_root/`
-- Copy here: `ReaSet.html` and `Sortable.min.js`
+- Web root (typical): `~/Library/Application Support/REAPER/Plugins/reaper_www_root/`
 
 **Windows**
 - Resource Path: `%APPDATA%\REAPER\`
-- Web interface root (typical): `%APPDATA%\REAPER\Plugins\reaper_www_root\`
-- Copy here: `ReaSet.html` and `Sortable.min.js`
+- Web root (typical): `%APPDATA%\REAPER\Plugins\reaper_www_root\`
 
 **Linux**
 - Resource Path: `~/.config/REAPER/`
-- Web interface root (typical): `~/.config/REAPER/Plugins/reaper_www_root/`
-- Copy here: `ReaSet.html` and `Sortable.min.js`
+- Web root (typical): `~/.config/REAPER/Plugins/reaper_www_root/`
 
-> `main.js` is not included in this project: it is provided by REAPER Web Interface.
+> `main.js` is provided by REAPER Web Interface (not included in this project).
 
 ### Step 2 — Install Lua scripts
 1. Open REAPER.
 2. Go to **Actions > Show action list**.
 3. Use **ReaScript: Load...** and load both scripts from `Requirements/`.
-4. (Recommended) Move/copy scripts to REAPER script folder for persistence.
-5. (Optional) Assign shortcuts or add scripts to a toolbar.
+4. (Recommended) Copy scripts into REAPER’s scripts folder.
+5. (Optional) Assign shortcuts or add to toolbar.
 
 #### Default script paths
-**macOS:** `~/Library/Application Support/REAPER/Scripts/`  
-**Windows:** `%APPDATA%\REAPER\Scripts\`  
-**Linux:** `~/.config/REAPER/Scripts/`
+- **macOS:** `~/Library/Application Support/REAPER/Scripts/`
+- **Windows:** `%APPDATA%\REAPER\Scripts\`
+- **Linux:** `~/.config/REAPER/Scripts/`
 
-### Step 3 — Prepare your project
+### Step 3 — Prepare project
 1. Create/rename track `lyrics`.
 2. Create/rename track `chords`.
-3. Add text items in each track and write lyrics/chords into item notes.
-4. Make sure song regions are correctly defined on the timeline.
+3. Add lyrics/chords into item notes.
+4. Verify song regions in timeline.
 
 ### Step 4 — Launch interface
-1. Open REAPER and load your project.
+1. Open REAPER + project.
 2. Open web interface and load `ReaSet.html`.
-3. Run Lyrics and Chords Lua scripts to publish content to the interface.
+3. Run Lyrics and Chords Lua scripts.
+
+---
 
 ## 6) Usage setup
 ### Recommended live workflow
-1. Open project and verify regions.
+1. Verify regions.
 2. Run Lyrics/Chords scripts.
 3. Open `ReaSet.html`.
-4. Create/select a setlist.
-5. Reorder songs (drag & drop) and set status (skip/loop/chain).
-6. Test transport controls before the show.
-7. Export setlist (`.json`) as backup.
+4. Create/select setlist.
+5. Reorder songs and set states (skip/loop/chain).
+6. Test transport before showtime.
+7. Export `.json` backup.
 
 ### Persistence and backups
-- The app stores state locally in browser (`localStorage`).
-- Use **Export/Import JSON** to move/backup setlists.
-- Recommended: save dated backups before major edits.
+- Browser-local state (`localStorage`).
+- Use Export/Import JSON for backup/migration.
+- Recommended: dated backups before major edits.
 
 ### Best practices
-- Use consistent region naming (avoid ambiguous duplicates).
-- Keep a dedicated “Show-Ready” project separate from production sessions.
+- Keep consistent region naming.
+- Keep a dedicated “Show-Ready” project.
 - Test on the same device/browser used on stage.
 
+---
+
 ## 7) Quick troubleshooting
-### Lyrics are not showing
-- Verify exact track name `lyrics`.
-- Verify items contain notes.
-- Verify Lyrics script is running.
+### ❌ Lyrics not showing
+- Check exact track name `lyrics`.
+- Check item notes.
+- Check if Lyrics script is running.
 
-### Chords are not showing
-- Verify exact track name `chords`.
-- Verify item notes.
-- Verify Chords script is running.
+### ❌ Chords not showing
+- Check `chords` track.
+- Check item notes.
+- Check if Chords script is running.
 
-### `ULT_GetMediaItemNote` error
-- Missing compatible scripting/API environment; install required dependency or adapt script.
+### ❌ `ULT_GetMediaItemNote` error
+- Missing compatible scripting/API environment; install dependency or adapt script.
 
-### Interface has no data / no control
-- Check REAPER Web Interface is enabled and reachable.
-- Confirm `main.js` loads from the same directory.
+### ❌ No interface data/control
+- Verify Web Interface is enabled and reachable.
+- Verify `main.js` loads from the same folder.
 
-## 8) Suggested distribution structure
-```text
-ReaSetlist/
-├─ ReaSet.html
-├─ Sortable.min.js
-├─ Requirements/
-│  ├─ X-Raym_Convert Lyrics ... .lua
-│  └─ X-Raym_Convert Chords ... .lua
-└─ Docs/
-```
+---
 
 
+#### ESPAÑOL
+---
+## 📌 Índice (ES)
+- [💛 Apoya el proyecto](#-apoya-el-proyecto)
+- [1) ¿Qué es ReaSet?](#1-qué-es-reaset)
+- [2) Funcionalidades principales](#2-funcionalidades-principales)
+- [3) Créditos y agradecimientos](#3-créditos-y-agradecimientos)
+- [4) Requisitos](#4-requisitos)
+- [5) Instalación](#5-instalación)
+- [6) Configuración de uso](#6-configuración-de-uso)
+- [7) Solución rápida de problemas](#7-solución-rápida-de-problemas)
 
-# ReaSet — Descripción, Requisitos, Instalación y Configuración
+---
+
+## 💛 Apoya el proyecto
+Si este proyecto te sirve, puedes apoyar su desarrollo aquí:
+
+<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
+  <img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Invítame un café en Ko-fi" height="36" style="border:0px;height:36px;" />
+</a>
+
+---
 
 ## 1) ¿Qué es ReaSet?
-**ReaSet** es una interfaz web para usar dentro de **REAPER** como gestor de setlists en vivo.
+**ReaSet** es una interfaz web para **REAPER** orientada a shows en vivo y gestión de setlists.
 
 Base del proyecto:
-- Inspirado en **ReaSetlistManager** de `@suckyble`.
-- Extendido con visualización de **letras y acordes** usando la lógica/script de **@X-Raym**.
+- Inspirado en **ReaSetlistManager** de `suckyble`.
+- Extendido con visualización de **letras y acordes** usando lógica/script de **X-Raym**.
 
 Objetivo principal:
 - Ordenar y ejecutar canciones (regiones) durante un show.
 - Controlar transporte (play/stop/cue/next).
 - Administrar múltiples setlists con persistencia local.
-- Mostrar letras y acordes sincronizados desde pistas dedicadas en el proyecto.
-
-## Apoya este proyecto
-
-Si este proyecto te sirve, puedes apoyar su desarrollo aquí:
-
-<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
-<img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Invítame un café en Ko-fi" height="36" style="border:0px;height:36px;" />
-</a>
+- Mostrar letras y acordes sincronizados desde pistas dedicadas.
 
 ---
 
 ## 2) Funcionalidades principales
-- Gestión de setlists (crear/eliminar/cambiar).
-- Drag & drop para reordenar canciones.
-- Estado por canción: activa, en cola, omitida, loop, chain.
-- Controles de transporte en pantalla.
-- Exportación/importación de setlists en JSON.
-- Persistencia local vía `localStorage`.
-- Panel de letras y panel de acordes.
-- Personalización visual (temas, tipografías, tamaños y color de acordes).
+- ✅ Gestión de setlists (crear/eliminar/cambiar).
+- 🔀 Drag & drop para reordenar canciones.
+- 🎯 Estado por canción: activa, en cola, omitida, loop, chain.
+- ⏯️ Controles de transporte en pantalla.
+- 💾 Exportación/importación de setlists en JSON.
+- 🧠 Persistencia local vía `localStorage`.
+- 🎤 Panel de letras + 🎸 panel de acordes.
+- 🎨 Personalización visual (temas, tipografías, tamaños, color de acordes).
 
-Archivo principal del proyecto:
+Archivo principal:
 - `ReaSet.html`
 
-Dependencias incluidas en carpeta:
+Dependencias incluidas:
 - `Sortable.min.js`
-- Scripts Lua de puente para letras/acordes en `Requirements/`
+- Scripts Lua de puente en `Requirements/`
 
 ---
 
-## 3) Agradecimientos y créditos de código
+## 3) Créditos y agradecimientos
 ### Proyecto base
-- **suckyble / ReaSetlistManager**
-- Repositorio: https://github.com/suckyble/ReaSetlistManager
+- **suckyble / ReaSetlistManager**  
+- https://github.com/suckyble/ReaSetlistManager
 
-### Integración letras y acordes (Web Interface)
-- **X-Raym / REAPER-ReaScripts**
-- Repositorio: https://github.com/X-Raym/REAPER-ReaScripts/tree/master/Web%20Interfaces
-- Script original de referencia:
-  - `Convert Lyrics track items notes for the dedicated web browser interface.lua`
+### Integración de letras y acordes
+- **X-Raym / REAPER-ReaScripts**  
+- https://github.com/X-Raym/REAPER-ReaScripts/tree/master/Web%20Interfaces
+- Script de referencia:  
+  `Convert Lyrics track items notes for the dedicated web browser interface.lua`
 
 ### Librería de ordenamiento
 - **SortableJS** (`Sortable.min.js`)
 
 ### Proceso de desarrollo asistido por IA
-Este script y su integración se generaron/probaron en un flujo de trabajo asistido por IA para acelerar iteración, depuración y testeo de código:
+Este proyecto fue iterado, depurado y testeado con apoyo de:
 - **Claude (cowork)**
 - **Google (Antigravity)**
 
-El diseño funcional, ajustes finales y validación en entorno real se realizaron sobre REAPER con pruebas prácticas de uso en setlist.
+La validación funcional final se hizo en REAPER con pruebas reales de uso en setlist.
 
-> Nota: Mantener y respetar licencias originales de los componentes reutilizados (ej. GPL v3 en scripts de X-Raym donde aplique).
+> ⚖️ Nota legal: mantener y respetar licencias originales de los componentes reutilizados (por ejemplo, GPL v3 donde aplique).
 
 ---
 
 ## 4) Requisitos
-## Software
+### Software
 1. **REAPER** (v5+ recomendado; ideal versión reciente).
-2. Navegador web (desktop/tablet/móvil) para abrir la interfaz.
-3. Proyecto REAPER con regiones (cada canción normalmente representada por una región).
+2. Navegador web (desktop/tablet/móvil).
+3. Proyecto REAPER con regiones (normalmente una región por canción).
 
-## Archivos mínimos
+### Archivos mínimos
 - `ReaSet.html`
 - `Sortable.min.js`
 - Scripts en `Requirements/`:
   - `X-Raym_Convert Lyrics track items notes for dedicated web browser interface.lua`
   - `X-Raym_Convert Chords track items notes for dedicated web browser interface.lua`
 
-## Pistas para letras/acordes
+### Pistas requeridas para letras/acordes
 - Pista llamada exactamente: `lyrics`
 - Pista llamada exactamente: `chords`
-- Cada item debe contener el texto en **Item Notes**.
+- Cada item debe tener texto en **Item Notes**.
 
-## Compatibilidad scripting
+### Compatibilidad de scripting
 Los scripts usan `reaper.ULT_GetMediaItemNote`.
-- Si tu REAPER no reconoce esa función, instala el entorno/API compatible usado por el script (por ejemplo, Ultraschall API) o adapta la lectura de notas a un método alternativo.
+- Si tu REAPER no reconoce esa función, instala entorno/API compatible (ej. Ultraschall API) o adapta el método de lectura de notas.
 
 ---
 
 ## 5) Instalación
-## Paso 1 — Copiar interfaz web
-Coloca estos archivos en la carpeta de interfaz web de REAPER (el mismo lugar donde vive `main.js` del web control):
+### Paso 1 — Copiar interfaz web
+Copiar en la carpeta web de REAPER (donde existe `main.js`):
 - `ReaSet.html`
 - `Sortable.min.js`
 
-### Rutas por defecto (REAPER Resource Path)
-> Si no estás seguro, en REAPER abre: **Options > Show REAPER resource path in explorer/finder**.
+#### Rutas por defecto (REAPER Resource Path)
+> En REAPER: **Options > Show REAPER resource path in explorer/finder**.
 
 **macOS**
 - Resource Path: `~/Library/Application Support/REAPER/`
-- Web interface root (habitual): `~/Library/Application Support/REAPER/Plugins/reaper_www_root/`
-- Copiar aquí: `ReaSet.html` y `Sortable.min.js`
+- Web root (habitual): `~/Library/Application Support/REAPER/Plugins/reaper_www_root/`
 
 **Windows**
 - Resource Path: `%APPDATA%\REAPER\`
-- Web interface root (habitual): `%APPDATA%\REAPER\Plugins\reaper_www_root\`
-- Copiar aquí: `ReaSet.html` y `Sortable.min.js`
+- Web root (habitual): `%APPDATA%\REAPER\Plugins\reaper_www_root\`
 
 **Linux**
 - Resource Path: `~/.config/REAPER/`
-- Web interface root (habitual): `~/.config/REAPER/Plugins/reaper_www_root/`
-- Copiar aquí: `ReaSet.html` y `Sortable.min.js`
+- Web root (habitual): `~/.config/REAPER/Plugins/reaper_www_root/`
 
-> `main.js` no viene en este proyecto: lo provee REAPER Web Interface.
+> `main.js` lo provee REAPER Web Interface (no viene en este proyecto).
 
-## Paso 2 — Instalar scripts Lua
-1. Abre REAPER.
-2. Ve a **Actions > Show action list**.
-3. Usa **ReaScript: Load...** y carga ambos scripts desde `Requirements/`.
-4. (Opcional recomendado) Mueve/copia scripts a la carpeta de scripts de REAPER para mantenerlos persistentes.
-5. (Opcional recomendado) Asigna atajos o agrega los scripts a toolbar.
+### Paso 2 — Instalar scripts Lua
+1. Abrir REAPER.
+2. Ir a **Actions > Show action list**.
+3. Usar **ReaScript: Load...** y cargar ambos scripts desde `Requirements/`.
+4. (Recomendado) Copiar scripts a carpeta oficial de scripts de REAPER.
+5. (Opcional) Asignar atajos o toolbar.
 
-### Rutas por defecto para scripts
-**macOS:** `~/Library/Application Support/REAPER/Scripts/`  
-**Windows:** `%APPDATA%\REAPER\Scripts\`  
-**Linux:** `~/.config/REAPER/Scripts/`
+#### Rutas por defecto para scripts
+- **macOS:** `~/Library/Application Support/REAPER/Scripts/`
+- **Windows:** `%APPDATA%\REAPER\Scripts\`
+- **Linux:** `~/.config/REAPER/Scripts/`
 
-## Paso 3 — Preparar proyecto
-1. Crea/renombra pista `lyrics`.
-2. Crea/renombra pista `chords`.
-3. Agrega items de texto en cada pista y escribe letras/acordes en notas del item.
-4. Asegura que las canciones/regiones estén bien delimitadas en timeline.
+### Paso 3 — Preparar proyecto
+1. Crear/renombrar pista `lyrics`.
+2. Crear/renombrar pista `chords`.
+3. Escribir letras/acordes en notas de items.
+4. Verificar regiones de canciones en timeline.
 
-## Paso 4 — Abrir la interfaz
-1. Inicia REAPER y abre tu proyecto.
-2. Abre la web interface y carga `ReaSet.html`.
-3. Ejecuta los scripts Lua de **Lyrics** y **Chords** para publicar contenido hacia la interfaz.
+### Paso 4 — Abrir interfaz
+1. Abrir REAPER + proyecto.
+2. Abrir interfaz web y cargar `ReaSet.html`.
+3. Ejecutar scripts Lua de Lyrics y Chords.
 
 ---
 
 ## 6) Configuración de uso
-## Flujo recomendado (show en vivo)
-1. Abrir proyecto y verificar regiones.
-2. Ejecutar scripts de Lyrics/Chords.
+### Flujo recomendado (en vivo)
+1. Verificar regiones.
+2. Ejecutar scripts Lyrics/Chords.
 3. Abrir `ReaSet.html`.
-4. Crear o seleccionar setlist.
-5. Reordenar canciones (drag & drop) y marcar estados (skip/loop/chain).
-6. Probar transporte (play/cue/stop) antes del show.
-7. Exportar setlist (`.json`) como backup.
+4. Crear/seleccionar setlist.
+5. Reordenar canciones y definir estados (skip/loop/chain).
+6. Probar transporte antes del show.
+7. Exportar `.json` de respaldo.
 
-## Persistencia y respaldos
-- La app guarda estado local en navegador (`localStorage`).
-- Para mover o respaldar setlists, usa **Export/Import JSON**.
-- Recomendado: guardar backup por fecha antes de cambios grandes.
+### Persistencia y backups
+- Estado local en navegador (`localStorage`).
+- Respaldos/migración vía Export/Import JSON.
+- Recomendado: backup por fecha antes de cambios grandes.
 
-## Buenas prácticas
-- Usar nombres consistentes de regiones (evitar duplicados ambiguos).
-- Mantener un proyecto “Show-Ready” separado de proyecto de producción.
-- Probar en el mismo dispositivo/navegador que usarás en vivo.
+### Buenas prácticas
+- Nombres consistentes de regiones.
+- Proyecto “Show-Ready” separado del de producción.
+- Testear en el mismo dispositivo/navegador que usarás en vivo.
 
 ---
 
 ## 7) Solución rápida de problemas
-### No aparecen letras
-- Verifica pista `lyrics` (nombre exacto).
-- Verifica que los items tengan notas.
-- Verifica que el script de Lyrics esté ejecutándose.
+### ❌ No aparecen letras
+- Revisar nombre exacto de pista `lyrics`.
+- Revisar notas en items.
+- Revisar que el script de Lyrics esté activo.
 
-### No aparecen acordes
-- Verifica pista `chords` (nombre exacto).
-- Verifica notas de items.
-- Verifica que el script de Chords esté ejecutándose.
+### ❌ No aparecen acordes
+- Revisar pista `chords`.
+- Revisar notas en items.
+- Revisar script de Chords activo.
 
-### Error por función `ULT_GetMediaItemNote`
-- Falta entorno/API compatible; instala dependencia de scripting necesaria o adapta el script.
+### ❌ Error `ULT_GetMediaItemNote`
+- Falta entorno/API compatible; instalar dependencia o adaptar script.
 
-### Interfaz sin datos o sin control
-- Verifica que REAPER Web Interface esté activa y accesible.
-- Revisa que `main.js` cargue correctamente en el mismo directorio.
+### ❌ Interfaz sin datos/control
+- Verificar Web Interface habilitada y accesible.
+- Verificar carga correcta de `main.js` en la misma carpeta.
 
 ---
 
-## 8) Estructura sugerida de distribución
-```text
-ReaSetlist/
-├─ ReaSet.html
-├─ Sortable.min.js
-├─ Requirements/
-│  ├─ X-Raym_Convert Lyrics ... .lua
-│  └─ X-Raym_Convert Chords ... .lua
-└─ Docs/
-```
-
-
-
+ReaSet is a REAPER web interface focused on live performance: it manages setlists, reorders songs, controls transport, and displays real-time lyrics/chords. It is based on ReaSetlistManager (suckyble) and extended with X-Raym-inspired lyrics/chords integration.
