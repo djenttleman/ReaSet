@@ -1457,12 +1457,33 @@
         }
 
         .live-now-label {
-            font-size: 9px;
+            font-size: 15px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.2);
+            color: #FC3C44;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            margin-left: 2px;
+            animation: blink 1.2s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
         }
 
         .live-song-name {
@@ -1503,7 +1524,7 @@
         .live-progress-fill {
             height: 100%;
             width: 63%;
-            background: #fff;
+            background: #20D760;
             border-radius: 2px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
@@ -1577,7 +1598,7 @@
         }
 
         .lt-play {
-            background: rgba(255, 255, 255, 0.95);
+            background: #20D760;
             color: #12001f;
             padding: 14px 32px;
             font-size: 16px;
@@ -2650,10 +2671,10 @@
     <div id="live-view">
         <button class="chord-close-btn" onclick="closeLiveView()"
             style="position:absolute; top:30px; right:40px;">✕</button>
-        <p class="live-now-label">● <span id="live-show-time"
-                style="font-family: monospace; font-size: 15px;">00:00</span></p>
+        <p class="live-now-label">LIVE <span class="live-indicator">●</span> <span id="live-show-time"
+                style="font-family: monospace; margin-left: 6px; letter-spacing: 1px;">00:00</span></p>
+        <p class="live-setlist-name" id="live-setlist-name" style="margin-bottom: 14px;"></p>
         <h2 class="live-song-name" id="live-song-name">—</h2>
-        <p class="live-setlist-name" id="live-setlist-name"></p>
         <p class="live-region" id="live-sub-region"></p>
         <div class="live-progress-bar" id="live-progress-bar">
             <div class="live-progress-fill" id="live-progress-fill"></div>
