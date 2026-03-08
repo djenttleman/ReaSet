@@ -687,7 +687,7 @@
             height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: none;
             cursor: pointer;
             color: rgba(255, 255, 255, 0.22);
             font-size: 18px;
@@ -701,7 +701,6 @@
             transform: scale(0.92);
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .sa-btn:hover {
@@ -1559,6 +1558,22 @@
             padding: 12px 22px;
             font-size: 14px;
             box-shadow: 0 4px 16px rgba(252, 60, 68, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lt-stop::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.28);
+            width: 0%;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .lt-stop.stop-holding::before {
+            animation: stop-fill 3s linear forwards;
         }
 
         .lt-play {
@@ -1575,6 +1590,13 @@
             padding: 12px 18px;
             font-size: 14px;
             border: 1.5px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .lt-ghost.active {
+            background: rgba(191, 90, 242, 0.18);
+            color: var(--color-loop);
+            border-color: rgba(191, 90, 242, 0.4);
+            box-shadow: 0 0 16px rgba(191, 90, 242, 0.3);
         }
 
         /* ══════════════════════════════════════════════
@@ -2403,9 +2425,10 @@
         <!-- TRANSPORT FOOTER -->
         <div class="app-transport">
             <button class="t-btn t-btn-play" id="main-play-btn" onclick="togglePlay()">▶ PLAY</button>
-            <button class="t-btn t-btn-stop" id="main-stop-btn" onmousedown="handleMainStopPress()"
-                onmouseup="handleMainStopRelease()" ontouchstart="handleMainStopPress()"
-                ontouchend="handleMainStopRelease()" style="user-select:none;-webkit-user-select:none">■ STOP</button>
+            <button class="t-btn t-btn-stop" id="main-stop-btn" onmousedown="handleMainStopPress(this)"
+                onmouseup="handleMainStopRelease(this)" ontouchstart="handleMainStopPress(this)"
+                ontouchend="handleMainStopRelease(this)" style="user-select:none;-webkit-user-select:none">■
+                STOP</button>
             <button id="footer-loop-btn" class="t-btn t-btn-loop" onclick="toggleCurrentLoop()">↻ Loop</button>
             <button class="t-btn t-btn-sync" onclick="wwr_start()">SYNC</button>
         </div>
@@ -2641,10 +2664,13 @@
         </div>
         <div class="live-transport">
             <button class="lt-btn lt-ghost" onclick="liveNav('prev')">⏮</button>
-            <button class="lt-btn lt-stop" onclick="smartStop()">■ STOP</button>
+            <button class="lt-btn lt-stop" onmousedown="handleMainStopPress(this)"
+                onmouseup="handleMainStopRelease(this)" ontouchstart="handleMainStopPress(this)"
+                ontouchend="handleMainStopRelease(this)" style="user-select:none;-webkit-user-select:none">■
+                STOP</button>
             <button class="lt-btn lt-play" id="live-play-btn" onclick="togglePlay()">▶ PLAY</button>
-            <button class="lt-btn lt-ghost" onclick="liveNav('next')">⏭</button>
-            <button class="lt-btn lt-ghost" id="live-loop-btn" onclick="toggleCurrentLoop()">↻ Loop</button>
+            <button class="lt-btn lt-ghost" onclick="liveNav('next', event)">⏭</button>
+            <button class="lt-btn lt-ghost" id="live-loop-btn" onclick="toggleCurrentLoop(event)">↻ Loop</button>
         </div>
         <div class="live-size-ctrl"
             style="position:absolute; bottom:20px; right:40px; color:var(--text2); display:flex; gap:12px; font-weight:700;">
@@ -2967,7 +2993,7 @@
         });
 
         // Global state for nested sections: loop, skipped
-        var subStates = {};
+        window.subStates = window.subStates || {};
 
         // Color Mapping Palette
         var THEME_PALETTE = [
@@ -3051,9 +3077,9 @@
                             if (!subMap[parent.name]) subMap[parent.name] = [];
                             entry.sectionName = entry.name;
                             entry.parentName = parent.name;
-                            if (!subStates[entry.id]) subStates[entry.id] = { loop: false, skipped: false };
-                            entry.loop = subStates[entry.id].loop;
-                            entry.skipped = subStates[entry.id].skipped;
+                            if (!window.subStates[entry.id]) window.subStates[entry.id] = { loop: false, skipped: false };
+                            entry.loop = window.subStates[entry.id].loop;
+                            entry.skipped = window.subStates[entry.id].skipped;
 
                             subMap[parent.name].push(entry);
                             isSub = true;
@@ -3320,7 +3346,8 @@
             for (var i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { displayList[i].loop = !displayList[i].loop; break; } }
             saveCurrentState(); lastRenderChecksum = ""; syncRegions();
         }
-        function toggleCurrentLoop() {
+        function toggleCurrentLoop(e) {
+            if (e) e.stopPropagation();
             var activeIdx = -1;
             for (var i = 0; i < displayList.length; i++) {
                 var r = displayList[i];
@@ -3338,10 +3365,10 @@
             }
         }
         function toggleSubLoop(id) {
-            if (subStates[id]) { subStates[id].loop = !subStates[id].loop; lastRenderChecksum = ""; syncRegions(); }
+            if (window.subStates[id]) { window.subStates[id].loop = !window.subStates[id].loop; lastRenderChecksum = ""; syncRegions(); }
         }
         function toggleSubSkip(id) {
-            if (subStates[id]) { subStates[id].skipped = !subStates[id].skipped; lastRenderChecksum = ""; syncRegions(); }
+            if (window.subStates[id]) { window.subStates[id].skipped = !window.subStates[id].skipped; lastRenderChecksum = ""; syncRegions(); }
         }
         function toggleSkip(id) {
             for (var i = 0; i < displayList.length; i++) { if (displayList[i].id == id) { displayList[i].skipped = !displayList[i].skipped; break; } }
@@ -3377,9 +3404,19 @@
             }
             var activeRegion = (activeIdx !== -1) ? displayList[activeIdx] : null;
 
+            var isLooping = false;
+            if (activeRegion) {
+                var csubs = g_subRegionMap[activeRegion.name] || [];
+                var csub = null;
+                for (var s = 0; s < csubs.length; s++) {
+                    if (currentPos >= csubs[s].start && currentPos < csubs[s].end) { csub = csubs[s]; break; }
+                }
+                isLooping = csub ? csub.loop : activeRegion.loop;
+            }
+
             // Loop button
             var loopBtn = document.getElementById("footer-loop-btn");
-            if (activeRegion && activeRegion.loop) loopBtn.classList.add("active");
+            if (isLooping) loopBtn.classList.add("active");
             else loopBtn.classList.remove("active");
 
             // Play button text
@@ -3462,7 +3499,7 @@
                 }
 
                 // Live view update
-                if (liveViewOpen) updateLiveView(activeRegion, activeIdx, pct);
+                if (liveViewOpen) updateLiveView(activeRegion, activeIdx, pct, isLooping);
 
                 // Sub-region End-of-region logic
                 if (activeSub && isPlaying) {
@@ -4045,9 +4082,9 @@
 
         // Main bottom-bar Stop button Tap/Hold handlers
         var _mainStopTimer = null;
-        function handleMainStopPress() {
+        function handleMainStopPress(btn) {
             if (_stopMode === 'tap') { smartStop(); return; }
-            var btn = document.getElementById('main-stop-btn');
+            if (!btn) btn = document.getElementById('main-stop-btn'); // fallback
             if (btn) {
                 btn.classList.remove('stop-holding');
                 void btn.offsetWidth; // reflow to restart animation
@@ -4055,15 +4092,14 @@
             }
             _mainStopTimer = setTimeout(function () {
                 _mainStopTimer = null;
-                var b = document.getElementById('main-stop-btn');
-                if (b) b.classList.remove('stop-holding');
+                if (btn) btn.classList.remove('stop-holding');
                 smartStop();
             }, 3000);
         }
-        function handleMainStopRelease() {
+        function handleMainStopRelease(btn) {
             if (_stopMode === 'tap') return;
             if (_mainStopTimer) { clearTimeout(_mainStopTimer); _mainStopTimer = null; }
-            var btn = document.getElementById('main-stop-btn');
+            if (!btn) btn = document.getElementById('main-stop-btn'); // fallback
             if (btn) btn.classList.remove('stop-holding');
         }
 
@@ -4134,29 +4170,30 @@
             var tl = document.getElementById('tab-btn-live'); if (tl) tl.classList.remove('active');
             updateTopTabs();
         }
-        function updateLiveView(activeRegion, activeIdx, pct) {
+        function updateLiveView(activeRegion, activeIdx, pct, isLooping) {
             document.getElementById("live-song-name").style.fontSize = Math.round(78 * liveFontScale) + "px";
-            document.getElementById("live-song-name").innerText = activeRegion.name;
+            document.getElementById("live-song-name").innerText = activeRegion ? activeRegion.name : "—";
             // Sub-region in live view
-            var subs = g_subRegionMap[activeRegion.name];
+            var subs = activeRegion ? g_subRegionMap[activeRegion.name] : null;
             var activeSub = "";
             if (subs) { for (var s = 0; s < subs.length; s++) { if (currentPos >= subs[s].start && currentPos < subs[s].end) { activeSub = subs[s].sectionName; break; } } }
             document.getElementById("live-sub-region").innerText = activeSub;
             // Progress
             document.getElementById("live-progress-fill").style.width = pct + "%";
-            var rem = activeRegion.end - currentPos; if (rem < 0) rem = 0;
+            var rem = activeRegion ? (activeRegion.end - currentPos) : 0; if (rem < 0) rem = 0;
             document.getElementById("live-time-rem").innerText = "-" + formatTime(rem);
             // Next song
-            var nxt = findNextValidSong(activeIdx);
+            var nxt = activeIdx !== -1 ? findNextValidSong(activeIdx) : null;
             document.getElementById("live-next-name").innerText = nxt ? nxt.name : "(end of setlist)";
             // Play btn
             var lp = document.getElementById("live-play-btn");
             if (lp) lp.innerHTML = isPlaying ? "&#9646;&#9646; PAUSE" : "&#9654; PLAY";
             // Loop btn
             var ll = document.getElementById("live-loop-btn");
-            if (ll) { if (activeRegion.loop) ll.classList.add("active"); else ll.classList.remove("active"); }
+            if (ll) { if (isLooping) ll.classList.add("active"); else ll.classList.remove("active"); }
         }
-        function liveNav(dir) {
+        function liveNav(dir, e) {
+            if (e) e.stopPropagation();
             var activeIdx = -1;
             for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
             var target = null;
