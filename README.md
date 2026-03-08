@@ -33,11 +33,11 @@ Included dependencies:
 
 ## 3) Credits and acknowledgements
 ### Base project
-- **suckyble / ReaSetlistManager**
+- **@suckyble / ReaSetlistManager**
 - Repository: https://github.com/suckyble/ReaSetlistManager
 
 ### Lyrics and chords integration (Web Interface)
-- **X-Raym / REAPER-ReaScripts**
+- **@X-Raym / REAPER-ReaScripts**
 - Repository: https://github.com/X-Raym/REAPER-ReaScripts/tree/master/Web%20Interfaces
 - Reference script:
   - `Convert Lyrics track items notes for the dedicated web browser interface.lua`
@@ -182,8 +182,8 @@ ReaSetlist/
 **ReaSet** es una interfaz web para usar dentro de **REAPER** como gestor de setlists en vivo.
 
 Base del proyecto:
-- Inspirado en **ReaSetlistManager** de `suckyble`.
-- Extendido con visualización de **letras y acordes** usando la lógica/script de **X-Raym**.
+- Inspirado en **ReaSetlistManager** de `@suckyble`.
+- Extendido con visualización de **letras y acordes** usando la lógica/script de **@X-Raym**.
 
 Objetivo principal:
 - Ordenar y ejecutar canciones (regiones) durante un show.
