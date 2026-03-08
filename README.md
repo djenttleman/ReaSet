@@ -14,6 +14,14 @@ Main goals:
 - Manage multiple setlists with local persistence.
 - Display synced lyrics and chords from dedicated REAPER tracks.
 
+## Support this project
+
+If this project helps you, you can support development here:
+
+<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
+<img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="36" style="border:0px;height:36px;" />
+</a>
+
 ## 2) Main features
 - Setlist management (create/delete/switch).
 - Drag & drop song reordering.
@@ -190,6 +198,14 @@ Objetivo principal:
 - Controlar transporte (play/stop/cue/next).
 - Administrar múltiples setlists con persistencia local.
 - Mostrar letras y acordes sincronizados desde pistas dedicadas en el proyecto.
+
+## Apoya este proyecto
+
+Si este proyecto te sirve, puedes apoyar su desarrollo aquí:
+
+<a href="https://ko-fi.com/W7W81VLW05" target="_blank">
+<img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Invítame un café en Ko-fi" height="36" style="border:0px;height:36px;" />
+</a>
 
 ---
 
