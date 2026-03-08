@@ -5,7 +5,7 @@ ReaSet is a REAPER web interface focused on live performance: it manages setlist
 **ReaSet** is a web interface for **REAPER**, designed as a live setlist manager.
 
 Project foundation:
-- Inspired by **ReaSetlistManager** by `suckyble`.
+- Inspired by **ReaSetlistManager** by @suckyble.
 - Extended with **lyrics and chords** display based on **X-Raym** scripts/logic.
 
 Main goals:
