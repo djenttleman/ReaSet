@@ -8,795 +8,517 @@
     <script src="main.js"></script>
     <script src="Sortable.min.js"></script>
     <style>
-        /* === THEMES === */
+        /* ══════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════ */
         :root {
-            --bg: #000000;
-            --bg2: #000000;
-            --bg3: #0a0a0a;
-            --bg4: #141414;
-            --card: rgba(20, 20, 20, 0.95);
-            --card2: rgba(30, 30, 30, 0.95);
-            --text: #ffffff;
-            --text2: #bbbbbb;
-            --text3: #777777;
-            --accent: #00e676;
-            --accent2: #2196F3;
-            --accent3: #ffcf33;
-            --border: rgba(255, 255, 255, 0.2);
-            --border2: rgba(255, 255, 255, 0.1);
-            --shadow: rgba(0, 0, 0, 0.9);
+            --bg-app: #121212;
+            --bg-card: #1F1F1F;
+            --bg-elevated: #2A2A2A;
+            --bg-hover: #333333;
+            --bg-press: #000000;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-subdued: #6A6A6A;
+            --color-brand: #1ED760;
+            --color-active: #FC3C44;
+            --color-loop: #BF5AF2;
+            --color-chain: #30D158;
+            --color-live: #64D2FF;
+            --color-timer: #FF9F0A;
+            --color-skip: #FF453A;
+            --radius-pill: 9999px;
+            --radius-card: 18px;
+            --radius-sm: 8px;
+            --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', 'Roboto Mono', 'Consolas', 'Courier New', monospace;
         }
 
-        [data-theme="neon"] {
-            --bg: #050510;
-            --bg2: #0a0a20;
-            --bg3: #080818;
-            --bg4: #0d0d30;
-            --card: rgba(10, 10, 30, 0.95);
-            --card2: rgba(15, 15, 35, 0.95);
-            --text: #d0ffd0;
-            --text2: #60cc60;
-            --text3: #308030;
-            --accent: #00ffaa;
-            --accent2: #00ff88;
-            --accent3: #ffff44;
-            --border: rgba(0, 255, 128, 0.2);
-            --border2: rgba(0, 255, 128, 0.07);
-            --shadow: rgba(0, 255, 128, 0.1);
-        }
-
-        [data-theme="minimal"] {
-            --bg: #f2f2f2;
-            --bg2: #e8e8e8;
-            --bg3: #ddd;
-            --bg4: #bbb;
-            --card: rgba(255, 255, 255, 0.95);
-            --card2: rgba(245, 245, 245, 0.95);
-            --text: #111;
-            --text2: #555;
-            --text3: #888;
-            --accent: #1565C0;
-            --accent2: #2e7d32;
-            --accent3: #f57f17;
-            --border: rgba(0, 0, 0, 0.12);
-            --border2: rgba(0, 0, 0, 0.06);
-            --shadow: rgba(0, 0, 0, 0.15);
-        }
-
-        [data-theme="retro"] {
-            --bg: #1a0e00;
-            --bg2: #251500;
-            --bg3: #200f00;
-            --bg4: #3a2200;
-            --card: rgba(55, 30, 0, 0.9);
-            --card2: rgba(45, 22, 0, 0.9);
-            --text: #ffcc66;
-            --text2: #cc9933;
-            --text3: #996622;
-            --accent: #ff9900;
-            --accent2: #ffcc00;
-            --accent3: #ff6600;
-            --border: rgba(255, 153, 0, 0.2);
-            --border2: rgba(255, 153, 0, 0.07);
-            --shadow: rgba(0, 0, 0, 0.7);
-        }
-
-        /* === GLOBAL === */
-        * {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-            color: var(--text);
-            margin: 0;
-            padding-bottom: 120px;
-            user-select: none;
-            -webkit-user-select: none;
-            min-height: 100vh;
+            font-family: var(--font-ui);
+            background: var(--bg-app);
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
         }
 
-        /* === CONTROLS === */
-        .controls {
+        /* ══════════════════════════════════════════════
+   DEMO CHROME
+══════════════════════════════════════════════ */
+        .demo-header {
             position: sticky;
             top: 0;
-            z-index: 100;
-            background: var(--bg);
-            padding: 14px;
-            border-bottom: 2px solid var(--border);
+            z-index: 9000;
+            background: rgba(18, 18, 18, 0.96);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 0 28px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 8px 32px var(--shadow);
-            backdrop-filter: blur(10px);
-        }
-
-        .setlist-row {
-            display: flex;
-            gap: 6px;
-            background: rgba(42, 42, 42, 0.4);
-            padding: 10px;
-            border-radius: 12px;
             align-items: center;
-            border: 1px solid var(--border);
-            flex-wrap: wrap;
+            gap: 28px;
+            height: 52px;
         }
 
-        [data-theme="minimal"] .setlist-row {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        [data-theme="retro"] .setlist-row {
-            background: rgba(55, 30, 0, 0.5);
-        }
-
-        .setlist-select {
-            flex-grow: 1;
-            padding: 9px 12px;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            min-width: 80px;
-        }
-
-        [data-theme="minimal"] .setlist-select {
-            background: #fff;
-            color: #111;
-        }
-
-        .btn-mini {
-            padding: 9px 13px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            background: rgba(51, 51, 51, 0.8);
-            color: var(--text2);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
-            color: #fff;
-        }
-
-        .btn-del {
-            background: linear-gradient(135deg, #c62828, #f44336);
-            color: #fff;
-        }
-
-        .btn-exp {
-            background: linear-gradient(135deg, #1565C0, #2196F3);
-            color: #fff;
-        }
-
-        .btn-imp {
-            background: linear-gradient(135deg, #EF6C00, #FF9800);
-            color: #fff;
-        }
-
-        /* Theme dots */
-        .theme-selector {
+        .demo-logo {
             display: flex;
-            gap: 5px;
             align-items: center;
+            gap: 9px;
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .demo-logo-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--color-brand);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #000;
+            font-weight: 900;
+        }
+
+        .demo-badge {
+            background: rgba(252, 60, 68, 0.15);
+            border: 1px solid rgba(252, 60, 68, 0.3);
+            color: var(--color-active);
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-nav {
+            display: flex;
+            gap: 2px;
             margin-left: auto;
         }
 
-        .theme-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
+        .demo-nav a {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-subdued);
+            text-decoration: none;
+            transition: all 0.15s;
         }
 
-        .theme-dot.active {
-            border-color: var(--text);
-            transform: scale(1.2);
+        .demo-nav a:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
         }
 
-        .theme-dot[data-theme="dark"] {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-            border: 2px solid #444;
+        .page-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 52px 24px 0;
         }
 
-        .theme-dot[data-theme="neon"] {
-            background: linear-gradient(135deg, #050510, #00ffaa);
+        .page-section+.page-section {
+            padding-top: 52px;
         }
 
-        .theme-dot[data-theme="minimal"] {
-            background: linear-gradient(135deg, #f2f2f2, #1565C0);
+        .section-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-subdued);
+            margin-bottom: 6px;
         }
 
-        .theme-dot[data-theme="retro"] {
-            background: linear-gradient(135deg, #1a0e00, #ff9900);
+        .section-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
 
-        /* Hamburger button */
-        .hamburger-btn {
-            padding: 8px 12px;
-            background: rgba(51, 51, 51, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
+        .section-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        hr.divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin: 52px 24px 0;
+        }
+
+        /* ══════════════════════════════════════════════
+   SHARED: TOGGLES (new design)
+══════════════════════════════════════════════ */
+        .n-switch {
+            position: relative;
+            width: 38px;
+            height: 22px;
             flex-shrink: 0;
-            transition: all 0.2s;
         }
 
-        .hamburger-btn:active {
-            background: var(--accent);
-        }
-
-        /* Sidebar overlay */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 400;
+        .n-switch input {
             display: none;
-            backdrop-filter: blur(4px);
         }
 
-        .sidebar-overlay.open {
-            display: block;
+        .n-track {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        /* Sidebar panel */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 300px;
-            max-width: 85vw;
-            height: 100%;
-            background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
-            border-right: 1px solid var(--border);
-            z-index: 410;
+        .n-thumb {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s, background 0.2s;
+            pointer-events: none;
+        }
+
+        .n-switch input:checked+.n-track {
+            background: var(--color-brand);
+        }
+
+        .n-switch input:checked+.n-track .n-thumb {
+            transform: translateX(16px);
+            background: #fff;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-row .help-btn {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: var(--text-subdued);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ══════════════════════════════════════════════
+   1. FULL APP PREVIEW
+══════════════════════════════════════════════ */
+        .app-frame {
+            background: var(--bg-surface);
+            border-radius: 0;
+            border: none;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
-            overflow-y: auto;
-        }
-
-        #sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .sidebar-close {
-            font-size: 22px;
-            cursor: pointer;
-            color: var(--text2);
-            padding: 4px 8px;
-        }
-
-        .sidebar-section {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border2);
-        }
-
-        .sidebar-section-title {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text2);
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        /* Theme dots in sidebar */
-        .theme-selector {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .theme-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-dot.active {
-            border-color: var(--text);
-            transform: scale(1.15);
-        }
-
-        .theme-dot[data-theme="dark"] {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-            border-color: #444;
-        }
-
-        .theme-dot[data-theme="neon"] {
-            background: linear-gradient(135deg, #050510, #00ffaa);
-        }
-
-        .theme-dot[data-theme="minimal"] {
-            background: linear-gradient(135deg, #f2f2f2, #1565C0);
-        }
-
-        .theme-dot[data-theme="retro"] {
-            background: linear-gradient(135deg, #1a0e00, #ff9900);
-        }
-
-        /* Sidebar action buttons */
-        .sidebar-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            padding: 13px 16px;
-            margin-bottom: 8px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            color: #fff;
-            transition: all 0.2s;
-            text-align: left;
-        }
-
-        .sidebar-btn:active {
-            opacity: 0.85;
-            transform: scale(0.98);
-        }
-
-        .sidebar-btn .sb-icon {
-            font-size: 20px;
-            width: 28px;
-            text-align: center;
-        }
-
-        .sidebar-btn.sb-lyrics {
-            background: linear-gradient(135deg, #004D40, #00796B);
-        }
-
-        .sidebar-btn.sb-chords {
-            background: linear-gradient(135deg, #4A148C, #7B1FA2);
-        }
-
-        .sidebar-btn.sb-live {
-            background: linear-gradient(135deg, #7F0000, #D50000);
-        }
-
-        .sidebar-btn.sb-sync {
-            background: linear-gradient(135deg, #37474f, #546e7a);
-        }
-
-        .sidebar-btn.panel-open {
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) inset;
-        }
-
-        /* Font picker */
-        .font-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-        }
-
-        .font-btn {
-            padding: 7px 12px;
-            border-radius: 8px;
-            border: 1.5px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.18s;
-            flex: 1 1 auto;
-        }
-
-        .font-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .font-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-            font-weight: 700;
-        }
-
-        /* Size slider */
-        .size-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border);
-            outline: none;
-            margin: 10px 0 14px;
-            cursor: pointer;
-        }
-
-        .size-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-        }
-
-        .size-presets {
-            display: flex;
-            gap: 8px;
-        }
-
-        .size-preset {
-            flex: 1;
-            padding: 8px 0;
-            border-radius: 8px;
-            border: 1.5px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.18s;
-        }
-
-        .size-preset:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-        }
-
-        /* 3-dot menu */
-        .dotmenu-wrap {
+            height: 100dvh;
             position: relative;
         }
-        .dotmenu-btn {
-            padding: 7px 13px;
-            background: rgba(51, 51, 51, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 20px;
-            line-height: 1;
-            letter-spacing: 3px;
-            transition: all 0.2s;
-        }
-        .dotmenu-btn:hover {
-            background: var(--accent);
-            color: #fff;
-        }
-        .dotmenu-dropdown {
-            display: none;
-            position: absolute;
-            top: calc(100% + 6px);
-            right: 0;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            min-width: 155px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-            z-index: 999;
-            overflow: hidden;
-        }
-        .dotmenu-dropdown.open {
-            display: block;
-        }
-        .dotmenu-item {
+
+        /* TOP TABS */
+        .app-topbar {
+            background: rgba(22, 22, 22, 0.95);
+            backdrop-filter: blur(32px) saturate(140%);
+            -webkit-backdrop-filter: blur(32px) saturate(140%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            transition: background 0.15s;
+            align-items: stretch;
+            height: 56px;
+            flex-shrink: 0;
+            padding: 0 4px;
+        }
+
+        .app-menu-btn {
+            width: 48px;
             border: none;
             background: none;
-            width: 100%;
-            text-align: left;
-        }
-        .dotmenu-item:hover {
-            background: rgba(255, 255, 255, 0.07);
-        }
-        .dotmenu-item.item-danger:hover {
-            background: rgba(211, 47, 47, 0.18);
-            color: #ef5350;
-        }
-        .dotmenu-item .dm-icon {
-            font-size: 15px;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* App-internal modals */
-        .app-modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 9999;
+            cursor: pointer;
+            color: var(--text-subdued);
+            font-size: 22px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            margin-right: 4px;
+            transition: color 0.15s;
         }
-        .app-modal-overlay.open {
+
+        .app-menu-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .vtab {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            gap: 2px;
+            color: var(--text-subdued);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-bottom: 2px solid transparent;
+            min-width: 52px;
+            position: relative;
         }
-        .app-modal {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
-            min-width: 300px;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+
+        .vtab .vtab-icon {
+            font-size: 19px;
+            line-height: 1;
         }
-        .app-modal-title {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+
+        .vtab:hover {
+            color: var(--text-secondary);
         }
-        .app-modal-body {
+
+        .vtab.t-show {
+            color: var(--color-brand);
+            border-bottom-color: var(--color-brand);
+        }
+
+        .vtab.t-lyrics {
+            color: var(--color-chain);
+            border-bottom-color: var(--color-chain);
+        }
+
+        .vtab.t-chords {
+            color: var(--color-loop);
+            border-bottom-color: var(--color-loop);
+        }
+
+        .vtab.t-live {
+            color: var(--color-live);
+            border-bottom-color: var(--color-live);
+        }
+
+        .vtab.t-canvas {
+            color: var(--color-timer);
+            border-bottom-color: var(--color-timer);
+        }
+
+        .vtab-spacer {
+            flex: 1;
+        }
+
+        .app-topbar-info {
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 10px;
             font-size: 13px;
-            color: var(--text2);
-            margin-bottom: 20px;
-            line-height: 1.55;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
         }
-        .app-modal-actions {
+
+        .timer-chip {
+            color: var(--color-timer);
+            font-weight: 700;
+        }
+
+        /* SETLIST ROW */
+        .app-setlist-row {
             display: flex;
+            align-items: center;
             gap: 8px;
-            justify-content: flex-end;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
         }
-        .app-modal-btn {
-            padding: 9px 18px;
-            border-radius: 8px;
+
+        .n-select {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
             font-size: 13px;
+            font-weight: 600;
+            font-family: var(--font-ui);
+            outline: none;
+            min-width: 0;
+            appearance: none;
+        }
+
+        .n-btn-new {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-pill);
+            background: rgba(30, 215, 96, 0.15);
+            border: 1px solid rgba(30, 215, 96, 0.3);
+            color: var(--color-brand);
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-        }
-        .app-modal-btn.btn-cancel {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text2);
-            border: 1px solid var(--border);
-        }
-        .app-modal-btn.btn-cancel:hover { background: rgba(255, 255, 255, 0.13); }
-        .app-modal-btn.btn-confirm {
-            background: var(--accent);
-            color: #fff;
-        }
-        .app-modal-btn.btn-confirm:hover { opacity: 0.85; }
-        .app-modal-btn.btn-danger {
-            background: #c62828;
-            color: #fff;
-        }
-        .app-modal-btn.btn-danger:hover { background: #ef5350; }
-        .app-modal-input {
-            width: 100%;
-            padding: 9px 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 13px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-        }
-
-        /* View toggle */
-        .view-toggle {
-            padding: 7px 11px;
-            background: rgba(51, 51, 51, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text2);
-            cursor: pointer;
-            font-size: 17px;
-            transition: all 0.2s;
-        }
-
-        .view-toggle.active {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        /* Toggles row */
-        .toggles-row {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(37, 37, 37, 0.4);
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid var(--border2);
-            gap: 6px;
-        }
-
-        [data-theme="minimal"] .toggles-row {
-            background: rgba(0, 0, 0, 0.06);
-        }
-
-        .toggle-wrapper {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text2);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 22px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            inset: 0;
-            background: var(--bg4);
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 3px;
-            bottom: 3px;
-            background: #fff;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider {
-            background: var(--accent);
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(18px);
-        }
-
-        .help-icon {
-            display: inline-flex;
             justify-content: center;
-            align-items: center;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--bg4);
-            color: var(--text);
-            font-size: 10px;
-            cursor: pointer;
+            transition: all 0.18s;
+            flex-shrink: 0;
         }
 
-        /* Info row */
-        .info-row {
+        .n-btn-new:hover {
+            background: rgba(30, 215, 96, 0.25);
+        }
+
+        .n-dotmenu-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 17px;
+            letter-spacing: 2px;
+            cursor: pointer;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 9px 14px;
+            justify-content: center;
+            transition: all 0.18s;
+            flex-shrink: 0;
+        }
+
+        .n-dotmenu-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        /* INFO ROW */
+        .app-info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 14px;
+            padding: 7px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: rgba(255, 255, 255, 0.25);
+            flex-shrink: 0;
+        }
+
+        .info-setlist-name {
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 600;
+        }
+
+        .info-live-chip {
+            background: rgba(100, 210, 255, 0.12);
+            color: var(--color-live);
+            border: 1px solid rgba(100, 210, 255, 0.22);
+            border-radius: 20px;
+            padding: 1px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .info-spacer {
+            flex: 1;
+        }
+
+        .info-timer {
+            color: var(--color-timer);
+            font-weight: 700;
+        }
+
+        .info-timer-reset {
+            color: var(--text-subdued);
+            cursor: pointer;
             font-size: 13px;
-            color: var(--accent);
-            font-weight: bold;
-            font-family: monospace;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            gap: 6px;
-            flex-wrap: wrap;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
         }
 
-        .show-timer {
-            color: var(--accent3);
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        /* SCROLLABLE CONTENT */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 14px 12px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
         }
 
-        .timer-reset {
-            font-size: 10px;
-            padding: 2px 5px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text2);
+        .app-content::-webkit-scrollbar {
+            width: 3px;
         }
 
-        /* === SETLIST === */
-        #setlist {
-            list-style: none;
-            padding: 16px;
-            margin: 0;
-            counter-reset: song-counter;
-            touch-action: pan-y;
+        .app-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
         }
 
-        /* ═══════════ HIERARCHICAL SETLIST ═══════════ */
-
-        /* Song container handles layout spacing */
+        /* ── SONG CARDS ── */
         .song-container {
-            margin-bottom: 4px;
-            position: relative;
+            margin-bottom: 6px;
         }
 
-        /* Song row (level 1) */
         .song-row {
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
-            gap: 0;
-            padding: 0;
-            border-radius: 10px;
-            background: var(--card);
-            border: 1px solid var(--border2);
-            border-left: 6px solid #444;
-            /* Thicker left bar for status */
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: var(--radius-card);
+            min-height: 70px;
+            padding: 0 10px 0 0;
             cursor: pointer;
-            transition: background 0.15s, border-color 0.15s;
+            transition: background 0.2s, box-shadow 0.2s;
             user-select: none;
-            min-height: 64px;
-            /* Larger hit target */
-        }
-
-        .song-row:hover {
-            background: var(--card2);
-        }
-
-        .song-row.active {
-            border-left-color: var(--accent);
-            border-left-width: 8px;
-            /* Extra thick when active */
-            box-shadow: 0 0 0 1px rgba(0, 230, 118, 0.3);
-            /* NO background here — card-bg-fill handles the progress tint */
         }
 
         .song-row.expanded {
@@ -805,35 +527,37 @@
             border-bottom-color: transparent;
         }
 
+        .song-row:hover {
+            background: rgba(255, 255, 255, 0.10);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .song-row.active {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
+        }
+
         .song-row.skipped {
-            opacity: 0.38;
-            filter: grayscale(70%);
+            opacity: 0.28;
+            filter: grayscale(1);
         }
 
         .song-row.queued {
-            border-left-color: var(--accent3);
-            animation: pulse-queued 1.2s ease-in-out infinite;
+            border-color: rgba(255, 159, 10, 0.35);
         }
 
-        .section-row.queued {
-            border-left-color: var(--accent3);
-            animation: pulse-queued 1.2s ease-in-out infinite;
-        }
-
-        /* Card BG fill — progress indicator, filled left-to-right via JS */
+        /* Progress fill */
         .card-bg-fill {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
-            width: 0%;
-            background: rgba(0, 230, 118, 0.35);
-            /* Increased opacity for stage visibility */
-            /* SOLIDO (sin degradado) */
-            transition: width 0.1s linear;
+            background: rgba(30, 215, 96, 0.15);
             pointer-events: none;
             z-index: 0;
-            border-radius: 0 6px 6px 0;
+            border-radius: 0;
+            transition: width 0.3s linear;
         }
 
         .song-row>*:not(.card-bg-fill) {
@@ -843,514 +567,1195 @@
 
         /* Drag handle */
         .drag-handle {
-            font-size: 18px;
-            color: var(--text3);
-            padding: 16px 10px 16px 14px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.1);
+            padding: 22px 8px 22px 14px;
             cursor: grab;
-            touch-action: none;
-            line-height: 1;
             flex-shrink: 0;
+            transition: color 0.15s;
         }
 
-        .drag-handle:active {
-            cursor: grabbing;
-            color: var(--accent);
+        .song-row:hover .drag-handle {
+            color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Chevron expand button */
+        /* Number */
+        .song-index {
+            width: 22px;
+            text-align: right;
+            color: var(--text-subdued);
+            font-size: 11px;
+            font-family: var(--font-mono);
+            flex-shrink: 0;
+            margin-right: 4px;
+            cursor: pointer;
+        }
+
+        /* Color dot */
+        .song-color-dot {
+            display: none;
+        }
+
+        .song-row.has-mapped-color {
+            border-left: 4px solid var(--mapped-theme-color, transparent);
+        }
+
+        .song-row.has-mapped-color .card-bg-fill {
+            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
+        }
+
+        /* Chevron */
         .song-chevron {
-            width: 36px;
-            height: 36px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            color: var(--text2);
-            transition: transform 0.2s, color 0.2s;
-            border-radius: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
             flex-shrink: 0;
-            margin-left: 2px;
+            transition: all 0.18s;
+            margin: 0 2px;
         }
 
-        .song-chevron.has-sections {
-            color: var(--accent);
+        .song-chevron.has-subs {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .song-chevron.has-subs:hover {
+            background: rgba(252, 60, 68, 0.1);
+            color: var(--color-active);
         }
 
         .song-chevron.open {
             transform: rotate(90deg);
+            color: rgba(255, 255, 255, 0.55);
         }
 
-        /* Color dot for region color */
-        .song-color-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin-left: 6px;
-            background: var(--text3);
-        }
-
-        /* Song text area */
+        /* Title */
         .song-title-area {
             flex: 1;
             min-width: 0;
-            padding: 14px 8px 14px 6px;
+            padding: 14px 6px 14px 0;
         }
 
         .song-name {
-            font-weight: 700;
-            color: var(--text);
-            font-size: 1.25em;
-            /* Larger base font for stage */
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 600;
+            color: #FFFFFF;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: block;
-            transition: all 0.2s;
+            letter-spacing: 0.1px;
+            transition: color 0.15s;
         }
 
         .song-row.active .song-name {
-            color: var(--accent);
-            font-weight: 900;
-            font-size: 1.35em;
-            /* Even larger when active */
+            color: #FFFFFF;
+            font-weight: 700;
         }
 
         /* Duration */
         .song-duration {
-            font-family: monospace;
-            color: var(--text2);
-            font-size: 1.05em;
-            /* Larger duration */
-            font-weight: bold;
-            padding: 0 16px 0 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.22);
+            padding: 0 8px;
             flex-shrink: 0;
-            min-width: 60px;
+            min-width: 42px;
             text-align: right;
         }
 
-        .song-duration.live-time {
-            color: var(--accent2);
-            font-weight: 900;
-            font-size: 1.15em;
+        .song-row.active .song-duration {
+            color: var(--color-live);
         }
 
-        /* Song controls row (shown when expanded) */
-        .song-controls {
-            display: none;
-            align-items: center;
-            gap: 6px;
-            padding: 0 10px 10px 52px;
-        }
-
-        .song-row.expanded+.section-list .song-controls,
-        .song-controls.visible {
-            display: flex;
-        }
-
-        .song-controls-inner {
+        /* Action buttons */
+        .song-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .sa-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.22);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .sa-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .sa-btn.chain-on {
+            color: var(--color-chain);
+            background: rgba(48, 209, 88, 0.12);
+        }
+
+        .sa-btn.loop-on {
+            color: var(--color-loop);
+            background: rgba(191, 90, 242, 0.12);
+        }
+
+        .sa-btn.skip-on {
+            color: var(--color-active);
+            background: rgba(252, 60, 68, 0.10);
         }
 
         /* Section list */
         .section-list {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-top: none;
+            border-radius: 0 0 var(--radius-card) var(--radius-card);
+            padding: 4px 12px 8px 28px;
             display: none;
-            padding: 8px 12px 0 36px;
-            animation: slideDown 0.3s ease-out;
-            position: relative;
+            animation: slideDown 0.2s ease;
         }
 
         .section-list.open {
             display: block;
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .section-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 10px 14px;
-            /* More padding */
-            background: rgba(255, 255, 255, 0.05);
-            /* Lighter bg so it pops from pure black */
-            border-left: 4px solid var(--border);
-            /* Thicker left border */
-            margin-bottom: 8px;
-            /* More spacing */
-            border-radius: 6px;
+            min-height: 42px;
+            padding: 0 8px 0 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.15s;
             position: relative;
-            /* para el bg-fill */
             overflow: hidden;
-            z-index: 1;
-            min-height: 48px;
         }
 
-        .section-row.active {
-            background: rgba(33, 150, 243, 0.15);
-            /* Stronger active bg */
-            border-left-color: #2196F3;
+        .section-row:last-child {
+            border-bottom: none;
         }
 
         .section-row:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .section-row.active {
+            background: rgba(252, 60, 68, 0.07);
+            border-left: 2px solid rgba(252, 60, 68, 0.4);
         }
 
         .section-row-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--text2);
-            margin-right: 12px;
-            position: relative;
-            z-index: 2;
+            display: none;
+        }
+
+        .section-row.has-mapped-color {
+            border-left: 3px solid var(--mapped-theme-color, transparent);
+        }
+
+        .section-row.has-mapped-color .card-bg-fill {
+            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
         }
 
         .section-row.active .section-row-dot {
-            background: #2196F3;
-            box-shadow: 0 0 8px rgba(33, 150, 243, 0.6);
+            background: var(--color-active);
+            box-shadow: 0 0 6px rgba(252, 60, 68, 0.5);
         }
 
         .section-row-name {
-            flex-grow: 1;
-            font-size: 1.05em;
-            /* Larger size */
-            color: var(--text);
-            /* Brighter base text */
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
+            flex: 1;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.42);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .section-row.active .section-row-name {
-            color: #2196F3;
-            font-weight: 900;
-            font-size: 1.15em;
+            color: #FFFFFF;
+            font-weight: 600;
         }
 
         .section-row-dur {
-            font-family: monospace;
-            font-size: 0.95em;
-            color: var(--text2);
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-            margin-right: 14px;
-        }
-
-        /* Controles inline para sub-secciones */
-        .section-actions {
-            display: flex;
-            gap: 4px;
-            pointer-events: auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .section-actions button {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            /* Softer, larger buttons */
-            padding: 4px;
-            width: 32px;
-            height: 32px;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .section-actions .chain-btn {
-            display: none;
-            /* subregions don't have chain */
-        }
-
-        .section-actions .loop-btn.looping {
-            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
-            color: #e1bee7;
-        }
-
-        .section-actions .skip-btn.skipped {
-            background: rgba(211, 47, 47, 0.8);
-            color: #ef9a9a;
-            border-color: rgba(244, 67, 54, 0.5);
-        }
-
-        .section-actions .stop-btn {
-            color: #ef9a9a;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            flex-shrink: 0;
+            margin-right: 10px;
         }
 
         .section-row.active .section-row-dur {
-            color: var(--accent2);
+            color: rgba(252, 60, 68, 0.6);
         }
 
-        /* Controls area at bottom of expanded section */
+        .section-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .section-actions .sa-btn {
+            width: 34px;
+            height: 34px;
+            font-size: 15px;
+        }
+
+        /* Expanded controls */
         .expanded-controls {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 12px 10px 52px;
-            border-top: 1px solid var(--border2);
-            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 8px 14px 10px 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Sortable */
-        .sortable-fallback {
-            opacity: 1 !important;
-            background: var(--card);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-        }
-
-        .sortable-ghost {
-            opacity: 0.4 !important;
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 2px dashed #666 !important;
-        }
-
-        /* Action buttons shared styles */
-        .song-actions-inline {
-            display: flex;
-            gap: 4px;
-            padding-right: 12px;
-            z-index: 2;
-        }
-
-        .song-actions-inline button {
-            background: rgba(51, 51, 51, 0.5);
-            color: var(--text2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 4px;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-            display: flex;
+        .btn-play-song {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .song-actions-inline .chain-btn.linked {
-            background: rgba(46, 125, 50, 0.8);
-            color: #a5d6a7;
-            border-color: rgba(76, 175, 80, 0.5);
-        }
-
-        .song-actions-inline .loop-btn.looping {
-            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
-            color: #e1bee7;
-        }
-
-        .song-actions-inline .skip-btn.skipped {
-            background: rgba(211, 47, 47, 0.8);
-            color: #ef9a9a;
-            border-color: rgba(244, 67, 54, 0.5);
-        }
-
-        .chain-btn,
-        .skip-btn,
-        .loop-btn {
-            background: rgba(51, 51, 51, 0.5);
-            color: var(--text2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px;
-            width: 34px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .chain-btn.linked {
-            background: rgba(46, 125, 50, 0.8);
-            color: #a5d6a7;
-        }
-
-        .loop-btn.looping {
-            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
-            color: #e1bee7;
-        }
-
-        .skip-btn.skipped {
-            background: rgba(211, 47, 47, 0.8);
-            color: #ef9a9a;
-        }
-
-        .load-btn {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.18), rgba(33, 150, 243, 0.06));
-            color: #64b5f6;
-            border: 1px solid rgba(33, 150, 243, 0.4);
-            border-radius: 8px;
-            padding: 6px 14px;
+            gap: 6px;
+            background: rgba(100, 210, 255, 0.1);
+            border: 1px solid rgba(100, 210, 255, 0.25);
+            color: var(--color-live);
+            border-radius: var(--radius-pill);
+            padding: 6px 16px;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
+            font-family: var(--font-ui);
+            transition: all 0.18s;
         }
 
-        /* === GRID VIEW === */
-        #setlist.grid-mode {
+        .btn-play-song:hover {
+            background: rgba(100, 210, 255, 0.18);
+        }
+
+        /* GRID VIEW */
+        .grid-mode {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-            padding: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
+            padding: 8px 0;
         }
 
-        #setlist.grid-mode .region-item {
+        .grid-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-card);
+            padding: 14px 10px;
+            display: flex;
             flex-direction: column;
-            margin-bottom: 0;
-            padding: 12px;
-            text-align: center;
+            align-items: center;
             gap: 6px;
             cursor: pointer;
-            align-items: center;
-        }
-
-        #setlist.grid-mode .drag-handle,
-        #setlist.grid-mode .song-actions,
-        #setlist.grid-mode .sub-regions {
-            display: none;
-        }
-
-        #setlist.grid-mode .song-info {
-            width: 100%;
-        }
-
-        #setlist.grid-mode .song-header {
-            flex-direction: column;
-            gap: 4px;
             text-align: center;
-        }
-
-        #setlist.grid-mode .song-name {
-            font-size: 0.88em;
-        }
-
-        #setlist.grid-mode .song-duration {
-            min-width: unset;
-            text-align: center;
-        }
-
-        #setlist.grid-mode .region-index {
-            font-size: 22px;
-        }
-
-        /* === TRANSPORT === */
-        .transport-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(0deg, var(--bg2), var(--bg3));
-            padding: 10px;
-            padding-bottom: calc(10px + env(safe-area-inset-bottom));
-            border-top: 2px solid var(--bg4);
-            z-index: 500;
-            display: flex;
-            gap: 5px;
-            box-shadow: 0 -4px 20px var(--shadow);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-transport {
-            flex: 1;
-            padding: 20px 0;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 10px;
-            border: none;
-            color: #fff;
-            transition: all 0.2s;
-            min-width: 0;
-        }
-
-        .btn-transport:active {
-            transform: scale(0.97);
-        }
-
-        .btn-play {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            flex: 1.5;
-        }
-
-        .btn-stop {
-            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            transition: background 0.2s;
             position: relative;
             overflow: hidden;
         }
 
-        /* Hold-mode fill animation on main stop button */
-        .btn-stop::before {
+        .grid-card:hover {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .grid-card.active {
+            border-color: rgba(252, 60, 68, 0.4);
+        }
+
+        .grid-card.skipped {
+            opacity: 0.28;
+            filter: grayscale(1);
+        }
+
+        .grid-card-index {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            color: var(--text-subdued);
+        }
+
+        .grid-card-dot {
+            display: none;
+        }
+
+        .grid-card.has-mapped-color {
+            border-left: 4px solid var(--mapped-theme-color, transparent);
+        }
+
+        .grid-card.has-mapped-color .card-bg-fill {
+            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
+        }
+
+        .grid-card-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .grid-card.active .grid-card-name {
+            color: var(--color-active);
+        }
+
+        .grid-card-dur {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-subdued);
+        }
+
+        /* TRANSPORT FOOTER */
+        .app-transport {
+            background: rgba(14, 14, 14, 0.97);
+            backdrop-filter: blur(40px) saturate(140%);
+            -webkit-backdrop-filter: blur(40px) saturate(140%);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 -2px 30px rgba(0, 0, 0, 0.6);
+            padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: stretch;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Pill text buttons for transport */
+        .t-btn {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: var(--radius-pill);
+            padding: 16px 8px;
+            transition: all 0.18s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .t-btn:active {
+            transform: scale(0.96);
+            filter: brightness(0.85);
+        }
+
+        .t-btn-play {
+            background: var(--color-brand);
+            color: #000;
+            flex: 1.6;
+            box-shadow: 0 4px 18px rgba(30, 215, 96, 0.35);
+        }
+
+        .t-btn-play:hover {
+            background: #1fdf64;
+            box-shadow: 0 6px 24px rgba(30, 215, 96, 0.5);
+        }
+
+        .t-btn-stop {
+            background: var(--color-active);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(252, 60, 68, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .t-btn-stop:hover {
+            background: #ff453a;
+            box-shadow: 0 4px 22px rgba(252, 60, 68, 0.55);
+        }
+
+        /* Hold fill overlay — mismo mecanismo que la app */
+        .t-btn-stop::before {
             content: '';
             position: absolute;
             inset: 0;
             background: rgba(255, 255, 255, 0.28);
             width: 0%;
-            left: 0;
-            top: 0;
-            bottom: 0;
             border-radius: inherit;
             pointer-events: none;
         }
 
-        .btn-stop.stop-holding::before {
+        .t-btn-stop.stop-holding::before {
             animation: stop-fill 3s linear forwards;
         }
 
-        .btn-refresh {
+        @keyframes stop-fill {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .t-btn-loop {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.45);
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .t-btn-loop:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .t-btn-loop.active {
+            background: rgba(191, 90, 242, 0.18);
+            color: var(--color-loop);
+            border-color: rgba(191, 90, 242, 0.4);
+            box-shadow: 0 0 16px rgba(191, 90, 242, 0.3);
+        }
+
+        .t-btn-sync {
+            background: rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.45);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .t-btn-sync:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+        }
+
+        /* ══════════════════════════════════════════════
+   2. SIDEBAR
+══════════════════════════════════════════════ */
+        .sidebar-preview {
+            background: #111111;
+            backdrop-filter: blur(32px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 320px;
+            overflow: hidden;
+        }
+
+        .sidebar-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .sidebar-logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--color-brand);
+        }
+
+        .sidebar-close-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            border: none;
+            color: var(--text-subdued);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .sidebar-close-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+        }
+
+        .sidebar-section {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--text-subdued);
+            margin-bottom: 10px;
+        }
+
+        .sidebar-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            transition: all 0.18s;
+        }
+
+        .sidebar-action-btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-action-btn .sab-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sab-teal {
+            background: linear-gradient(135deg, #004D40, #00796B);
+        }
+
+        .sab-red {
+            background: linear-gradient(135deg, #B71C1C, #D32F2F);
+        }
+
+        .sab-slate {
             background: linear-gradient(135deg, #37474f, #546e7a);
         }
 
-        .btn-loop-transport {
-            background: linear-gradient(135deg, #424242, #616161);
-            color: #aaa;
+        .sab-orange {
+            background: linear-gradient(135deg, #BF360C, #E64A19);
         }
 
-        .btn-loop-transport.active {
-            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+        /* Font buttons */
+        .font-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .font-btn {
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            transition: all 0.15s;
+        }
+
+        .font-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+        }
+
+        .font-btn.active {
+            background: rgba(30, 215, 96, 0.15);
+            border-color: rgba(30, 215, 96, 0.35);
+            color: var(--color-brand);
+        }
+
+        /* Color dots */
+        .color-dots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .color-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+        .color-dot.active {
+            border-color: #fff;
+            transform: scale(1.15);
+        }
+
+        /* Size slider */
+        .size-slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.12);
+            appearance: none;
+            outline: none;
+            margin: 8px 0 6px;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-brand);
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(30, 215, 96, 0.4);
+        }
+
+        .size-presets {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .size-preset {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: var(--font-ui);
+        }
+
+        .size-preset:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Theme dot */
+        .theme-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .theme-dot.active {
+            border-color: #fff;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* 3-dot dropdown */
+        .dotmenu-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dotmenu-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            min-width: 160px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .dotmenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-ui);
+            transition: background 0.15s;
+        }
+
+        .dotmenu-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-primary);
+        }
+
+        .dotmenu-item.item-danger:hover {
+            background: rgba(252, 60, 68, 0.12);
+            color: var(--color-active);
+        }
+
+        .dotmenu-item .dm-icon {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ══════════════════════════════════════════════
+   3. LYRICS PANEL
+══════════════════════════════════════════════ */
+        .lyrics-panel-preview {
+            background: #111111;
+            backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-brand);
+            letter-spacing: 0.5px;
+        }
+
+        .panel-close-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            border: none;
+            color: var(--text-subdued);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lyrics-body {
+            padding: 32px 40px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.55;
+            color: var(--text-primary);
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .lyrics-next-line {
+            font-size: 18px;
+            opacity: 0.35;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* ══════════════════════════════════════════════
+   4. CHORDS PANEL
+══════════════════════════════════════════════ */
+        .chords-panel-preview {
+            background: #111111;
+            backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(191, 90, 242, 0.2);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 24px;
+            min-height: 160px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chord-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            border: none;
+            color: var(--text-subdued);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chord-display {
+            font-size: 90px;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-loop);
+            text-shadow: 0 0 40px rgba(191, 90, 242, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .chord-label {
+            font-size: 13px;
+            color: rgba(191, 90, 242, 0.6);
+            font-weight: 600;
+        }
+
+        /* ══════════════════════════════════════════════
+   5. LIVE VIEW
+══════════════════════════════════════════════ */
+        .live-view-preview {
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            overflow: hidden;
+            padding: 36px 28px;
+            text-align: center;
+        }
+
+        .live-now-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .live-song-name {
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: 8px;
+        }
+
+        .live-setlist-name {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .live-region {
+            font-size: 13px;
+            color: var(--color-live);
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .live-progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+            max-width: 420px;
+            margin: 0 auto 16px;
+        }
+
+        .live-progress-fill {
+            height: 100%;
+            width: 63%;
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .live-time {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 28px;
+        }
+
+        .song-duration.live-time {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .live-next {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 28px;
+        }
+
+        .live-next span {
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 600;
+        }
+
+        .live-transport {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Live transport uses the same pill style */
+        .lt-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            border-radius: var(--radius-pill);
+            transition: all 0.18s ease;
+        }
+
+        .lt-stop {
+            background: var(--color-active);
+            color: #fff;
+            padding: 12px 22px;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(252, 60, 68, 0.4);
+        }
+
+        .lt-play {
+            background: rgba(255, 255, 255, 0.95);
+            color: #12001f;
+            padding: 14px 32px;
+            font-size: 16px;
+            box-shadow: 0 4px 22px rgba(0, 0, 0, 0.5);
+        }
+
+        .lt-ghost {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.45);
+            padding: 12px 18px;
+            font-size: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* ══════════════════════════════════════════════
+   6. MODALS
+══════════════════════════════════════════════ */
+        .modal-preview {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 18px;
+            padding: 24px;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.55;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 9px 14px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: var(--font-ui);
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .m-btn {
+            padding: 9px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-ui);
+            transition: all 0.18s;
+        }
+
+        .m-btn-cancel {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .m-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .m-btn-confirm {
+            background: var(--color-brand);
+            color: #000;
+        }
+
+        .m-btn-confirm:hover {
+            background: #1fdf64;
+        }
+
+        .m-btn-danger {
+            background: #c62828;
             color: #fff;
         }
 
-        .btn-lyrics {
-            background: linear-gradient(135deg, #004D40, #00796B);
+        .m-btn-danger:hover {
+            background: var(--color-active);
+        }
+
+        /* ══════════════════════════════════════════════
+   DEMO PAGE LAYOUT
+══════════════════════════════════════════════ */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .comp-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-subdued);
+            margin-bottom: 10px;
+        }
+
+        .page-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 28px;
+            text-align: center;
+            color: var(--text-subdued);
             font-size: 12px;
+            margin-top: 60px;
         }
 
-        .btn-chords {
-            background: linear-gradient(135deg, #4A148C, #7B1FA2);
-            font-size: 12px;
+        @media (max-width: 700px) {
+
+            .two-col,
+            .three-col {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .btn-live {
-            background: linear-gradient(135deg, #7F0000, #D50000);
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 1px;
+        /* --- UI Bug Fixes (States & Pos) --- */
+        .dotmenu-dropdown {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .btn-lyrics.panel-open,
-        .btn-chords.panel-open {
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        .dotmenu-dropdown.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
         }
 
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            max-width: 80vw;
+            height: 100vh;
+            background: #111111;
+            backdrop-filter: blur(32px) saturate(180%);
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            z-index: 2000;
+            transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 40px;
+        }
+
+        #sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* RESTORED PANELS CSS */
         /* === LYRICS PANEL === */
         #lyrics-panel {
             position: fixed;
             inset: 0;
-            bottom: 60px;
-            background: rgba(0, 0, 8, 0.97);
+            background: #111111;
             z-index: 200;
             display: none;
             flex-direction: column;
@@ -1387,13 +1792,11 @@
 
         .lyrics-content {
             font-size: 42px;
-            /* Increased from 36px for stage */
             line-height: 1.6;
-            color: var(--text);
+            color: var(--text-primary);
             white-space: pre-wrap;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: var(--font-ui);
             font-weight: 700;
-            /* Increased to bold */
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1424,17 +1827,13 @@
         /* === CHORDS PANEL === */
         #chords-panel {
             position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 60px;
-            height: 200px;
-            background: rgba(40, 0, 60, 0.97);
+            inset: 0;
+            background: #111111;
             z-index: 210;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-top: 2px solid rgba(156, 39, 176, 0.5);
             backdrop-filter: blur(20px);
         }
 
@@ -1452,13 +1851,12 @@
         }
 
         #chord-display {
-            font-size: 100px;
-            /* Increased from 80px */
+            font-size: 15vw;
             font-weight: 900;
-            color: #ce93d8;
-            font-family: Georgia, serif;
+            color: var(--color-brand);
+            font-family: var(--font-heading);
             letter-spacing: 4px;
-            text-shadow: 0 0 30px rgba(206, 147, 216, 0.4);
+            text-shadow: 0 0 30px rgba(30, 215, 96, 0.2);
             transition: all 0.15s;
         }
 
@@ -1475,7 +1873,7 @@
             position: fixed;
             inset: 0;
             z-index: 300;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            background: #111111;
             display: none;
             flex-direction: column;
             align-items: center;
@@ -1524,8 +1922,9 @@
 
         #live-song-name {
             font-size: clamp(32px, 8vw, 78px);
+            font-family: var(--font-heading);
             font-weight: 900;
-            color: var(--text);
+            color: var(--text-primary);
             text-align: center;
             line-height: 1.1;
         }
@@ -1655,9 +2054,11 @@
         #canvas-mode {
             position: fixed;
             inset: 0;
-            background: #000;
-            z-index: 900;
+            background: #111111;
+            z-index: 400;
             display: none;
+            font-family: var(--font-ui);
+            user-select: none;
             overflow: hidden;
         }
 
@@ -1923,182 +2324,84 @@
 
         .lb-loop {
             background: linear-gradient(135deg, #424242, #616161);
-            color: #aaa;
-        }
-
-        .lb-loop.active {
-            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
-            color: #fff;
-        }
-
-        .live-size-ctrl {
-            position: absolute;
-            bottom: 80px;
-            right: 16px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .live-size-label {
-            font-size: 10px;
-            color: var(--text2);
-        }
-
-        .live-size-btn {
-            padding: 5px 10px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--text2);
-            font-size: 12px;
-        }
-
-        @keyframes pulse-queued {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: brightness(1);
-                background-color: transparent;
-            }
-
-            50% {
-                opacity: 0.75;
-                transform: scale(1.015);
-                filter: brightness(1.4);
-                background-color: rgba(255, 207, 51, 0.15);
-                /* discreto blink en BG */
-            }
-        }
-
-        @media(max-width:600px) {
-            .controls {
-                padding: 8px;
-                gap: 7px;
-            }
-
-            .toggles-row {
-                padding: 7px 4px;
-                gap: 3px;
-            }
-
-            .toggle-wrapper {
-                flex-direction: column;
-                flex: 1;
-                gap: 2px;
-                text-align: center;
-            }
-
-            .toggle-wrapper span {
-                font-size: 9px;
-                white-space: nowrap;
-            }
-
-            .switch {
-                transform: scale(0.8);
-            }
-
-            .help-icon {
-                display: none;
-            }
-
-            .region-item {
-                padding: 10px;
-                gap: 8px;
-                margin-bottom: 8px;
-            }
-
-            .drag-handle {
-                padding: 8px;
-                font-size: 20px;
-            }
-
-            .load-btn {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-
-            .btn-transport {
-                padding: 11px 0;
-                font-size: 11px;
-            }
-
-            #chord-display {
-                font-size: 54px;
-            }
-
-            .info-row {
-                font-size: 11px;
-            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- F14: Top Tabs — full-width sticky top bar -->
-    <div class="top-tabs">
-        <button class="top-tab-btn top-tab-menu" onclick="openSidebar()" title="Menu">&#9776;</button>
-        <button class="top-tab-btn active" id="tab-btn-show" onclick="showMainView()">
-            <span class="top-tab-icon">&#9654;</span> Show
-        </button>
-        <button class="top-tab-btn" id="tab-btn-lyrics" onclick="toggleLyricsPanel()">
-            <span class="top-tab-icon">&#9834;</span> Lyrics
-        </button>
-        <button class="top-tab-btn" id="tab-btn-chords" onclick="toggleChordsPanel()">
-            <span class="top-tab-icon">&#9837;</span> Chords
-        </button>
-        <button class="top-tab-btn" id="tab-btn-live" onclick="openLiveView()">
-            <span class="top-tab-icon">&#9654;</span> Live View
-        </button>
-        <button class="top-tab-btn" id="tab-btn-canvas" onclick="openCanvasMode()">
-            <span class="top-tab-icon">&#9635;</span> Canvas
-        </button>
-    </div>
+    <div class="app-frame">
+        <!-- TOP TABS -->
+        <div class="app-topbar">
+            <button class="app-menu-btn" onclick="openSidebar()" title="Menu">☰</button>
 
-    <div class="controls">
-        <div class="setlist-row">
+            <div class="vtab t-show active" id="tab-btn-show" onclick="showMainView()">
+                <span class="vtab-icon">▶</span><span>SHOW</span>
+            </div>
+            <div class="vtab" id="tab-btn-lyrics" onclick="toggleLyricsPanel()">
+                <span class="vtab-icon">♪</span><span>LYRICS</span>
+            </div>
+            <div class="vtab" id="tab-btn-chords" onclick="toggleChordsPanel()">
+                <span class="vtab-icon">♭</span><span>CHORDS</span>
+            </div>
+            <div class="vtab" id="tab-btn-live" onclick="openLiveView()">
+                <span class="vtab-icon">▶</span><span>LIVE</span>
+            </div>
+            <div class="vtab" id="tab-btn-canvas" onclick="openCanvasMode()">
+                <span class="vtab-icon">▣</span><span>CANVAS</span>
+            </div>
 
-            <select id="setlistSelect" class="setlist-select" onchange="changeSetlist()"></select>
-            <button class="btn-mini btn-add" onclick="createSetlist()" title="New">+</button>
-            <div class="dotmenu-wrap" id="dotMenuWrap">
-                <button class="dotmenu-btn" onclick="toggleDotMenu(event)" title="Options">&#xB7;&#xB7;&#xB7;</button>
+            <div class="vtab-spacer"></div>
+
+            <div class="app-topbar-info">
+                <span class="timer-chip" id="show-timer-display">00:00</span>
+                <span>Active: <span id="song-count">0</span> · <span id="total-time">0:00</span></span>
+                <span class="timer-reset" onclick="resetShowTimer()" style="cursor:pointer; font-size:12px;">↻</span>
+            </div>
+        </div>
+
+        <!-- SETLIST ROW -->
+        <div class="app-setlist-row">
+            <select id="setlistSelect" class="n-select" onchange="changeSetlist()"></select>
+            <button class="n-btn-new" onclick="createSetlist()" title="New">+</button>
+            <div class="dotmenu-wrap" id="dotMenuWrap" style="position:relative">
+                <button class="n-dotmenu-btn" onclick="toggleDotMenu(event)" title="Options">···</button>
                 <div class="dotmenu-dropdown" id="dotMenuDropdown">
                     <button class="dotmenu-item" onclick="exportSetlists();closeDotMenu()">
-                        <span class="dm-icon">&#8595;</span> Export
+                        <span class="dm-icon">↓</span> Export
                     </button>
                     <button class="dotmenu-item" onclick="triggerImport();closeDotMenu()">
-                        <span class="dm-icon">&#8593;</span> Import
+                        <span class="dm-icon">↑</span> Import
                     </button>
                     <button class="dotmenu-item item-danger" onclick="deleteSetlist();closeDotMenu()">
-                        <span class="dm-icon">&#10005;</span> Delete
+                        <span class="dm-icon">✕</span> Delete
                     </button>
                 </div>
             </div>
             <input type="file" id="importInput" style="display:none" accept=".json" onchange="importSetlists(this)">
         </div>
 
-        <div class="info-row">
-            <span id="song-count">Active: 0</span>
-            <span id="total-time">Playtime: 0:00</span>
-            <span class="show-timer">SHOW: <span id="show-timer-display">00:00</span> <span class="timer-reset"
-                    onclick="resetShowTimer()">&#8635;</span></span>
+        <!-- INFO ROW -->
+        <div class="app-info-row">
+            <span class="info-setlist-name" id="current-setlist-name-display">Active Setlist</span>
+            <span class="info-live-chip" id="live-indicator-chip" style="display:none;">● LIVE</span>
+            <span class="info-spacer"></span>
+            <!-- removed count and time as it is on the top bar now, just keep space for balance -->
         </div>
-    </div>
 
-    <ul id="setlist"></ul>
+        <div class="app-content">
+            <ul id="setlist" style="list-style: none; padding: 0; margin: 0; padding-bottom: 20px;"></ul>
+        </div>
 
-    <div class="transport-footer">
-        <button class="btn-transport btn-play" id="main-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
-        <button class="btn-transport btn-stop" id="main-stop-btn" onmousedown="handleMainStopPress()"
-            onmouseup="handleMainStopRelease()" ontouchstart="handleMainStopPress()"
-            ontouchend="handleMainStopRelease()" style="user-select:none;-webkit-user-select:none">&#9632; STOP</button>
-        <button id="footer-loop-btn" class="btn-transport btn-loop-transport" onclick="toggleCurrentLoop()">&#8635;
-            Loop</button>
-        <button class="btn-transport btn-refresh" onclick="wwr_start()">SYNC</button>
+        <!-- TRANSPORT FOOTER -->
+        <div class="app-transport">
+            <button class="t-btn t-btn-play" id="main-play-btn" onclick="togglePlay()">▶ PLAY</button>
+            <button class="t-btn t-btn-stop" id="main-stop-btn" onmousedown="handleMainStopPress()"
+                onmouseup="handleMainStopRelease()" ontouchstart="handleMainStopPress()"
+                ontouchend="handleMainStopRelease()" style="user-select:none;-webkit-user-select:none">■ STOP</button>
+            <button id="footer-loop-btn" class="t-btn t-btn-loop" onclick="toggleCurrentLoop()">↻ Loop</button>
+            <button class="t-btn t-btn-sync" onclick="wwr_start()">SYNC</button>
+        </div>
     </div>
 
     <!-- SIDEBAR OVERLAY -->
@@ -2106,48 +2409,90 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar">
-        <div class="sidebar-header">
-            <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:var(--accent)">ReaSet</span>
-            <span class="sidebar-close" onclick="closeSidebar()">&#10005;</span>
+        <div class="sidebar-head">
+            <span class="sidebar-logo">REASET</span>
+            <button class="sidebar-close-btn" onclick="closeSidebar()">✕</button>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Show Options</div>
-            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="autoScrollToggle" checked><span
-                        class="slider"></span></label><span>Auto-Scroll</span><span class="help-icon"
-                    onclick="showHelp('scroll')">?</span></div>
-            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="queueModeToggle"><span
-                        class="slider"></span></label><span>Queue Mode</span><span class="help-icon"
-                    onclick="showHelp('queue')">?</span></div>
-            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="autoStopToggle" checked><span
-                        class="slider"></span></label><span>Auto-Stop</span><span class="help-icon"
-                    onclick="showHelp('stop')">?</span></div>
-            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="hideSkippedToggle"
-                        onchange="toggleHideSkipped()"><span class="slider"></span></label><span>Hide Skips</span><span
-                    class="help-icon" onclick="showHelp('hide')">?</span></div>
-            <div class="toggle-wrapper"><label class="switch"><input type="checkbox" id="initSongMidiToggle"
-                        checked><span class="slider"></span></label><span>MIDI Init</span><span class="help-icon"
-                    onclick="showHelp('initsongmidi')">?</span></div>
 
-            <!-- Stop mode toggle -->
-            <div class="toggle-wrapper" style="margin-top:4px;">
-                <label class="switch"><input type="checkbox" id="stopHoldToggle"
-                        onchange="setStopMode(this.checked ? 'hold' : 'tap')"><span class="slider"></span></label>
-                <span>Stop Hold (3s)</span>
-                <span class="help-icon" onclick="showHelp('stophold')">?</span>
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="autoScrollToggle" checked>
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Auto-Scroll
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('scroll')">?</button>
             </div>
 
-            <!-- Grid view toggle -->
-            <div class="toggle-wrapper" style="margin-top:4px;">
-                <label class="switch"><input type="checkbox" id="gridViewToggle"
-                        onchange="setGridView(this.checked)"><span class="slider"></span></label>
-                <span>Grid View</span>
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="queueModeToggle">
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Queue Mode
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('queue')">?</button>
+            </div>
+
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="autoStopToggle" checked>
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Auto-Stop
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('stop')">?</button>
+            </div>
+
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="hideSkippedToggle" onchange="toggleHideSkipped()">
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Hide Skips
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('hide')">?</button>
+            </div>
+
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="initSongMidiToggle" checked>
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                MIDI Init
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('initsongmidi')">?</button>
+            </div>
+
+            <div class="toggle-row">
+                <label class="n-switch"><input type="checkbox" id="stopHoldToggle"
+                        onchange="setStopMode(this.checked ? 'hold' : 'tap')">
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Stop Hold (3s)
+                <button class="help-btn" style="margin-left:auto" onclick="showHelp('stophold')">?</button>
+            </div>
+
+            <div class="toggle-row" style="border:none">
+                <label class="n-switch"><input type="checkbox" id="gridViewToggle" onchange="setGridView(this.checked)">
+                    <div class="n-track">
+                        <div class="n-thumb"></div>
+                    </div>
+                </label>
+                Grid View
             </div>
         </div>
+
         <div class="sidebar-section">
             <div class="sidebar-section-title">Settings &mdash; Theme</div>
             <div class="theme-selector">
-                <div class="theme-dot active" data-theme="dark" onclick="setTheme('dark')" title="Dark"></div>
+                <div class="theme-dot active" data-theme="dark" onclick="setTheme('dark')"
+                    style="background:#121212;border-color:#fff" title="Dark"></div>
             </div>
         </div>
 
@@ -2172,10 +2517,10 @@
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Lyrics &mdash; Size <span id="font-size-label"
-                    style="color:var(--accent);float:right">36px</span></div>
+                    style="color:var(--color-brand);float:right">36px</span></div>
             <input type="range" id="font-size-slider" class="size-slider" min="16" max="144" step="2" value="36"
                 oninput="applyLyricsSize(this.value)">
-            <div class="size-presets" style="display:flex; flex-wrap:wrap; gap:4px">
+            <div class="size-presets">
                 <button class="size-preset" onclick="applyLyricsSize(20)">S</button>
                 <button class="size-preset" onclick="applyLyricsSize(36)">M</button>
                 <button class="size-preset" onclick="applyLyricsSize(52)">L</button>
@@ -2186,7 +2531,6 @@
             </div>
         </div>
 
-        <!-- F11: Chords prefs -->
         <div class="sidebar-section">
             <div class="sidebar-section-title">Chords &mdash; Font</div>
             <div class="font-options" id="chords-font-options">
@@ -2200,55 +2544,55 @@
                     onclick="applyChordsFont(this)">Mono</button>
             </div>
         </div>
+
         <div class="sidebar-section">
             <div class="sidebar-section-title">Chords &mdash; Size <span id="chords-size-label"
-                    style="color:var(--accent);float:right">110px</span></div>
+                    style="color:var(--color-brand);float:right">110px</span></div>
             <input type="range" id="chords-size-slider" class="size-slider" min="40" max="220" step="4" value="110"
                 oninput="applyChordsSize(this.value)">
-            <div class="size-presets" style="display:flex; flex-wrap:wrap; gap:4px">
+            <div class="size-presets">
                 <button class="size-preset" onclick="applyChordsSize(60)">S</button>
                 <button class="size-preset" onclick="applyChordsSize(110)">M</button>
                 <button class="size-preset" onclick="applyChordsSize(160)">L</button>
                 <button class="size-preset" onclick="applyChordsSize(200)">XL</button>
             </div>
         </div>
+
         <div class="sidebar-section">
             <div class="sidebar-section-title">Chords &mdash; Color</div>
-            <div id="chords-color-selector" style="display:flex;flex-wrap:wrap;gap:8px;">
-                <div class="theme-dot" style="background:#ce93d8" onclick="applyChordsColor('#ce93d8')" title="Lilac">
+            <div id="chords-color-selector" class="color-dots">
+                <div class="color-dot" style="background:#BF5AF2" onclick="applyChordsColor('#BF5AF2')" title="Lilac">
                 </div>
-                <div class="theme-dot" style="background:#80cbc4" onclick="applyChordsColor('#80cbc4')" title="Teal">
+                <div class="color-dot" style="background:#FC3C44" onclick="applyChordsColor('#FC3C44')" title="Red">
                 </div>
-                <div class="theme-dot" style="background:#ffcc80" onclick="applyChordsColor('#ffcc80')" title="Amber">
+                <div class="color-dot" style="background:#FFFFFF" onclick="applyChordsColor('#FFFFFF')" title="White">
                 </div>
-                <div class="theme-dot" style="background:#ef9a9a" onclick="applyChordsColor('#ef9a9a')" title="Red">
+                <div class="color-dot" style="background:#1ED760" onclick="applyChordsColor('#1ED760')" title="Green">
                 </div>
-                <div class="theme-dot" style="background:#ffffff" onclick="applyChordsColor('#ffffff')" title="White">
+                <div class="color-dot" style="background:#64D2FF" onclick="applyChordsColor('#64D2FF')" title="Blue">
                 </div>
-                <div class="theme-dot" style="background:#00e676" onclick="applyChordsColor('#00e676')" title="Green">
+                <div class="color-dot" style="background:#FF9F0A" onclick="applyChordsColor('#FF9F0A')" title="Amber">
                 </div>
-                <div class="theme-dot" style="background:#64b5f6" onclick="applyChordsColor('#64b5f6')" title="Blue">
+                <div class="color-dot" style="background:#30D158" onclick="applyChordsColor('#30D158')" title="Teal">
                 </div>
             </div>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Data &mdash; Backup</div>
-            <button class="sidebar-btn sb-sync" onclick="exportAllData()">
-                <span class="sb-icon">&#8595;</span> Export Settings JSON
+            <button class="sidebar-action-btn sab-slate" onclick="exportAllData()">
+                <span class="sab-icon">↓</span> Export Settings JSON
             </button>
-            <button class="sidebar-btn sb-sync"
-                style="background:linear-gradient(135deg,#BF360C,#E64A19);margin-top:8px"
-                onclick="document.getElementById('importAllInput').click()">
-                <span class="sb-icon">&#8593;</span> Import Settings JSON
+            <button class="sidebar-action-btn sab-orange" onclick="document.getElementById('importAllInput').click()">
+                <span class="sab-icon">↑</span> Import Settings JSON
             </button>
             <input type="file" id="importAllInput" style="display:none" accept=".json" onchange="importAllData(this)">
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">REAPER Connection</div>
-            <button class="sidebar-btn sb-sync" onclick="wwr_start();closeSidebar()">
-                <span class="sb-icon">&#8635;</span> Sync
+            <button class="sidebar-action-btn sab-slate" onclick="wwr_start();closeSidebar()">
+                <span class="sab-icon">↻</span> Sync
             </button>
         </div>
     </div>
@@ -2257,94 +2601,101 @@
     <div id="lyrics-panel">
         <div class="panel-header">
             <span class="panel-title" id="lyrics-song-title">Lyrics</span>
-            <span class="panel-close" onclick="toggleLyricsPanel()">&#10005;</span>
+            <span class="panel-close-btn" onclick="toggleLyricsPanel()">✕</span>
         </div>
         <div class="lyrics-content" id="lyrics-content">
-            <div class="lyrics-no-data">Enable the "X-Raym Convert Lyrics" Lua script in REAPER to see live lyrics.</div>
+            <div class="lyrics-no-data">Enable the "X-Raym Convert Lyrics" Lua script in REAPER to see live lyrics.
+            </div>
         </div>
     </div>
 
     <!-- CHORDS PANEL -->
     <div id="chords-panel">
-        <span class="chords-close" onclick="toggleChordsPanel()">&#10005;</span>
+        <span class="chord-close-btn" onclick="toggleChordsPanel()">✕</span>
         <div id="chord-display">&#9834;</div>
         <div class="chord-label" id="chord-label">Enable the Lua chords script in REAPER</div>
     </div>
 
     <!-- LIVE VIEW -->
     <div id="live-view">
-        <div class="live-header">
-            <span class="live-setlist-name" id="live-setlist-name"></span>
-            <span class="live-show-time" id="live-show-time">00:00</span>
-            <span class="live-exit" onclick="closeLiveView()">&#10005; SALIR</span>
+        <button class="chord-close-btn" onclick="closeLiveView()"
+            style="position:absolute; top:30px; right:40px;">✕</button>
+        <p class="live-now-label">● <span id="live-show-time"
+                style="font-family: monospace; font-size: 15px;">00:00</span></p>
+        <h2 class="live-song-name" id="live-song-name">—</h2>
+        <p class="live-setlist-name" id="live-setlist-name"></p>
+        <p class="live-region" id="live-sub-region"></p>
+        <div class="live-progress-bar" id="live-progress-bar">
+            <div class="live-progress-fill" id="live-progress-fill"></div>
         </div>
-        <div id="live-song-name">&#8212;</div>
-        <div id="live-sub-region"></div>
-        <div id="live-progress-bar">
-            <div id="live-progress-fill"></div>
-        </div>
-        <div id="live-time-rem">&#8212;</div>
+        <p class="live-time" id="live-time-rem">—</p>
         <div class="live-next-wrap">
-            <div class="live-next-label">Up Next</div>
-            <div id="live-next-name">&#8212;</div>
+            <p class="live-next" style="margin-top:0;">Up Next: <span id="live-next-name">—</span></p>
         </div>
-        <div class="live-controls">
-            <button class="live-btn lb-prev" onclick="liveNav('prev')">&#9664;&#9664;</button>
-            <button class="live-btn lb-stop" onclick="smartStop()">&#9632;</button>
-            <button class="live-btn lb-play" id="live-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
-            <button class="live-btn lb-next" onclick="liveNav('next')">&#9654;&#9654;</button>
-            <button class="live-btn lb-loop" id="live-loop-btn" onclick="toggleCurrentLoop()">&#8635;</button>
+        <div class="live-transport">
+            <button class="lt-btn lt-ghost" onclick="liveNav('prev')">⏮</button>
+            <button class="lt-btn lt-stop" onclick="smartStop()">■ STOP</button>
+            <button class="lt-btn lt-play" id="live-play-btn" onclick="togglePlay()">▶ PLAY</button>
+            <button class="lt-btn lt-ghost" onclick="liveNav('next')">⏭</button>
+            <button class="lt-btn lt-ghost" id="live-loop-btn" onclick="toggleCurrentLoop()">↻ Loop</button>
         </div>
-        <div class="live-size-ctrl">
-            <span class="live-size-label">SIZE</span>
-            <span class="live-size-btn" onclick="adjustLiveSize(-1)">A&#8722;</span>
-            <span class="live-size-btn" onclick="adjustLiveSize(1)">A+</span>
+        <div class="live-size-ctrl"
+            style="position:absolute; bottom:20px; right:40px; color:var(--text2); display:flex; gap:12px; font-weight:700;">
+            <span class="live-size-label" style="padding-top:2px;">SIZE</span>
+            <span class="live-size-btn" onclick="adjustLiveSize(-1)"
+                style="cursor:pointer; padding:2px 8px; background:rgba(255,255,255,0.1); border-radius:4px;">A−</span>
+            <span class="live-size-btn" onclick="adjustLiveSize(1)"
+                style="cursor:pointer; padding:2px 8px; background:rgba(255,255,255,0.1); border-radius:4px;">A+</span>
         </div>
     </div>
 
     <!-- APP CONFIRM MODAL -->
-    <div class="app-modal-overlay" id="appConfirmOverlay">
-        <div class="app-modal">
-            <div class="app-modal-title" id="appConfirmTitle"></div>
-            <div class="app-modal-body" id="appConfirmBody"></div>
-            <div class="app-modal-actions">
-                <button class="app-modal-btn btn-cancel" onclick="closeAppConfirm(false)">Cancel</button>
-                <button class="app-modal-btn btn-danger" id="appConfirmOk" onclick="closeAppConfirm(true)">Confirmar</button>
+    <div class="app-modal-overlay" id="appConfirmOverlay"
+        style="z-index:9000;display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+        <div class="modal-preview">
+            <div class="modal-title" id="appConfirmTitle"></div>
+            <div class="modal-body" id="appConfirmBody"></div>
+            <div class="modal-actions">
+                <button class="m-btn m-btn-cancel" onclick="closeAppConfirm(false)">Cancel</button>
+                <button class="m-btn m-btn-danger" id="appConfirmOk" onclick="closeAppConfirm(true)">Confirmar</button>
             </div>
         </div>
     </div>
 
     <!-- APP ALERT MODAL -->
-    <div class="app-modal-overlay" id="appAlertOverlay">
-        <div class="app-modal">
-            <div class="app-modal-title" id="appAlertTitle">Notification</div>
-            <div class="app-modal-body" id="appAlertBody"></div>
-            <div class="app-modal-actions">
-                <button class="app-modal-btn btn-confirm" onclick="closeAppAlert()">OK</button>
+    <div class="app-modal-overlay" id="appAlertOverlay"
+        style="z-index:9000;display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+        <div class="modal-preview">
+            <div class="modal-title" id="appAlertTitle">Notification</div>
+            <div class="modal-body" id="appAlertBody"></div>
+            <div class="modal-actions">
+                <button class="m-btn m-btn-confirm" onclick="closeAppAlert()">OK</button>
             </div>
         </div>
     </div>
 
     <!-- EXPORT MODAL -->
-    <div class="app-modal-overlay" id="exportModalOverlay">
-        <div class="app-modal">
-            <div class="app-modal-title">Export Setlists</div>
-            <div class="app-modal-body">Download all your setlists as a JSON file.</div>
-            <input class="app-modal-input" id="exportFilename" type="text" value="reaper_setlists.json">
-            <div class="app-modal-actions">
-                <button class="app-modal-btn btn-cancel" onclick="closeExportModal()">Cancel</button>
-                <button class="app-modal-btn btn-confirm" onclick="doExportDownload()">&#8595; Download</button>
+    <div class="app-modal-overlay" id="exportModalOverlay"
+        style="z-index:9000;display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+        <div class="modal-preview">
+            <div class="modal-title">Export Setlists</div>
+            <div class="modal-body">Download all your setlists as a JSON file.</div>
+            <input class="modal-input" id="exportFilename" type="text" value="reaper_setlists.json">
+            <div class="modal-actions">
+                <button class="m-btn m-btn-cancel" onclick="closeExportModal()">Cancel</button>
+                <button class="m-btn m-btn-confirm" onclick="doExportDownload()">↓ Download</button>
             </div>
         </div>
     </div>
 
     <!-- CANVAS MODE -->
     <div id="canvas-mode">
-        <div class="canvas-header" id="canvas-header">
-            <button class="btn-mini btn-del" onclick="closeCanvasMode()">Exit</button>
-            <button class="btn-mini btn-imp" id="canvas-edit-btn" onclick="toggleCanvasEdit()">Edit Canvas</button>
+        <div class="canvas-header" id="canvas-header" style="justify-content: flex-start; gap: 10px;">
+            <button class="lt-btn lt-ghost" onclick="closeCanvasMode()" style="font-size: 14px; padding: 6px 16px;">✕
+                Exit</button>
+            <button class="lt-btn lt-play" id="canvas-edit-btn" onclick="toggleCanvasEdit()"
+                style="font-size: 14px; padding: 6px 16px;">Edit Canvas</button>
         </div>
-
         <div id="canvas-workspace">
             <!-- Song Name widget -->
             <div class="canvas-widget" id="cw-songname" style="left: 5%; top: 5%; width: 90%; height: 180px;">
@@ -2371,8 +2722,9 @@
                     <button class="cw-tool-btn" onclick="cwFontSize('cw-content-lyrics', -4)">A&minus;</button>
                     <button class="cw-tool-btn" onclick="cwFontSize('cw-content-lyrics', 4)">A+</button>
                     <span style="color:#888;font-size:10px;padding:0 2px">|</span>
-                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-lyrics', this.value)"
-                        title="Font">
+                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-lyrics', this.value)" title="Font">
+                        <option value="var(--font-ui)" selected>UI Default</option>
+                        <option value="var(--font-heading)">Heading</option>
                         <option value="'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica</option>
                         <option value="Georgia,serif">Georgia</option>
                         <option value="Impact,'Arial Narrow',sans-serif">Impact</option>
@@ -2392,9 +2744,10 @@
                     <button class="cw-tool-btn" onclick="cwFontSize('cw-content-chords', -8)">A&minus;</button>
                     <button class="cw-tool-btn" onclick="cwFontSize('cw-content-chords', 8)">A+</button>
                     <span style="color:#888;font-size:10px;padding:0 2px">|</span>
-                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-chords', this.value)"
-                        title="Font">
-                        <option value="Georgia,serif" selected>Georgia</option>
+                    <select class="cw-font-select" onchange="cwApplyFont('cw-content-chords', this.value)" title="Font">
+                        <option value="var(--font-heading)" selected>Heading Default</option>
+                        <option value="var(--font-ui)">UI Default</option>
+                        <option value="Georgia,serif">Georgia</option>
                         <option value="'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica</option>
                         <option value="Impact,'Arial Narrow',sans-serif">Impact</option>
                         <option value="'Courier New',Courier,monospace">Mono</option>
@@ -2408,19 +2761,20 @@
             <!-- Transport widget -->
             <div class="canvas-widget" id="cw-transport" style="left: 52%; top: 72%; width: 43%; height: 24%;">
                 <div class="cw-content" id="cw-content-transport">
-                    <div class="cw-transport-wrapper">
-                        <button class="live-btn lb-prev" onclick="canvasNav('prev')">&#9664;&#9664;</button>
-                        <button class="live-btn lb-play" id="cw-play-btn" onclick="togglePlay()">&#9654; PLAY</button>
-                        <button class="live-btn lb-next" onclick="canvasNav('next')">&#9654;&#9654;</button>
-                        <button class="live-btn lb-stop" id="cw-stop-btn" onmousedown="handleStopPress()"
+                    <div class="cw-transport-wrapper" style="display: flex; gap: 8px; justify-content: center;">
+                        <button class="lt-btn lt-ghost" onclick="canvasNav('prev')">⏮</button>
+                        <button class="lt-btn lt-stop" id="cw-stop-btn" onmousedown="handleStopPress()"
                             onmouseup="handleStopRelease()" ontouchstart="handleStopPress()"
-                            ontouchend="handleStopRelease()" style="user-select:none;-webkit-user-select:none">STOP
+                            ontouchend="handleStopRelease()" style="user-select:none;-webkit-user-select:none">■ STOP
                             (Hold)</button>
+                        <button class="lt-btn lt-play" id="cw-play-btn" onclick="togglePlay()">▶ PLAY</button>
+                        <button class="lt-btn lt-ghost" onclick="canvasNav('next')">⏭</button>
                     </div>
                 </div>
                 <div class="cw-toolbar">
                     <button class="cw-tool-btn" id="cw-stop-mode-btn" onclick="toggleStopMode()"
-                        title="Stop button mode">Mode: Hold</button>
+                        title="Stop button mode">Mode:
+                        Hold</button>
                 </div>
             </div>
         </div>
@@ -2608,6 +2962,46 @@
         // Global state for nested sections: loop, skipped
         var subStates = {};
 
+        // Color Mapping Palette
+        var THEME_PALETTE = [
+            { name: "brand", hex: "#1ED760", rgb: [30, 215, 96], bg: "rgba(30, 215, 96, 0.15)" },
+            { name: "active", hex: "#FC3C44", rgb: [252, 60, 68], bg: "rgba(252, 60, 68, 0.15)" },
+            { name: "loop", hex: "#BF5AF2", rgb: [191, 90, 242], bg: "rgba(191, 90, 242, 0.15)" },
+            { name: "chain", hex: "#30D158", rgb: [48, 209, 88], bg: "rgba(48, 209, 88, 0.15)" },
+            { name: "live", hex: "#64D2FF", rgb: [100, 210, 255], bg: "rgba(100, 210, 255, 0.15)" },
+            { name: "timer", hex: "#FF9F0A", rgb: [255, 159, 10], bg: "rgba(255, 159, 10, 0.15)" },
+            { name: "skip", hex: "#FF453A", rgb: [255, 69, 58], bg: "rgba(255, 69, 58, 0.15)" },
+            { name: "blue", hex: "#0A84FF", rgb: [10, 132, 255], bg: "rgba(10, 132, 255, 0.15)" },
+            { name: "yellow", hex: "#FFD60A", rgb: [255, 214, 10], bg: "rgba(255, 214, 10, 0.15)" }
+        ];
+
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : [255, 255, 255];
+        }
+
+        function getClosestPaletteColor(hex) {
+            if (!hex) return null;
+            var target = hexToRgb(hex);
+            var bestMatch = THEME_PALETTE[0];
+            var minDistance = Infinity;
+
+            for (var i = 0; i < THEME_PALETTE.length; i++) {
+                var p = THEME_PALETTE[i];
+                // Simple Euclidean distance in RGB space
+                var dist = Math.sqrt(
+                    Math.pow(target[0] - p.rgb[0], 2) +
+                    Math.pow(target[1] - p.rgb[1], 2) +
+                    Math.pow(target[2] - p.rgb[2], 2)
+                );
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    bestMatch = p;
+                }
+            }
+            return bestMatch;
+        }
+
         // --- 4. SYNC ---
         function syncRegions() {
             if (isDragging) return;
@@ -2759,12 +3153,21 @@
                     li.className = "song-row" + (r.skipped ? " skipped" : "");
                     li.id = "row-" + r.id; li.setAttribute("data-id", r.id);
                     li.setAttribute("onclick", "playRegion(" + r.start + ",'" + r.id + "')");
-                    var dotStyle = r.color ? 'background:' + r.color + ';' : '';
-                    li.innerHTML = '<div class="card-bg-fill" id="bg-' + r.id + '"></div>'
-                        + '<span class="song-index" style="width:25px;text-align:right;color:var(--text2);font-size:0.9em;cursor:pointer;padding:0 4px" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')" title="Click para mover">' + (i + 1) + '.</span>'
-                        + '<span class="song-color-dot" style="' + dotStyle + 'margin-left:5px;"></span>'
-                        + '<span class="song-name" style="padding:12px 8px;font-size:0.95em">' + r.name + '</span>'
-                        + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
+                    var mappedColor = getClosestPaletteColor(r.color);
+                    var styleAttr = "";
+                    var classAdds = "";
+                    if (mappedColor) {
+                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-bg: ' + mappedColor.bg + ';"';
+                        classAdds = " has-mapped-color";
+                    }
+
+                    li.className = "grid-card" + (r.skipped ? " skipped" : "") + classAdds;
+                    if (mappedColor) li.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-bg: " + mappedColor.bg + ";");
+
+                    li.innerHTML = '<div class="card-bg-fill" id="bg-' + r.id + '" style="border-radius: var(--radius-card);"></div>'
+                        + '<span class="grid-card-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + (i + 1) + '.</span>'
+                        + '<div class="grid-card-name">' + r.name + '</div>'
+                        + '<span class="grid-card-dur" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
                     listEl.appendChild(li);
                 }
             } else {
@@ -2778,14 +3181,22 @@
                     var hasSubs = subs.length > 0;
                     var isExp = !!expandedSongs[r.id];
 
-                    var chainIcon = r.chain ? "&#10140;" : "&#9632;";
-                    var chainClass = r.chain ? "chain-btn linked" : "chain-btn";
-                    var loopClass = r.loop ? "loop-btn looping" : "loop-btn";
-                    var skipIcon = r.skipped ? "&#10004;" : "&#10006;";
-                    var skipClass = r.skipped ? "skip-btn skipped" : "skip-btn";
-                    var dotStyle = r.color ? 'background:' + r.color + ';' : '';
-                    var chevClass = "song-chevron" + (hasSubs ? " has-sections" : "") + (isExp ? " open" : "");
-                    var chevIcon = hasSubs ? "&#9658;" : "&#8226;";
+                    var chainIcon = r.chain ? "&#8677;" : "&#9632;";
+                    var chainClass = r.chain ? "sa-btn chain-on" : "sa-btn";
+                    var loopIcon = "&#8635;";
+                    var loopClass = r.loop ? "sa-btn loop-on" : "sa-btn";
+                    var skipIcon = "&#10005;";
+                    var skipClass = r.skipped ? "sa-btn skip-on" : "sa-btn";
+                    var mappedColor = getClosestPaletteColor(r.color);
+                    var styleAttr = "";
+                    var classAdds = "";
+                    if (mappedColor) {
+                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-bg: ' + mappedColor.bg + ';"';
+                        classAdds = " has-mapped-color";
+                    }
+
+                    var chevClass = "song-chevron" + (hasSubs ? " has-subs" : "") + (isExp ? " open" : "");
+                    var chevIcon = hasSubs ? "&#9654;" : "&#9679;";
 
                     // --- Song container ---
                     var li = document.createElement("li");
@@ -2794,22 +3205,24 @@
 
                     // --- Song row ---
                     var rowDiv = document.createElement("div");
-                    rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "");
+                    rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "") + classAdds;
                     rowDiv.id = "row-" + r.id;
+                    if (mappedColor) {
+                        rowDiv.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-bg: " + mappedColor.bg + ";");
+                    }
 
                     rowDiv.innerHTML =
                         '<div class="card-bg-fill" id="bg-' + r.id + '"></div>'
-                        + '<div class="drag-handle">&#9776;</div>'
-                        + '<div class="song-index" style="width:25px;text-align:right;color:var(--text2);font-size:0.9em;cursor:pointer" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')" title="Click para mover a posici\u00f3n x">' + (i + 1) + '.</div>'
-                        + '<div class="' + chevClass + '" id="chev-' + r.id + '" onclick="event.stopPropagation();toggleExpand(\'' + r.id + '\',' + hasSubs + ')">' + chevIcon + '</div>'
-                        + '<div class="song-color-dot" style="' + dotStyle + '"></div>'
+                        + '<div class="drag-handle">⋮⋮</div>'
+                        + '<span class="song-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + (i + 1) + '.</span>'
+                        + '<button class="' + chevClass + '" id="chev-' + r.id + '" onclick="event.stopPropagation();toggleExpand(\'' + r.id + '\',' + hasSubs + ')">' + chevIcon + '</button>'
                         + '<div class="song-title-area" onclick="playRegion(' + r.start + ',\'' + r.id + '\')">'
-                        + '  <span class="song-name">' + r.name + '</span>'
+                        + '  <div class="song-name">' + r.name + '</div>'
                         + '</div>'
-                        + '<div class="song-actions-inline">'
-                        + '  <button class="' + chainClass + '" onclick="event.stopPropagation(); toggleChain(\'' + r.id + '\')" title="Action (Cont./Stop)">' + chainIcon + '</button>'
-                        + '  <button class="' + loopClass + '" onclick="event.stopPropagation(); toggleLoop(\'' + r.id + '\')" title="Loop">&#8635;</button>'
-                        + '  <button class="' + skipClass + '" onclick="event.stopPropagation(); toggleSkip(\'' + r.id + '\')" title="Eliminar/Skip">' + skipIcon + '</button>'
+                        + '<div class="song-actions">'
+                        + '  <button class="' + chainClass + '" onclick="event.stopPropagation(); toggleChain(\'' + r.id + '\')">' + chainIcon + '</button>'
+                        + '  <button class="' + loopClass + '" onclick="event.stopPropagation(); toggleLoop(\'' + r.id + '\')">' + loopIcon + '</button>'
+                        + '  <button class="' + skipClass + '" onclick="event.stopPropagation(); toggleSkip(\'' + r.id + '\')">' + skipIcon + '</button>'
                         + '</div>'
                         + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
 
@@ -2826,19 +3239,25 @@
                         var sub = subs[s];
                         var subDur = (sub.end - sub.start);
 
-                        var scloop = sub.loop ? "loop-btn looping" : "loop-btn";
-                        var scskip = sub.skipped ? "skip-btn skipped" : "skip-btn";
-                        // A progress bill specifically for the section row uses the same card-bg-fill class but with lower z-index 0
-                        slHtml += '<div class="section-row" id="subrow-' + sub.id + '"'
-                            + ' onclick="playRegion(' + sub.start + ',\'' + sub.id + '\')">'
+                        var scloop = sub.loop ? "sa-btn loop-on" : "sa-btn";
+                        var scskip = sub.skipped ? "sa-btn skip-on" : "sa-btn";
+                        var mappedSubColor = getClosestPaletteColor(sub.color || r.color);
+                        var subStyleAttr = "";
+                        var subClassAdds = "";
+                        if (mappedSubColor) {
+                            subStyleAttr = 'style="--mapped-theme-color: ' + mappedSubColor.hex + '; --mapped-theme-color-bg: ' + mappedSubColor.bg + ';"';
+                            subClassAdds = " has-mapped-color";
+                        }
+
+                        slHtml += '<div class="section-row' + subClassAdds + '" id="subrow-' + sub.id + '"'
+                            + ' onclick="playRegion(' + sub.start + ',\'' + sub.id + '\')" ' + subStyleAttr + '>'
                             + '<div class="card-bg-fill" id="bg-' + sub.id + '"></div>'
-                            + '<div class="section-row-dot"></div>'
                             + '<span class="section-row-name">' + sub.sectionName + '</span>'
                             + '<span class="section-row-dur">' + formatTime(subDur) + '</span>'
                             + '<div class="section-actions" onclick="event.stopPropagation()">'
-                            + '  <button class="stop-btn" onclick="smartStop()" title="Stop">&#9632;</button>'
-                            + '  <button class="' + scloop + '" onclick="toggleSubLoop(\'' + sub.id + '\')" title="Loop">&#8635;</button>'
-                            + '  <button class="' + scskip + '" onclick="toggleSubSkip(\'' + sub.id + '\')" title="Eliminar/Skip">&#10006;</button>'
+                            + '  <button class="sa-btn" onclick="smartStop()">&#9632;</button>'
+                            + '  <button class="' + scloop + '" onclick="toggleSubLoop(\'' + sub.id + '\')">&#8635;</button>'
+                            + '  <button class="' + scskip + '" onclick="toggleSubSkip(\'' + sub.id + '\')">&#10005;</button>'
                             + '</div>'
                             + '</div>';
                     }
@@ -2846,7 +3265,7 @@
                     // Expanded bottom controls
                     if (hasSubs) {
                         slHtml += '<div class="expanded-controls">'
-                            + '<button class="load-btn" onclick="playRegion(' + r.start + ',\'' + r.id + '\')" style="margin-left:auto">&#9654; REPRODUCIR CANCIÓN</button>'
+                            + '<button class="btn-play-song" onclick="playRegion(' + r.start + ',\'' + r.id + '\')">&#9654; Play Song</button>'
                             + '</div>';
                     }
 
