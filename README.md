@@ -392,5 +392,3 @@ Copiar en la carpeta web de REAPER (donde existe `main.js`):
 - Verificar carga correcta de `main.js` en la misma carpeta.
 
 ---
-
-ReaSet is a REAPER web interface focused on live performance: it manages setlists, reorders songs, controls transport, and displays real-time lyrics/chords. It is based on ReaSetlistManager (suckyble) and extended with X-Raym-inspired lyrics/chords integration.
