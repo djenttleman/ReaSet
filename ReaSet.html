@@ -2188,7 +2188,7 @@
         #cw-content-chords {
             font-size: 110px;
             color: #ce93d8;
-            font-family: Georgia, serif;
+            font-family: var(--font-ui);
         }
 
         .cw-transport-wrapper {
@@ -2778,8 +2778,8 @@
                     <button class="cw-tool-btn" onclick="cwFontSize('cw-content-chords', 8)">A+</button>
                     <span style="color:#888;font-size:10px;padding:0 2px">|</span>
                     <select class="cw-font-select" onchange="cwApplyFont('cw-content-chords', this.value)" title="Font">
-                        <option value="var(--font-heading)" selected>Heading Default</option>
-                        <option value="var(--font-ui)">UI Default</option>
+                        <option value="var(--font-heading)">Heading Default</option>
+                        <option value="var(--font-ui)" selected>UI Default</option>
                         <option value="Georgia,serif">Georgia</option>
                         <option value="'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica</option>
                         <option value="Impact,'Arial Narrow',sans-serif">Impact</option>
@@ -4360,6 +4360,8 @@
                     break;
                 case 'KeyC': event.preventDefault(); toggleChordsPanel(); break;
                 case 'KeyG': event.preventDefault(); toggleGridView(); break;
+                case 'KeyV': event.preventDefault(); if (liveViewOpen) closeLiveView(); else openLiveView(); break;
+                case 'KeyN': event.preventDefault(); if (canvasOpen) closeCanvasMode(); else openCanvasMode(); break;
                 case 'ArrowLeft':
                     event.preventDefault();
                     if (activeIdx !== -1) { playRegion(displayList[activeIdx].start, displayList[activeIdx].id); flashRow(displayList[activeIdx].id); }
