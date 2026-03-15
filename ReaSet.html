@@ -18,8 +18,8 @@
             --bg-hover: #333333;
             --bg-press: #000000;
             --text-primary: #FFFFFF;
-            --text-secondary: #B3B3B3;
-            --text-subdued: #6A6A6A;
+            --text-secondary: #D0D0D0;
+            --text-subdued: #808080;
             --color-brand: #1ED760;
             --color-active: #FC3C44;
             --color-loop: #BF5AF2;
@@ -65,7 +65,7 @@
             z-index: 9000;
             background: rgba(18, 18, 18, 0.96);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 0 28px;
             display: flex;
             align-items: center;
@@ -163,7 +163,7 @@
 
         hr.divider {
             border: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
             margin: 52px 24px 0;
         }
 
@@ -184,7 +184,7 @@
         .n-track {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
             border-radius: 11px;
             cursor: pointer;
             transition: background 0.2s;
@@ -197,7 +197,7 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.60);
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
             transition: transform 0.2s, background 0.2s;
             pointer-events: none;
@@ -217,7 +217,7 @@
             align-items: center;
             gap: 10px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
@@ -231,7 +231,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.10);
             border: none;
             color: var(--text-subdued);
             font-size: 10px;
@@ -262,7 +262,7 @@
             background: rgba(22, 22, 22, 0.95);
             backdrop-filter: blur(32px) saturate(140%);
             -webkit-backdrop-filter: blur(32px) saturate(140%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: stretch;
             height: 56px;
@@ -280,7 +280,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
             margin-right: 4px;
             transition: color 0.15s;
         }
@@ -367,8 +367,8 @@
             align-items: center;
             gap: 8px;
             padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             flex-shrink: 0;
         }
 
@@ -376,7 +376,7 @@
             flex: 1;
             background: rgba(0, 0, 0, 0.4);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: var(--radius-sm);
             padding: 8px 12px;
             font-size: 13px;
@@ -412,8 +412,8 @@
             width: 34px;
             height: 34px;
             border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-secondary);
             font-size: 17px;
             letter-spacing: 2px;
@@ -437,17 +437,17 @@
             gap: 10px;
             margin: 8px 14px;
             padding: 7px 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-sm);
             font-size: 11px;
             font-family: var(--font-mono);
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.30);
             flex-shrink: 0;
         }
 
         .info-setlist-name {
-            color: rgba(255, 255, 255, 0.45);
+            color: rgba(255, 255, 255, 0.54);
             font-weight: 600;
         }
 
@@ -487,7 +487,7 @@
             overflow-y: auto;
             padding: 4px 14px 12px;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+            scrollbar-color: rgba(255, 255, 255, 0.10) transparent;
         }
 
         .app-content::-webkit-scrollbar {
@@ -495,7 +495,7 @@
         }
 
         .app-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 2px;
         }
 
@@ -509,10 +509,10 @@
             overflow: hidden;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(20px) saturate(160%);
             -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: var(--radius-card);
             min-height: 70px;
             padding: 0 10px 0 0;
@@ -528,13 +528,13 @@
         }
 
         .song-row:hover {
-            background: rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         .song-row.active {
-            background: rgba(255, 255, 255, 0.10);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.18);
             box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
         }
 
@@ -567,16 +567,279 @@
 
         /* Drag handle */
         .drag-handle {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.1);
-            padding: 22px 8px 22px 14px;
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.38);
+            padding: 20px 0 20px 12px;
             cursor: grab;
             flex-shrink: 0;
             transition: color 0.15s;
+            line-height: 1;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Vertical separator between drag-handle and 3-dot */
+        .drag-handle::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
         }
 
         .song-row:hover .drag-handle {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        /* 3-dot song menu button */
+        .song-dotmenu-btn {
+            width: 28px;
+            height: 36px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.30);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s;
+            margin-right: 2px;
+            margin-left: 2px;
+        }
+
+        .song-row:hover .song-dotmenu-btn {
+            color: rgba(255, 255, 255, 0.78);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .song-dotmenu-btn.active {
+            background: rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 1);
+        }
+
+        /* 3-dot button for nested section rows */
+        .sub-dotmenu-btn {
+            width: 22px;
+            height: 32px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: color 0.12s, background 0.12s;
+            margin-right: 2px;
+            padding: 0;
+        }
+        .section-row:hover .sub-dotmenu-btn { color: rgba(255, 255, 255, 0.46); }
+        .sub-dotmenu-btn:hover              { color: rgba(255, 255, 255, 0.90) !important; background: rgba(255, 255, 255, 0.08); }
+        .sub-dotmenu-btn.active             { color: rgba(255, 255, 255, 1); background: rgba(255, 255, 255, 0.12); }
+
+        /* Note indicator dot on section name */
+        .sub-note-dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.42);
+            vertical-align: middle;
+            margin-left: 5px;
+            flex-shrink: 0;
+        }
+
+        /* Floating context panel */
+        .song-ctx-panel {
+            position: fixed;
+            z-index: 4000;
+            width: 256px;
+            background: #1c1c1e;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.85), 0 2px 8px rgba(0,0,0,0.5);
+            overflow: hidden;
+            animation: ctxFadeIn 0.15s ease;
+        }
+
+        @keyframes ctxFadeIn {
+            from { opacity: 0; transform: scale(0.94) translateY(-4px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .song-ctx-header {
+            padding: 10px 14px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.34);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .song-ctx-section {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .song-ctx-section:last-child { border-bottom: none; }
+
+        .song-ctx-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .song-ctx-row:last-child { margin-bottom: 0; }
+
+        .song-ctx-label {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.96);
+        }
+
+        .song-ctx-sublabel {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.46);
+            margin-bottom: 6px;
+        }
+
+        .song-ctx-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 13px;
+            font-family: var(--font-ui);
+            color: #fff;
+            outline: none;
+            transition: border-color 0.15s;
+            box-sizing: border-box;
+        }
+
+        .song-ctx-input:focus {
+            border-color: rgba(255, 255, 255, 0.34);
+            background: rgba(255, 255, 255, 0.11);
+        }
+
+        .song-ctx-input:disabled {
+            opacity: 0.32;
+            cursor: not-allowed;
+        }
+
+        .song-ctx-input.num-input {
+            width: 80px;
+            text-align: center;
+        }
+
+        .song-ctx-toggle {
+            position: relative;
+            width: 36px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .song-ctx-toggle input { display: none; }
+
+        .song-ctx-track {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .song-ctx-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.60);
+            transition: transform 0.2s, background 0.2s;
+            pointer-events: none;
+        }
+
+        .song-ctx-toggle input:checked + .song-ctx-track { background: var(--color-brand); }
+        .song-ctx-toggle input:checked + .song-ctx-track .song-ctx-thumb { transform: translateX(16px); background: #fff; }
+
+        /* Color palette grid */
+        .song-ctx-palette {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .ctx-color-swatch {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.12s, border-color 0.12s;
+        }
+
+        .ctx-color-swatch:hover { transform: scale(1.18); }
+
+        .ctx-color-swatch.selected {
+            border-color: #fff;
+            transform: scale(1.12);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.6) inset;
+        }
+
+        .ctx-clear-btn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.60);
+            font-size: 12px;
+            font-weight: 600;
+            font-family: var(--font-ui);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .ctx-clear-btn:hover { background: rgba(255, 255, 255, 0.13); color: #fff; }
+
+        /* Delay indicator on song duration */
+        .song-delay-tag {
+            display: block;
+            font-size: 9px;
+            font-family: var(--font-mono);
+            color: var(--color-timer);
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+            opacity: 0.85;
+        }
+
+        /* Stop-after indicator */
+        .song-stop-tag {
+            display: inline-block;
+            font-size: 9px;
+            background: rgba(252,60,68,0.18);
+            color: var(--color-active);
+            border-radius: 3px;
+            padding: 1px 4px;
+            margin-left: 4px;
+            font-weight: 700;
+            vertical-align: middle;
+            flex-shrink: 0;
         }
 
         /* Number */
@@ -597,11 +860,16 @@
         }
 
         .song-row.has-mapped-color {
-            border-left: 4px solid var(--mapped-theme-color, transparent);
+            background: var(--mapped-theme-color-dark, rgba(255, 255, 255, 0.07));
+            border-left: none;
+        }
+
+        .song-row.has-mapped-color:hover {
+            background: var(--mapped-theme-color-hover, rgba(255, 255, 255, 0.12));
         }
 
         .song-row.has-mapped-color .card-bg-fill {
-            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
+            background: var(--mapped-theme-color-fill, rgba(30, 215, 96, 0.30));
         }
 
         /* Chevron */
@@ -609,7 +877,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.24);
             font-size: 11px;
             display: flex;
             align-items: center;
@@ -623,7 +891,7 @@
         }
 
         .song-chevron.has-subs {
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.42);
         }
 
         .song-chevron.has-subs:hover {
@@ -633,7 +901,7 @@
 
         .song-chevron.open {
             transform: rotate(90deg);
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(255, 255, 255, 0.66);
         }
 
         /* Title */
@@ -663,7 +931,7 @@
         .song-duration {
             font-family: var(--font-mono);
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.22);
+            color: rgba(255, 255, 255, 0.26);
             padding: 0 8px;
             flex-shrink: 0;
             min-width: 42px;
@@ -672,6 +940,33 @@
 
         .song-row.active .song-duration {
             color: var(--color-live);
+        }
+
+        /* Loop iteration counter badge (e.g. 2/4) — shown left of song-actions */
+        .loop-counter-badge {
+            display: none;
+            height: 40px;
+            min-width: 40px;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.90);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            padding: 0 8px;
+            margin-right: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+        }
+        .song-row.active .loop-counter-badge,
+        .section-row.active .loop-counter-badge {
+            color: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.26);
         }
 
         /* Action buttons */
@@ -686,10 +981,10 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             border: none;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.22);
+            color: rgba(255, 255, 255, 0.26);
             font-size: 18px;
             display: flex;
             align-items: center;
@@ -699,13 +994,13 @@
 
         .sa-btn:active {
             transform: scale(0.92);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.36);
         }
 
         .sa-btn:hover {
-            background: rgba(255, 255, 255, 0.09);
-            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.11);
+            color: rgba(255, 255, 255, 0.96);
         }
 
         .sa-btn.chain-on {
@@ -728,7 +1023,7 @@
             background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-top: none;
             border-radius: 0 0 var(--radius-card) var(--radius-card);
             padding: 4px 12px 8px 28px;
@@ -757,7 +1052,7 @@
             align-items: center;
             min-height: 42px;
             padding: 0 8px 0 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: background 0.15s;
@@ -770,7 +1065,7 @@
         }
 
         .section-row:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .section-row.active {
@@ -783,11 +1078,16 @@
         }
 
         .section-row.has-mapped-color {
-            border-left: 3px solid var(--mapped-theme-color, transparent);
+            background: var(--mapped-theme-color-dark, rgba(255, 255, 255, 0.05));
+            border-left: none;
+        }
+
+        .section-row.has-mapped-color:hover {
+            background: var(--mapped-theme-color-hover, rgba(255, 255, 255, 0.10));
         }
 
         .section-row.has-mapped-color .card-bg-fill {
-            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
+            background: var(--mapped-theme-color-fill, rgba(30, 215, 96, 0.30));
         }
 
         .section-row.active .section-row-dot {
@@ -799,11 +1099,87 @@
             flex: 1;
             font-size: 13px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.42);
+            color: rgba(255, 255, 255, 0.50);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        /* Feature 3: {} info text inline with section name */
+        .marker-info {
+            font-style: italic;
+            font-weight: 400;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.34);
+            margin-left: 5px;
+        }
+        .section-row.active .marker-info { color: rgba(255, 255, 255, 0.66); }
+
+        /* Feature 5: +PAUSE indicator badge */
+        .marker-pause-tag {
+            font-size: 9px;
+            font-style: normal;
+            background: rgba(251,191,36,0.18);
+            color: #fbbf24;
+            border-radius: 3px;
+            padding: 1px 4px;
+            margin-left: 5px;
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+
+        /* Feature 11: skipped section row */
+        .section-row.skipped {
+            opacity: 0.38;
+        }
+        .section-row.skipped .section-row-name {
+            text-decoration: line-through;
+            text-decoration-color: rgba(255, 255, 255, 0.36);
+        }
+
+        /* Feature 4: STOP entry — shown in section list with info text */
+        .section-row.marker-stop {
+            opacity: 0.65;
+            border-left: 3px solid rgba(252,60,68,0.4) !important;
+        }
+        .section-row.marker-stop .section-row-name {
+            color: rgba(252,60,68,0.7);
+            font-style: italic;
+        }
+
+        /* Feature 8: [nosong] — dimmed, no numbering dot */
+        .song-row.nosong { opacity: 0.55; }
+        .song-row.nosong .song-index { visibility: hidden; }
+
+        /* Feature 12: CSS class markers — affect the name text, not the container */
+        .song-row.bold .song-name,
+        .section-row.bold .section-row-name,
+        .grid-card.bold .grid-card-name { font-weight: 900; letter-spacing: -0.2px; }
+
+        .song-row.dim .song-name,
+        .section-row.dim .section-row-name,
+        .grid-card.dim .grid-card-name { opacity: 0.42; }
+
+        .song-row.italic .song-name,
+        .section-row.italic .section-row-name,
+        .grid-card.italic .grid-card-name { font-style: italic; }
+
+        .song-row.loud .song-name,
+        .section-row.loud .section-row-name,
+        .grid-card.loud .grid-card-name { text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
+
+        .song-row.small .song-name { font-size: 12px; }
+        .song-row.large .song-name { font-size: 18px; font-weight: 700; }
+
+        /* Feature 3: info text on song name line */
+        .song-name-info {
+            font-style: italic;
+            font-weight: 400;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.36);
+            margin-left: 6px;
+        }
+        .song-row.active .song-name-info { color: rgba(255, 255, 255, 0.66); }
 
         .section-row.active .section-row-name {
             color: #FFFFFF;
@@ -813,7 +1189,7 @@
         .section-row-dur {
             font-family: var(--font-mono);
             font-size: 10px;
-            color: rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.22);
             flex-shrink: 0;
             margin-right: 10px;
         }
@@ -840,7 +1216,7 @@
             justify-content: flex-end;
             gap: 8px;
             padding: 8px 14px 10px 28px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .btn-play-song {
@@ -872,8 +1248,8 @@
         }
 
         .grid-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: var(--radius-card);
             padding: 14px 10px;
             display: flex;
@@ -888,7 +1264,7 @@
         }
 
         .grid-card:hover {
-            background: rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .grid-card.active {
@@ -911,17 +1287,22 @@
         }
 
         .grid-card.has-mapped-color {
-            border-left: 4px solid var(--mapped-theme-color, transparent);
+            background: var(--mapped-theme-color-dark, rgba(255, 255, 255, 0.07));
+            border-left: none;
+        }
+
+        .grid-card.has-mapped-color:hover {
+            background: var(--mapped-theme-color-hover, rgba(255, 255, 255, 0.12));
         }
 
         .grid-card.has-mapped-color .card-bg-fill {
-            background: var(--mapped-theme-color-bg, rgba(30, 215, 96, 0.15));
+            background: var(--mapped-theme-color-fill, rgba(30, 215, 96, 0.30));
         }
 
         .grid-card-name {
             font-size: 12px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.96);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1061,7 +1442,7 @@
         .sidebar-preview {
             background: #111111;
             backdrop-filter: blur(32px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             width: 100%;
             max-width: 320px;
@@ -1073,7 +1454,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .sidebar-logo {
@@ -1087,7 +1468,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             border: none;
             color: var(--text-subdued);
             font-size: 14px;
@@ -1099,13 +1480,13 @@
         }
 
         .sidebar-close-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
             color: var(--text-primary);
         }
 
         .sidebar-section {
             padding: 14px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .sidebar-section:last-child {
@@ -1175,8 +1556,8 @@
         .font-btn {
             padding: 5px 12px;
             border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-secondary);
             font-size: 12px;
             font-weight: 600;
@@ -1186,7 +1567,7 @@
         }
 
         .font-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
             color: var(--text-primary);
         }
 
@@ -1223,7 +1604,7 @@
             width: 100%;
             height: 4px;
             border-radius: 2px;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
             appearance: none;
             outline: none;
             margin: 8px 0 6px;
@@ -1248,8 +1629,8 @@
         .size-preset {
             padding: 4px 10px;
             border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-secondary);
             font-size: 11px;
             font-weight: 700;
@@ -1258,7 +1639,7 @@
         }
 
         .size-preset:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
         }
 
         /* Theme dot */
@@ -1291,7 +1672,7 @@
             top: calc(100% + 6px);
             right: 0;
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             min-width: 160px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
@@ -1317,7 +1698,7 @@
         }
 
         .dotmenu-item:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
         }
 
@@ -1338,7 +1719,7 @@
         .lyrics-panel-preview {
             background: #111111;
             backdrop-filter: blur(28px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             overflow: hidden;
         }
@@ -1348,7 +1729,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 14px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .panel-title {
@@ -1362,7 +1743,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             border: none;
             color: var(--text-subdued);
             font-size: 14px;
@@ -1419,7 +1800,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             border: none;
             color: var(--text-subdued);
             font-size: 14px;
@@ -1449,7 +1830,7 @@
 ══════════════════════════════════════════════ */
         .live-view-preview {
             background: #0d0d0d;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             overflow: hidden;
             padding: 36px 28px;
@@ -1497,7 +1878,7 @@
 
         .live-setlist-name {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.30);
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
@@ -1514,7 +1895,7 @@
         }
 
         .live-progress-bar {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             height: 4px;
             border-radius: 2px;
             max-width: 420px;
@@ -1526,13 +1907,13 @@
             width: 63%;
             background: #20D760;
             border-radius: 2px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.48);
         }
 
         .live-time {
             font-family: var(--font-mono);
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.42);
             margin-bottom: 28px;
         }
 
@@ -1543,12 +1924,12 @@
 
         .live-next {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.24);
             margin-bottom: 28px;
         }
 
         .live-next span {
-            color: rgba(255, 255, 255, 0.45);
+            color: rgba(255, 255, 255, 0.54);
             font-weight: 600;
         }
 
@@ -1587,7 +1968,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.34);
             width: 0%;
             border-radius: inherit;
             pointer-events: none;
@@ -1606,11 +1987,11 @@
         }
 
         .lt-ghost {
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.10);
+            color: rgba(255, 255, 255, 0.54);
             padding: 12px 18px;
             font-size: 14px;
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.14);
         }
 
         .lt-ghost.active {
@@ -1625,7 +2006,7 @@
 ══════════════════════════════════════════════ */
         .modal-preview {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 18px;
             padding: 24px;
             max-width: 380px;
@@ -1650,7 +2031,7 @@
             width: 100%;
             padding: 9px 14px;
             background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: var(--radius-sm);
             color: var(--text-primary);
             font-size: 13px;
@@ -1677,13 +2058,13 @@
         }
 
         .m-btn-cancel {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.10);
             color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .m-btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
         }
 
         .m-btn-confirm {
@@ -1731,7 +2112,7 @@
         }
 
         .page-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
             padding: 32px 28px;
             text-align: center;
             color: var(--text-subdued);
@@ -1770,7 +2151,7 @@
             height: 100vh;
             background: #111111;
             backdrop-filter: blur(32px) saturate(180%);
-            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 2000;
             transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             overflow-y: auto;
@@ -1961,7 +2342,7 @@
         }
 
         .live-exit {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.10);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 6px 14px;
@@ -1985,14 +2366,51 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             min-height: 26px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .live-loop-counter {
+            display: none;
+            font-size: 13px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.03em;
+            text-transform: none;
+            color: rgba(255, 255, 255, 0.78);
+            background: rgba(255, 255, 255, 0.11);
+            border: 1px solid rgba(255, 255, 255, 0.19);
+            border-radius: 6px;
+            padding: 2px 9px;
+            line-height: 20px;
+            flex-shrink: 0;
+        }
+
+        .live-sub-arrow {
+            display: none;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.26);
+            flex-shrink: 0;
+            letter-spacing: 0;
+        }
+
+        #live-sub-next-name {
+            display: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.34);
+            flex-shrink: 0;
         }
 
         #live-progress-bar {
             width: 100%;
             max-width: 700px;
             height: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -2000,8 +2418,32 @@
         #live-progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent2), #00c853);
+            background: #ffffff;
             transition: width 0.1s linear;
+        }
+
+        #live-sub-progress-bar {
+            width: 80%;
+            max-width: 560px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px auto 0;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        #live-sub-progress-bar.visible {
+            opacity: 1;
+        }
+
+        #live-sub-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #ffffff;
+            border-radius: 4px;
+            transition: width 0.1s linear, background 0.3s ease;
         }
 
         #live-time-rem {
@@ -2071,7 +2513,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.34);
             width: 0%;
             left: 0;
             top: 0;
@@ -2132,8 +2574,8 @@
         }
 
         #canvas-mode.edit-mode #canvas-workspace {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
@@ -2144,8 +2586,8 @@
         }
 
         #canvas-mode.edit-mode .canvas-widget {
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.36);
+            background: rgba(255, 255, 255, 0.06);
             resize: both;
             overflow: hidden;
             cursor: move;
@@ -2237,7 +2679,7 @@
             right: 4px;
             z-index: 1000;
             background: rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             border-radius: 8px;
             padding: 4px 6px;
             gap: 4px;
@@ -2251,9 +2693,9 @@
 
         .cw-tool-btn {
             padding: 4px 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.10);
             color: #fff;
             font-size: 11px;
             cursor: pointer;
@@ -2287,7 +2729,7 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.36);
             flex-shrink: 0;
         }
 
@@ -2337,7 +2779,7 @@
 
         .top-tab-btn:hover {
             color: var(--text);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .top-tab-btn.active {
@@ -2353,7 +2795,7 @@
         .cw-font-select {
             padding: 3px 6px;
             background: rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             border-radius: 5px;
             color: #fff;
             font-size: 11px;
@@ -2366,7 +2808,7 @@
             width: 28px;
             height: 22px;
             padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.36);
             border-radius: 4px;
             background: none;
             cursor: pointer;
@@ -2375,6 +2817,165 @@
         .lb-loop {
             background: linear-gradient(135deg, #424242, #616161);
         }
+        /* ══════════════════════════════════════════════
+   APPEARANCE MODAL
+══════════════════════════════════════════════ */
+        #appearance-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 3500;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #appearance-modal-overlay.open {
+            display: flex;
+        }
+
+        .appearance-modal {
+            background: #1c1c1e;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 22px;
+            padding: 24px 24px 20px;
+            width: 308px;
+            box-shadow: 0 28px 72px rgba(0, 0, 0, 0.85), 0 4px 12px rgba(0, 0, 0, 0.5);
+            animation: ctxFadeIn 0.18s ease;
+        }
+
+        .appearance-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .appearance-modal-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .appearance-modal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+
+        .appearance-modal-close:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .appearance-slider-row {
+            margin-bottom: 18px;
+        }
+
+        .appearance-slider-row:last-of-type {
+            margin-bottom: 20px;
+        }
+
+        .appearance-slider-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .appearance-slider-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.50);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .appearance-slider-value {
+            font-size: 13px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--color-brand);
+            min-width: 38px;
+            text-align: right;
+        }
+
+        .appearance-slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.14);
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+        }
+
+        .appearance-slider::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+            transition: transform 0.12s;
+        }
+
+        .appearance-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .appearance-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .appearance-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            margin: 0 0 16px;
+        }
+
+        .appearance-reset-btn {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.46);
+            font-size: 12px;
+            font-weight: 700;
+            font-family: var(--font-ui);
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .appearance-reset-btn:hover {
+            background: rgba(255, 255, 255, 0.11);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
     </style>
 </head>
 
@@ -2540,6 +3141,20 @@
         </div>
 
         <div class="sidebar-section">
+            <div class="sidebar-section-title">Settings &mdash; Appearance</div>
+            <button class="sidebar-action-btn sab-slate" onclick="openAppearanceModal()">
+                <span class="sab-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="7.5" stroke="white" stroke-opacity="0.85" stroke-width="1.5"/>
+                        <path d="M9 1.5C9 1.5 13.5 5.5 13.5 9C13.5 12.5 9 16.5 9 16.5" stroke="white" stroke-opacity="0.85" stroke-width="1.5"/>
+                        <line x1="1.5" y1="9" x2="16.5" y2="9" stroke="white" stroke-opacity="0.85" stroke-width="1.5"/>
+                    </svg>
+                </span>
+                Display Filters
+            </button>
+        </div>
+
+        <div class="sidebar-section">
             <div class="sidebar-section-title">Settings &mdash; Theme</div>
             <div class="theme-selector">
                 <div class="theme-dot active" data-theme="dark" onclick="setTheme('dark')"
@@ -2648,6 +3263,53 @@
         </div>
     </div>
 
+    <!-- APPEARANCE MODAL -->
+    <div id="appearance-modal-overlay" onclick="if(event.target===this)closeAppearanceModal()">
+        <div class="appearance-modal">
+            <div class="appearance-modal-header">
+                <span class="appearance-modal-title">Display Filters</span>
+                <button class="appearance-modal-close" onclick="closeAppearanceModal()">
+                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                        <path d="M1 1L10 10M10 1L1 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="appearance-slider-row">
+                <div class="appearance-slider-label-row">
+                    <span class="appearance-slider-name">Luminancia</span>
+                    <span class="appearance-slider-value" id="appearance-val-brightness">100%</span>
+                </div>
+                <input type="range" class="appearance-slider" id="appearance-slider-brightness"
+                    min="50" max="150" step="1" value="100"
+                    oninput="updateAppearanceSlider('brightness', this.value)">
+            </div>
+
+            <div class="appearance-slider-row">
+                <div class="appearance-slider-label-row">
+                    <span class="appearance-slider-name">Contraste</span>
+                    <span class="appearance-slider-value" id="appearance-val-contrast">100%</span>
+                </div>
+                <input type="range" class="appearance-slider" id="appearance-slider-contrast"
+                    min="50" max="150" step="1" value="100"
+                    oninput="updateAppearanceSlider('contrast', this.value)">
+            </div>
+
+            <div class="appearance-slider-row">
+                <div class="appearance-slider-label-row">
+                    <span class="appearance-slider-name">Saturación</span>
+                    <span class="appearance-slider-value" id="appearance-val-saturation">100%</span>
+                </div>
+                <input type="range" class="appearance-slider" id="appearance-slider-saturation"
+                    min="0" max="200" step="1" value="100"
+                    oninput="updateAppearanceSlider('saturation', this.value)">
+            </div>
+
+            <hr class="appearance-divider">
+            <button class="appearance-reset-btn" onclick="resetAppearance()">Restablecer valores</button>
+        </div>
+    </div>
+
     <!-- LYRICS PANEL -->
     <div id="lyrics-panel">
         <div class="panel-header">
@@ -2675,9 +3337,12 @@
                 style="font-family: monospace; margin-left: 6px; letter-spacing: 1px;">00:00</span></p>
         <p class="live-setlist-name" id="live-setlist-name" style="margin-bottom: 14px;"></p>
         <h2 class="live-song-name" id="live-song-name">—</h2>
-        <p class="live-region" id="live-sub-region"></p>
+        <p class="live-region" id="live-sub-region"><span id="live-sub-region-name"></span><span id="live-loop-counter" class="live-loop-counter"></span><span class="live-sub-arrow" id="live-sub-arrow">&#8594;</span><span id="live-sub-next-name"></span></p>
         <div class="live-progress-bar" id="live-progress-bar">
             <div class="live-progress-fill" id="live-progress-fill"></div>
+        </div>
+        <div id="live-sub-progress-bar">
+            <div id="live-sub-progress-fill"></div>
         </div>
         <p class="live-time" id="live-time-rem">—</p>
         <div class="live-next-wrap">
@@ -2854,6 +3519,7 @@
         // Batched recur like X-Raym: lyrics+chords+regions each on their own poll
         wwr_req_recur("TRANSPORT", 100);
         wwr_req_recur("REGION", 1000);
+        wwr_req_recur("MARKER", 1000);
         // X-Raym exact approach: poll PROJEXTSTATE every 10ms batched
         wwr_req_recur("GET/PROJEXTSTATE/XR_Lyrics/text;GET/PROJEXTSTATE/XR_Lyrics/next", 10);
         wwr_req_recur("GET/PROJEXTSTATE/XR_Chords/text", 200);
@@ -2861,6 +3527,7 @@
 
         // --- 2. STATE ---
         var g_regions = [];
+        var g_markers = [];        // point-in-time markers (end == start in REAPER)
         var displayList = [];
         var g_subRegionMap = {};   // { "Song Name": [{id,name,sectionName,start,end},...] }
         var isPlaying = false;
@@ -2871,6 +3538,307 @@
         var isDragging = false;
         var initialized = false;
         var expandedSongs = {}; // { songId: true/false }
+
+        // --- Per-project session detection via region fingerprint ---
+        // Project-specific keys are namespaced with a fingerprint derived from region IDs.
+        // Global UI prefs (theme, fonts, etc.) are NOT namespaced.
+        var g_projectKey = null; // e.g. 'pa3f9z' — set after first REGION_LIST_END
+
+        function _computeProjectFingerprint(regions) {
+            if (!regions || !regions.length) return null;
+            // Build a sorted list of region IDs for a stable, order-independent hash
+            var ids = regions.slice().sort(function(a,b){ return a[2] < b[2] ? -1 : 1; })
+                             .map(function(r){ return r[2]; }).join('|');
+            var h = 5381;
+            for (var ci = 0; ci < ids.length; ci++) { h = ((h << 5) + h + ids.charCodeAt(ci)) | 0; }
+            return 'p' + Math.abs(h).toString(36);
+        }
+
+        function _pkSuffix() { return g_projectKey ? '_' + g_projectKey : ''; }
+        function _overridesKey() { return 'reaset_song_overrides' + _pkSuffix(); }
+
+        function _initProjectStorage(newKey) {
+            // Called on first load and whenever the REAPER project changes.
+            // Reloads all project-specific storage under the new namespace.
+            g_projectKey = newKey;
+            try { g_songOverrides = JSON.parse(localStorage.getItem(_overridesKey()) || '{}'); }
+            catch(e) { g_songOverrides = {}; }
+            STORAGE_KEY = 'reaper_setlists_v9' + _pkSuffix();
+            CURRENT_KEY = 'reaper_current_setlist' + _pkSuffix();
+            try { setlists = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { "Default": [] }; }
+            catch(e) { setlists = { "Default": [] }; }
+            if (!setlists["Default"]) setlists["Default"] = [];
+            currentSetlistName = localStorage.getItem(CURRENT_KEY) || "Default";
+            if (!setlists[currentSetlistName]) currentSetlistName = "Default";
+            displayList = []; initialized = false;
+            updateSetlistDropdown();
+        }
+
+        // --- Per-song overrides (stop, delay, description, color) ---
+        var g_songOverrides = (function() {
+            try { return JSON.parse(localStorage.getItem('reaset_song_overrides') || '{}'); }
+            catch(e) { return {}; }
+        })();
+
+        function saveSongOverrides() {
+            localStorage.setItem(_overridesKey(), JSON.stringify(g_songOverrides));
+        }
+
+        function getOverride(id) {
+            return g_songOverrides[id] || {};
+        }
+
+        function setSongOverride(id, key, value) {
+            if (!g_songOverrides[id]) g_songOverrides[id] = {};
+            g_songOverrides[id][key] = value;
+            saveSongOverrides();
+            lastRenderChecksum = ''; syncRegions();
+        }
+
+        function hexToRgba(hex, alpha) {
+            var rgb = hexToRgb(hex);
+            return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha + ')';
+        }
+
+        function buildColorVarsFromHex(hex) {
+            return '--mapped-theme-color: ' + hex
+                + '; --mapped-theme-color-dark: ' + hexToRgba(hex, 0.10)
+                + '; --mapped-theme-color-hover: ' + hexToRgba(hex, 0.16)
+                + '; --mapped-theme-color-fill: ' + hexToRgba(hex, 0.32) + ';';
+        }
+
+        var SONG_COLOR_PALETTE = [
+            '#FF453A','#FF6B35','#FF9F0A','#FFD60A','#30D158','#34C759',
+            '#00C7BE','#64D2FF','#0A84FF','#5E5CE6','#BF5AF2','#FF375F',
+            '#8E8E93','#636366','#48484A','#FFFFFF','#C6A882','#A25752'
+        ];
+
+        var _ctxPanel = null;
+        var _ctxBtnRef = null;
+
+        function closeOpenCtxPanel() {
+            if (_ctxPanel && _ctxPanel.parentNode) _ctxPanel.parentNode.removeChild(_ctxPanel);
+            if (_ctxBtnRef) _ctxBtnRef.classList.remove('active');
+            _ctxPanel = null; _ctxBtnRef = null;
+        }
+
+        function openSongMenu(event, songId) {
+            event.stopPropagation();
+            var btn = event.currentTarget;
+            if (_ctxPanel && _ctxBtnRef === btn) { closeOpenCtxPanel(); return; }
+            closeOpenCtxPanel();
+            btn.classList.add('active');
+            _ctxBtnRef = btn;
+
+            var ov = getOverride(songId);
+            var stopAfter  = !!ov.stopAfter;
+            var delayAfter = ov.delayAfter || 0;
+            var desc       = ov.description || '';
+            var colorHex   = ov.colorHex || '';
+            var colorOn    = !!colorHex;
+
+            var songName = '';
+            for (var i = 0; i < displayList.length; i++) {
+                if (displayList[i].id == songId) { songName = displayList[i].displayName || displayList[i].name; break; }
+            }
+
+            var paletteHtml = '';
+            for (var c = 0; c < SONG_COLOR_PALETTE.length; c++) {
+                var cx = SONG_COLOR_PALETTE[c];
+                var sel = (colorHex === cx) ? ' selected' : '';
+                paletteHtml += '<div class="ctx-color-swatch' + sel + '" style="background:' + cx + '" data-color="' + cx + '" onclick="_ctxPickColor(\'' + songId + '\',\'' + cx + '\')"></div>';
+            }
+
+            var panel = document.createElement('div');
+            panel.className = 'song-ctx-panel';
+            panel.innerHTML =
+                '<div class="song-ctx-header">' + (songName.length > 22 ? songName.slice(0,20) + '\u2026' : songName) + '</div>'
+                + '<div class="song-ctx-section"><div class="song-ctx-row">'
+                + '<span class="song-ctx-label"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><rect x="2.5" y="2.5" width="8" height="8" rx="1.5" fill="rgba(255,255,255,0.65)"/></svg> Stop after song</span>'
+                + '<label class="song-ctx-toggle"><input type="checkbox" id="_ctx_stop_' + songId + '"' + (stopAfter ? ' checked' : '') + ' onchange="_ctxSetStop(\'' + songId + '\',this.checked)"><span class="song-ctx-track"><span class="song-ctx-thumb"></span></span></label>'
+                + '</div></div>'
+                + '<div class="song-ctx-section"><div class="song-ctx-row">'
+                + '<span class="song-ctx-label"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><circle cx="6.5" cy="7.5" r="4.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" fill="none"/><line x1="6.5" y1="7.5" x2="8.5" y2="5.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/><path d="M5 1.5h3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/><path d="M6.5 1.5v1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/></svg> Delay after song</span></div>'
+                + '<div class="song-ctx-sublabel">Segundos antes del siguiente</div>'
+                + '<div class="song-ctx-row"><input type="number" min="0" max="300" step="1" class="song-ctx-input num-input" id="_ctx_delay_' + songId + '" value="' + delayAfter + '" ' + (stopAfter ? 'disabled' : '') + ' placeholder="0" onchange="_ctxSetDelay(\'' + songId + '\',this.value)">'
+                + '<span class="song-ctx-label" style="font-size:11px;color:rgba(255,255,255,0.38)">s</span></div></div>'
+                + '<div class="song-ctx-section">'
+                + '<div class="song-ctx-sublabel"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><rect x="2" y="1.5" width="9" height="10" rx="1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><path d="M4.5 5h4M4.5 7h4M4.5 9h2.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.1" stroke-linecap="round"/></svg> Nota / Descripci\u00f3n</div>'
+                + '<textarea class="song-ctx-input" rows="2" id="_ctx_desc_' + songId + '" placeholder="Nota sobre la canci\u00f3n\u2026" style="resize:none" onchange="_ctxSetDesc(\'' + songId + '\',this.value)">' + desc + '</textarea>'
+                + '</div>'
+                + '<div class="song-ctx-section"><div class="song-ctx-row">'
+                + '<span class="song-ctx-label"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><circle cx="6.5" cy="6.5" r="5" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><circle cx="4.2" cy="5" r="1.1" fill="rgba(255,255,255,0.65)"/><circle cx="8.8" cy="5" r="1.1" fill="rgba(255,255,255,0.65)"/><circle cx="6.5" cy="9" r="1.1" fill="rgba(255,255,255,0.65)"/></svg> Color</span>'
+                + '<label class="song-ctx-toggle"><input type="checkbox" id="_ctx_coloron_' + songId + '"' + (colorOn ? ' checked' : '') + ' onchange="_ctxToggleColor(\'' + songId + '\',this.checked)"><span class="song-ctx-track"><span class="song-ctx-thumb"></span></span></label>'
+                + '</div><div id="_ctx_palette_' + songId + '"' + (!colorOn ? ' style="display:none"' : '') + '>'
+                + '<div class="song-ctx-palette">' + paletteHtml + '</div>'
+                + '<button class="ctx-clear-btn" onclick="_ctxClearColor(\'' + songId + '\')">\u2715 Quitar color</button>'
+                + '</div></div>';
+
+            document.body.appendChild(panel);
+            _ctxPanel = panel;
+
+            var br = btn.getBoundingClientRect();
+            var pw = 258, ph = 420;
+            var left = br.left;
+            var top  = br.bottom + 6;
+            if (left + pw > window.innerWidth  - 8) left = window.innerWidth  - pw - 8;
+            if (top  + ph > window.innerHeight - 8) top  = br.top - ph - 6;
+            if (top < 4) top = 4;
+            panel.style.left = left + 'px';
+            panel.style.top  = top  + 'px';
+
+            setTimeout(function() {
+                document.addEventListener('click', function _outside(e) {
+                    if (!panel.contains(e.target) && e.target !== btn) {
+                        closeOpenCtxPanel();
+                        document.removeEventListener('click', _outside);
+                    }
+                });
+            }, 10);
+        }
+
+        function _ctxSetStop(id, val) {
+            setSongOverride(id, 'stopAfter', val);
+            var di = document.getElementById('_ctx_delay_' + id);
+            if (di) di.disabled = val;
+        }
+
+        function _ctxSetDelay(id, val) {
+            var n = parseInt(val, 10) || 0;
+            setSongOverride(id, 'delayAfter', Math.max(0, n));
+        }
+
+        function _ctxSetDesc(id, val) {
+            setSongOverride(id, 'description', val.trim());
+        }
+
+        function _ctxToggleColor(id, on) {
+            var pal = document.getElementById('_ctx_palette_' + id);
+            if (pal) pal.style.display = on ? '' : 'none';
+            if (!on) {
+                setSongOverride(id, 'colorHex', null);
+                if (_ctxPanel) {
+                    var sw = _ctxPanel.querySelectorAll('.ctx-color-swatch');
+                    for (var i = 0; i < sw.length; i++) sw[i].classList.remove('selected');
+                }
+            }
+        }
+
+        function _ctxPickColor(id, hex) {
+            setSongOverride(id, 'colorHex', hex);
+            if (_ctxPanel) {
+                var sw = _ctxPanel.querySelectorAll('.ctx-color-swatch');
+                for (var i = 0; i < sw.length; i++)
+                    sw[i].classList.toggle('selected', sw[i].dataset.color === hex);
+            }
+        }
+
+        function _ctxClearColor(id) {
+            setSongOverride(id, 'colorHex', null);
+            var cb = document.getElementById('_ctx_coloron_' + id);
+            if (cb) { cb.checked = false; _ctxToggleColor(id, false); }
+            else closeOpenCtxPanel();
+        }
+
+        // ── Sub-region (section) context menu ───────────────────────────────
+        function openSubMenu(event, subId) {
+            event.stopPropagation();
+            var btn = event.currentTarget;
+            if (_ctxPanel && _ctxBtnRef === btn) { closeOpenCtxPanel(); return; }
+            closeOpenCtxPanel();
+            btn.classList.add('active');
+            _ctxBtnRef = btn;
+
+            var ov       = getOverride(subId);
+            var desc     = ov.description || '';
+            var colorHex = ov.colorHex || '';
+            var colorOn  = !!colorHex;
+
+            // Find section display name
+            var secName = subId;
+            for (var _k in g_subRegionMap) {
+                if (!g_subRegionMap.hasOwnProperty(_k)) continue;
+                var _sl = g_subRegionMap[_k];
+                for (var _si = 0; _si < _sl.length; _si++) {
+                    if (_sl[_si].id === subId) { secName = _sl[_si].sectionName || _sl[_si].name || subId; break; }
+                }
+                if (secName !== subId) break;
+            }
+
+            var paletteHtml = '';
+            for (var _c = 0; _c < SONG_COLOR_PALETTE.length; _c++) {
+                var _cx = SONG_COLOR_PALETTE[_c];
+                var _sel = (colorHex === _cx) ? ' selected' : '';
+                paletteHtml += '<div class="ctx-color-swatch' + _sel + '" style="background:' + _cx + '" data-color="' + _cx + '" onclick="_subCtxPickColor(\'' + subId + '\',\'' + _cx + '\')"></div>';
+            }
+
+            var panel = document.createElement('div');
+            panel.className = 'song-ctx-panel';
+            panel.innerHTML =
+                '<div class="song-ctx-header">' + (secName.length > 22 ? secName.slice(0,20) + '\u2026' : secName) + '</div>'
+                + '<div class="song-ctx-section">'
+                + '<div class="song-ctx-sublabel"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><rect x="2" y="1.5" width="9" height="10" rx="1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><path d="M4.5 5h4M4.5 7h4M4.5 9h2.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.1" stroke-linecap="round"/></svg> Nota / Descripci\u00f3n</div>'
+                + '<textarea class="song-ctx-input" rows="2" id="_ctx_subdesc_' + subId + '" placeholder="Nota sobre la secci\u00f3n\u2026" style="resize:none" onchange="_ctxSetDesc(\'' + subId + '\',this.value)">' + desc + '</textarea>'
+                + '</div>'
+                + '<div class="song-ctx-section"><div class="song-ctx-row">'
+                + '<span class="song-ctx-label"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><circle cx="6.5" cy="6.5" r="5" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><circle cx="4.2" cy="5" r="1.1" fill="rgba(255,255,255,0.65)"/><circle cx="8.8" cy="5" r="1.1" fill="rgba(255,255,255,0.65)"/><circle cx="6.5" cy="9" r="1.1" fill="rgba(255,255,255,0.65)"/></svg> Color</span>'
+                + '<label class="song-ctx-toggle"><input type="checkbox" id="_ctx_subcoloron_' + subId + '"' + (colorOn ? ' checked' : '') + ' onchange="_subCtxToggleColor(\'' + subId + '\',this.checked)"><span class="song-ctx-track"><span class="song-ctx-thumb"></span></span></label>'
+                + '</div><div id="_ctx_subpalette_' + subId + '"' + (!colorOn ? ' style="display:none"' : '') + '>'
+                + '<div class="song-ctx-palette">' + paletteHtml + '</div>'
+                + '<button class="ctx-clear-btn" onclick="_subCtxClearColor(\'' + subId + '\')">\u2715 Quitar color</button>'
+                + '</div></div>';
+
+            document.body.appendChild(panel);
+            _ctxPanel = panel;
+
+            var br = btn.getBoundingClientRect();
+            var pw = 256, ph = 300;
+            var left = br.right - pw;
+            var top  = br.bottom + 6;
+            if (left < 8) left = 8;
+            if (left + pw > window.innerWidth - 8) left = window.innerWidth - pw - 8;
+            if (top + ph > window.innerHeight - 8) top = br.top - ph - 6;
+            if (top < 4) top = 4;
+            panel.style.left = left + 'px';
+            panel.style.top  = top  + 'px';
+
+            setTimeout(function() {
+                document.addEventListener('click', function _outside(e) {
+                    if (!panel.contains(e.target) && e.target !== btn) {
+                        closeOpenCtxPanel();
+                        document.removeEventListener('click', _outside);
+                    }
+                });
+            }, 10);
+        }
+
+        function _subCtxPickColor(id, hex) {
+            setSongOverride(id, 'colorHex', hex);
+            if (_ctxPanel) {
+                var sw = _ctxPanel.querySelectorAll('.ctx-color-swatch');
+                for (var i = 0; i < sw.length; i++)
+                    sw[i].classList.toggle('selected', sw[i].dataset.color === hex);
+            }
+        }
+
+        function _subCtxToggleColor(id, on) {
+            var pal = document.getElementById('_ctx_subpalette_' + id);
+            if (pal) pal.style.display = on ? '' : 'none';
+            if (!on) {
+                setSongOverride(id, 'colorHex', null);
+                if (_ctxPanel) {
+                    var sw = _ctxPanel.querySelectorAll('.ctx-color-swatch');
+                    for (var i = 0; i < sw.length; i++) sw[i].classList.remove('selected');
+                }
+            }
+        }
+
+        function _subCtxClearColor(id) {
+            setSongOverride(id, 'colorHex', null);
+            var cb = document.getElementById('_ctx_subcoloron_' + id);
+            if (cb) { cb.checked = false; _subCtxToggleColor(id, false); }
+            else closeOpenCtxPanel();
+        }
 
         // View state
         var hideSkippedMode = (localStorage.getItem("reaper_hide_skipped") === "true");
@@ -2898,7 +3866,8 @@
         var liveViewOpen = false;
         var liveFontScale = 1.0;
 
-        // Storage
+        // Storage — keys are updated by _initProjectStorage() once the project fingerprint is known.
+        // Until the first REGION_LIST_END these fall back to the global (un-namespaced) keys.
         var STORAGE_KEY = "reaper_setlists_v9";
         var CURRENT_KEY = "reaper_current_setlist";
         var setlists = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { "Default": [] };
@@ -2957,7 +3926,44 @@
                         g_regions.push(tok);
                         break;
                     case "REGION_LIST_END":
+                        // Project fingerprint: namespace all project-specific storage.
+                        // Detects REAPER project switches without requiring a page reload.
+                        var _fp = _computeProjectFingerprint(g_regions);
+                        if (_fp && _fp !== g_projectKey) {
+                            _initProjectStorage(_fp);
+                        }
                         syncRegions();
+                        break;
+                    case "MARKER_LIST":
+                        window._gmraw = [];
+                        break;
+                    case "MARKER":
+                        window._gmraw = window._gmraw || [];
+                        window._gmraw.push(tok);
+                        break;
+                    case "MARKER_LIST_END":
+                        var newMarkers = (window._gmraw || []).map(function(t) {
+                            var parsed = parseMarkerName(t[1]);
+                            // Prefer [colorname] from marker name; fall back to REAPER track color
+                            var hexColor = parsed.colorHex || null;
+                            if (!hexColor && t[4] && t[4] !== '0') {
+                                hexColor = '#' + t[4].replace(/^0x/i, '').slice(-6);
+                            }
+                            return {
+                                name:   t[1],           // raw REAPER name (for keying)
+                                id:     'mkr_' + t[2],
+                                pos:    parseFloat(t[3]),
+                                color:  hexColor,
+                                parsed: parsed          // all parsed attributes
+                            };
+                        });
+                        var newSig = JSON.stringify(newMarkers);
+                        if (newSig !== window._lastMarkerSig) {
+                            window._lastMarkerSig = newSig;
+                            g_markers = newMarkers;
+                            lastRenderChecksum = '';
+                            syncRegions();
+                        }
                         break;
                 }
             }
@@ -3001,11 +4007,19 @@
         window.addEventListener('load', function () {
             if (location.protocol === 'file:') {
                 window.g_regions = [
-                    ["REGION", "Main Song", "id1", "10.0", "60.0", "16711680"],
-                    ["REGION", "Intro", "id2", "10.0", "20.0", "65280"],
-                    ["REGION", "Verse 1", "id3", "20.0", "40.0", "65280"],
-                    ["REGION", "Chorus", "id4", "40.0", "60.0", "65280"],
-                    ["REGION", "Second Song", "id5", "70.0", "120.0", "16711680"]
+                    // Song 1: sections defined via NESTED REGIONS (legacy / existing behaviour)
+                    ["REGION", "Main Song",  "id1",  "10.0",  "60.0",  "16711680"],
+                    ["REGION", "Intro",      "id2",  "10.0",  "20.0",  "65280"],
+                    ["REGION", "Verse 1",    "id3",  "20.0",  "40.0",  "65280"],
+                    ["REGION", "Chorus",     "id4",  "40.0",  "60.0",  "65280"],
+                    // Song 2: sections defined via MARKERS (new behaviour)
+                    // Markers have end == start  → duration = 0
+                    ["REGION", "Second Song", "id5",  "70.0", "130.0", "16711680"],
+                    ["REGION", "Verso 1",     "mkr1", "70.0",  "70.0", "255"],     // marker at song start
+                    ["REGION", "Verso 2",     "mkr2", "95.0",  "95.0", "255"],     // marker mid-song
+                    ["REGION", "Coro",        "mkr3", "112.0","112.0", "255"],     // marker near end
+                    // Song 3: no sections at all
+                    ["REGION", "Third Song",  "id6", "140.0", "190.0", "0"]
                 ];
                 window.displayList = [];
                 window.subStates = {};
@@ -3018,15 +4032,15 @@
 
         // Color Mapping Palette
         var THEME_PALETTE = [
-            { name: "brand", hex: "#1ED760", rgb: [30, 215, 96], bg: "rgba(30, 215, 96, 0.15)" },
-            { name: "active", hex: "#FC3C44", rgb: [252, 60, 68], bg: "rgba(252, 60, 68, 0.15)" },
-            { name: "loop", hex: "#BF5AF2", rgb: [191, 90, 242], bg: "rgba(191, 90, 242, 0.15)" },
-            { name: "chain", hex: "#30D158", rgb: [48, 209, 88], bg: "rgba(48, 209, 88, 0.15)" },
-            { name: "live", hex: "#64D2FF", rgb: [100, 210, 255], bg: "rgba(100, 210, 255, 0.15)" },
-            { name: "timer", hex: "#FF9F0A", rgb: [255, 159, 10], bg: "rgba(255, 159, 10, 0.15)" },
-            { name: "skip", hex: "#FF453A", rgb: [255, 69, 58], bg: "rgba(255, 69, 58, 0.15)" },
-            { name: "blue", hex: "#0A84FF", rgb: [10, 132, 255], bg: "rgba(10, 132, 255, 0.15)" },
-            { name: "yellow", hex: "#FFD60A", rgb: [255, 214, 10], bg: "rgba(255, 214, 10, 0.15)" }
+            { name: "brand",   hex: "#1ED760", rgb: [30, 215, 96],   bgDark: "rgba(30,215,96,0.10)",   hover: "rgba(30,215,96,0.16)",   fill: "rgba(30,215,96,0.32)"   },
+            { name: "active",  hex: "#FC3C44", rgb: [252, 60, 68],   bgDark: "rgba(252,60,68,0.10)",   hover: "rgba(252,60,68,0.16)",   fill: "rgba(252,60,68,0.32)"   },
+            { name: "loop",    hex: "#BF5AF2", rgb: [191, 90, 242],  bgDark: "rgba(191,90,242,0.10)",  hover: "rgba(191,90,242,0.16)",  fill: "rgba(191,90,242,0.32)"  },
+            { name: "chain",   hex: "#30D158", rgb: [48, 209, 88],   bgDark: "rgba(48,209,88,0.10)",   hover: "rgba(48,209,88,0.16)",   fill: "rgba(48,209,88,0.32)"   },
+            { name: "live",    hex: "#64D2FF", rgb: [100, 210, 255], bgDark: "rgba(100,210,255,0.10)", hover: "rgba(100,210,255,0.16)", fill: "rgba(100,210,255,0.32)" },
+            { name: "timer",   hex: "#FF9F0A", rgb: [255, 159, 10],  bgDark: "rgba(255,159,10,0.10)",  hover: "rgba(255,159,10,0.16)",  fill: "rgba(255,159,10,0.32)"  },
+            { name: "skip",    hex: "#FF453A", rgb: [255, 69, 58],   bgDark: "rgba(255,69,58,0.10)",   hover: "rgba(255,69,58,0.16)",   fill: "rgba(255,69,58,0.32)"   },
+            { name: "blue",    hex: "#0A84FF", rgb: [10, 132, 255],  bgDark: "rgba(10,132,255,0.10)",  hover: "rgba(10,132,255,0.16)",  fill: "rgba(10,132,255,0.32)"  },
+            { name: "yellow",  hex: "#FFD60A", rgb: [255, 214, 10],  bgDark: "rgba(255,214,10,0.10)",  hover: "rgba(255,214,10,0.16)",  fill: "rgba(255,214,10,0.32)"  }
         ];
 
         function hexToRgb(hex) {
@@ -3063,61 +4077,320 @@
             var subMap = {};
             var allEntries = [];
 
+            // ── Pass 1: build allEntries from regions only ────────────────────
+            // g_markers is now populated independently by the MARKER_LIST_END handler
+            // via the native Web Remote MARKER poll — no need to derive markers here.
             for (var i = 0; i < g_regions.length; i++) {
                 var r = g_regions[i];
                 if (r.length <= 4) continue;
+
+                var rStart    = parseFloat(r[3]);
+                var rEnd      = parseFloat(r[4]);
+                var rDuration = rEnd - rStart;
+
+                if (Math.abs(rDuration) < 0.001) continue; // skip zero-duration entries
+
                 var rawColor = r.length > 5 ? parseInt(r[5]) : 0;
                 var cssColor = null;
                 if (rawColor > 0) {
                     cssColor = '#' + (rawColor & 0xFFFFFF).toString(16);
                     while (cssColor.length < 7) cssColor = "#0" + cssColor.substr(1);
                 }
+
+                // Parse flags from the region name so display is clean for ALL regions
+                // (top-level songs AND sub-regions). Features 3, 9, 11, 12, etc.
+                var prFlags = parseRegionFlags(r[1]);
+
                 allEntries.push({
-                    name: r[1],
-                    id: r[2],
-                    start: parseFloatDigits(r[3]),
-                    end: parseFloatDigits(r[4]),
-                    duration: parseFloat(r[4]) - parseFloat(r[3]),
-                    color: cssColor
+                    name:        r[1],                          // raw name — kept for lookups
+                    displayName: prFlags.displayName || r[1],   // cleaned: {}, [], +flags stripped
+                    markerInfo:  prFlags.info,                  // feature 3: {} italic info
+                    className:   prFlags.className,             // feature 12: [.class]
+                    defaultSkip: prFlags.skip,                  // feature 11: +SKIP default
+                    id:          r[2],
+                    start:       parseFloatDigits(r[3]),
+                    end:         parseFloatDigits(r[4]),
+                    duration:    rDuration,
+                    // Feature 9: named [colorname] overrides REAPER track color
+                    color:       prFlags.colorHex || cssColor
                 });
             }
 
-            // Detect REAPER nested/overlapping regions by containment
-            // Sort by duration descending (largest regions first -> songs)
+            // ── Pass 2: detect nested sub-regions by containment ─────────────
+            // Sort regions by duration descending (largest = songs)
             allEntries.sort(function (a, b) { return b.duration - a.duration; });
 
             for (var k = 0; k < allEntries.length; k++) {
                 var entry = allEntries[k];
                 var isSub = false;
-                // Find if this region fits entirely inside an already-registered song
                 for (var key in mainMap) {
                     if (mainMap.hasOwnProperty(key)) {
                         var parent = mainMap[key];
-                        // If fully contained in parent (and strictly smaller)
                         if (entry.start >= parent.start && entry.end <= parent.end && entry.duration < parent.duration) {
                             if (!subMap[parent.name]) subMap[parent.name] = [];
-                            entry.sectionName = entry.name;
-                            entry.parentName = parent.name;
-                            if (!window.subStates[entry.id]) window.subStates[entry.id] = { loop: false, skipped: false };
-                            entry.loop = window.subStates[entry.id].loop;
+                            // Parse full feature set from region name (features 3,5,6,7,9,10,11,12 + loop)
+                            var rFlags = parseRegionFlags(entry.name);
+                            entry.sectionName = rFlags.displayName || entry.name;
+                            entry.parentName  = parent.name;
+                            // Feature 3: {} info text
+                            entry.info        = rFlags.info;
+                            // Feature 5: +PAUSE
+                            entry.pause       = rFlags.pause;
+                            // Feature 10: >>> transition (pos resolved after sort)
+                            entry.transition  = rFlags.transition;
+                            // Feature 6: tags
+                            entry.tags        = rFlags.tags;
+                            // Feature 12: custom CSS class
+                            entry.className   = rFlags.className;
+                            // Feature 9: named color overrides REAPER color
+                            if (rFlags.colorHex) entry.color = rFlags.colorHex;
+                            // Feature 7: duration override
+                            if (rFlags.durationSec !== null) {
+                                entry.end      = entry.start + rFlags.durationSec;
+                                entry.duration = rFlags.durationSec;
+                            }
+                            // Loop flags
+                            entry.loopFull    = rFlags.loopFull;
+                            entry.loopMax     = rFlags.loopMax;
+                            if (!window.subStates[entry.id]) {
+                                window.subStates[entry.id] = {
+                                    loop:         rFlags.loop,  skipped:  rFlags.skip || false,
+                                    loopFull:     rFlags.loopFull, loopMax: rFlags.loopMax,
+                                    loopCount:    0, _loopDefault: rFlags.loop, _skipInit: rFlags.skip
+                                };
+                            } else {
+                                // Real-time loop detection: if the parsed default changed
+                                // (user added/removed +LOOP from region name), apply it immediately.
+                                var prevLoopDefault = window.subStates[entry.id]._loopDefault;
+                                if (prevLoopDefault !== rFlags.loop) {
+                                    window.subStates[entry.id].loop         = rFlags.loop;
+                                    window.subStates[entry.id]._loopDefault = rFlags.loop;
+                                    lastRenderChecksum = ''; // force re-render (loop button update)
+                                }
+                                // Feature 11: +SKIP default (first time only)
+                                if (rFlags.skip && !window.subStates[entry.id]._skipInit) {
+                                    window.subStates[entry.id].skipped   = true;
+                                    window.subStates[entry.id]._skipInit  = true;
+                                }
+                                window.subStates[entry.id].loopFull = rFlags.loopFull;
+                                window.subStates[entry.id].loopMax  = rFlags.loopMax;
+                                if (!window.subStates[entry.id].hasOwnProperty('loopCount')) {
+                                    window.subStates[entry.id].loopCount = 0;
+                                }
+                            }
+                            entry.loop    = window.subStates[entry.id].loop;
                             entry.skipped = window.subStates[entry.id].skipped;
-
                             subMap[parent.name].push(entry);
                             isSub = true;
                             break;
                         }
                     }
                 }
-                if (!isSub) {
-                    mainMap[entry.id] = entry;
-                }
+                if (!isSub) mainMap[entry.id] = entry;
             }
 
-            // Sort sub-regions of each song by their start time
+            // Sort region-based sub-sections by start time
             for (var key in subMap) {
                 if (subMap.hasOwnProperty(key)) {
                     subMap[key].sort(function (a, b) { return a.start - b.start; });
                 }
+            }
+
+            // Feature 10: resolve >>> transitions for region-based sub-sections
+            for (var tKey in subMap) {
+                if (!subMap.hasOwnProperty(tKey)) continue;
+                var tSecs = subMap[tKey];
+                // Find parent song end from mainMap
+                var tParentEnd = null;
+                for (var tPk in mainMap) {
+                    if (mainMap.hasOwnProperty(tPk) && mainMap[tPk].name === tKey) {
+                        tParentEnd = mainMap[tPk].end; break;
+                    }
+                }
+                for (var ti2 = 0; ti2 < tSecs.length; ti2++) {
+                    if (!tSecs[ti2].transition) continue;
+                    var tgtName = tSecs[ti2].transition.toUpperCase();
+                    if (tgtName === 'SONG END' && tParentEnd !== null) {
+                        tSecs[ti2].transitionPos = tParentEnd;
+                    } else {
+                        for (var tj2 = 0; tj2 < tSecs.length; tj2++) {
+                            if (tSecs[tj2].sectionName && tSecs[tj2].sectionName.toUpperCase() === tgtName) {
+                                tSecs[ti2].transitionPos = tSecs[tj2].start; break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ── Pass 3: marker-based sections ────────────────────────────────
+            // Full marker feature set. Priority: region sub-sections beat markers.
+            // g_specialMarkersMap: { songName: [{pos, type:'SONG_END'|'STOP', info}] }
+            // Used in updatePlaybackUI for real-time playback triggers.
+            window.g_specialMarkersMap = window.g_specialMarkersMap || {};
+
+            for (var songKey in mainMap) {
+                if (!mainMap.hasOwnProperty(songKey)) continue;
+                var song = mainMap[songKey];
+                if (subMap[song.name]) continue;  // region sub-sections take priority
+
+                // Collect all markers in [song.start, song.end)
+                var inside = [];
+                for (var mi = 0; mi < g_markers.length; mi++) {
+                    var mkr = g_markers[mi];
+                    if (mkr.pos >= song.start && mkr.pos < song.end) inside.push(mkr);
+                }
+                if (inside.length === 0) continue;
+                inside.sort(function (a, b) { return a.pos - b.pos; });
+
+                // --- Feature 1: first marker at song.start (non-section) → override song display name
+                var firstM = inside[0];
+                var fp = firstM.parsed || parseMarkerName(firstM.name);
+                if (!fp.ignored && !fp.isSection && !fp.isSongEnd && !fp.isStop &&
+                    Math.abs(firstM.pos - song.start) < 0.001) {
+                    song.displayName = fp.displayName;
+                    song.markerInfo  = fp.info;
+                    if (fp.colorHex)      song.color   = fp.colorHex;
+                    if (fp.nosong)        song.nosong  = true;
+                    if (fp.className)     song.className = fp.className;
+                    if (fp.durationSec !== null) {
+                        song.duration = fp.durationSec;
+                        song.end      = song.start + fp.durationSec;
+                    }
+                    // Do NOT add this marker as a section
+                    inside = inside.slice(1);
+                    if (inside.length === 0) continue;
+                }
+
+                // Separate special markers (SONG END, STOP, ignored) from section markers
+                var specials = [];
+                var sectionMkrs = [];
+                for (var fi = 0; fi < inside.length; fi++) {
+                    var fm = inside[fi];
+                    var p = fm.parsed || parseMarkerName(fm.name);
+                    fm.parsed = p; // cache
+                    if (p.ignored)   continue;
+                    if (p.isSongEnd || p.isStop) { specials.push(fm); continue; }
+                    sectionMkrs.push(fm);
+                }
+
+                // Store special markers for playback triggers
+                window.g_specialMarkersMap[song.name] = specials.map(function(sm) {
+                    return { pos: sm.pos, type: sm.parsed.isSongEnd ? 'SONG_END' : 'STOP', info: sm.parsed.info };
+                });
+
+                // Build sections from > section markers
+                var sections = [];
+                for (var si = 0; si < sectionMkrs.length; si++) {
+                    var m  = sectionMkrs[si];
+                    var p  = m.parsed;
+
+                    // End of this section = start of next section marker (skip STOP/SONG END)
+                    var secEnd = song.end;
+                    for (var nx = si + 1; nx < sectionMkrs.length; nx++) {
+                        secEnd = sectionMkrs[nx].pos;
+                        break;
+                    }
+                    // Feature 7: [mm:ss] overrides the section end
+                    if (p.durationSec !== null) secEnd = m.pos + p.durationSec;
+
+                    var secId = 'mkr_' + m.id;
+                    if (!window.subStates[secId]) {
+                        window.subStates[secId] = {
+                            loop:         p.loop     || false,
+                            skipped:      p.skip     || false,
+                            loopFull:     p.loopFull || false,
+                            loopMax:      p.loopMax  || null,
+                            loopCount:    0,
+                            _loopDefault: p.loop || false,
+                            _skipInit:    p.skip
+                        };
+                    } else {
+                        if (p.skip && !window.subStates[secId]._skipInit) {
+                            window.subStates[secId].skipped  = true;
+                            window.subStates[secId]._skipInit = true;
+                        }
+                        // Real-time loop detection for marker sections
+                        var prevMkrDefault = window.subStates[secId]._loopDefault;
+                        if (prevMkrDefault !== (p.loop || false)) {
+                            window.subStates[secId].loop         = p.loop || false;
+                            window.subStates[secId]._loopDefault = p.loop || false;
+                            lastRenderChecksum = '';
+                        }
+                        window.subStates[secId].loopFull = p.loopFull || false;
+                        window.subStates[secId].loopMax  = p.loopMax  || null;
+                        if (!window.subStates[secId].hasOwnProperty('loopCount')) {
+                            window.subStates[secId].loopCount = 0;
+                        }
+                    }
+
+                    // Feature 4: STOP with info → show as a special entry in the section list
+                    // Check if there's a STOP marker between this section and the next
+                    var stopInfo = null;
+                    for (var sp = 0; sp < specials.length; sp++) {
+                        var spm = specials[sp];
+                        if (spm.parsed.isStop && spm.parsed.info && spm.pos >= m.pos && spm.pos < secEnd) {
+                            stopInfo = spm.parsed.info;
+                        }
+                    }
+
+                    sections.push({
+                        name:        p.displayName,
+                        id:          secId,
+                        start:       m.pos,
+                        end:         secEnd,
+                        duration:    secEnd - m.pos,
+                        sectionName: p.displayName,
+                        parentName:  song.displayName || song.name,
+                        color:       m.color || (p.colorHex ? p.colorHex : null),
+                        loop:        window.subStates[secId].loop,
+                        loopFull:    p.loopFull || false,
+                        loopMax:     p.loopMax  || null,
+                        skipped:     window.subStates[secId].skipped,
+                        info:        p.info,        // Feature 3: {} italic text
+                        pause:       p.pause,       // Feature 5: +PAUSE
+                        transition:  p.transition,  // Feature 10: >>>
+                        className:   p.className,   // Feature 12: [.class]
+                        stopInfo:    stopInfo        // Feature 4: STOP {info} entry
+                    });
+
+                    // Feature 4: STOP with info appended as a separate visible entry
+                    if (stopInfo) {
+                        var stopEntryId = 'stop_' + m.id;
+                        sections.push({
+                            name:        'STOP',
+                            id:          stopEntryId,
+                            start:       m.pos,
+                            end:         m.pos,
+                            duration:    0,
+                            sectionName: stopInfo,
+                            parentName:  song.displayName || song.name,
+                            color:       null,
+                            loop:        false,
+                            skipped:     false,
+                            markerType:  'stop',
+                            info:        stopInfo
+                        });
+                    }
+                }
+
+                // Feature 10: resolve >>> transitions by section name
+                for (var ti = 0; ti < sections.length; ti++) {
+                    if (sections[ti].transition) {
+                        var tgt = sections[ti].transition.toUpperCase();
+                        if (tgt === 'SONG END') {
+                            sections[ti].transitionPos = song.end; // jump to song end
+                        } else {
+                            for (var tj = 0; tj < sections.length; tj++) {
+                                if (sections[tj].name.toUpperCase() === tgt) {
+                                    sections[ti].transitionPos = sections[tj].start;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (sections.length > 0) subMap[song.name] = sections;
             }
 
             g_subRegionMap = subMap;
@@ -3135,7 +4408,7 @@
                 var newItems = [];
                 for (var k in mainMap) { if (mainMap.hasOwnProperty(k)) newItems.push(mainMap[k]); }
                 newItems.sort(function (a, b) { return a.start - b.start; });
-                for (var n = 0; n < newItems.length; n++) { newItems[n].chain = false; newItems[n].skipped = false; newItems[n].loop = false; displayList.push(newItems[n]); }
+                for (var n = 0; n < newItems.length; n++) { newItems[n].chain = false; newItems[n].skipped = !!newItems[n].defaultSkip; newItems[n].loop = false; displayList.push(newItems[n]); }
                 if (displayList.length > 0 && !isPlaying) wwr_req("SET/POS/" + displayList[0].start);
                 initialized = true;
             } else {
@@ -3157,7 +4430,7 @@
                 for (var n2 = 0; n2 < newItems2.length; n2++) { newItems2[n2].chain = false; newItems2[n2].skipped = false; newItems2[n2].loop = false; displayList.push(newItems2[n2]); }
             }
             saveCurrentState();
-            var cs = JSON.stringify(displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop, name: r.name, color: r.color }; })) + (hideSkippedMode ? 1 : 0) + JSON.stringify(g_subRegionMap);
+            var cs = JSON.stringify(displayList.map(function (r) { return { id: r.id, chain: r.chain, skipped: r.skipped, loop: r.loop, name: r.name, color: r.color }; })) + (hideSkippedMode ? 1 : 0) + JSON.stringify(g_subRegionMap) + JSON.stringify(g_songOverrides);
             if (cs !== lastRenderChecksum) { lastRenderChecksum = cs; renderSetlist(); updatePlaybackUI(); }
         }
 
@@ -3168,7 +4441,189 @@
             localStorage.setItem(CURRENT_KEY, currentSetlistName);
         }
 
-        // --- 5. HELPERS ---
+        // --- 5. MARKER PARSER ---
+
+        // Named color palette (Features 9, color override in [brackets])
+        var MARKER_COLORS = {
+            gray:    '#6b7280', red:     '#ef4444', orange:  '#f97316',
+            amber:   '#f59e0b', yellow:  '#eab308', lime:    '#84cc16',
+            green:   '#22c55e', emerald: '#10b981', teal:    '#14b8a6',
+            cyan:    '#06b6d4', sky:     '#0ea5e9', blue:    '#3b82f6',
+            indigo:  '#6366f1', violet:  '#8b5cf6', purple:  '#a855f7',
+            fuchsia: '#d946ef', pink:    '#ec4899', rose:    '#f43f5e'
+        };
+
+        // Parses a raw REAPER marker name and returns a structured object.
+        // Supported syntax:
+        //   * prefix         → ignore this marker entirely (Feature 13)
+        //   > prefix         → section marker (Feature 2)
+        //   {info text}      → italic info alongside name (Feature 3)
+        //   +PAUSE           → pause playback at end of section (Feature 5)
+        //   +SKIP            → section skipped by default (Feature 11)
+        //   >>> Target       → auto-jump to section named "Target" after this (Feature 10)
+        //   #tag             → search tag, not displayed (Feature 6 — pending)
+        //   [mm:ss]          → duration override (Feature 7)
+        //   [nosong]         → exclude from song count/numbering (Feature 8)
+        //   [colorname]      → named color from MARKER_COLORS palette (Feature 9)
+        //   [.classname]     → custom CSS class (Feature 12)
+        //   SONG END / STOP  → special playback commands (Feature 4)
+        // Parses +LOOP / +LOOPFULL / +LOOP:N flags from ANY name (region or marker).
+        // Used by both parseRegionFlags() and parseMarkerName().
+        // Mutates the string `s` in place, returns it cleaned.
+        function _applyLoopFlags(s, out) {
+            out.loop = false; out.loopFull = false; out.loopMax = null;
+            // +LOOPFULL must be tested before +LOOP to avoid partial match
+            if (s.indexOf('+LOOPFULL') !== -1) {
+                out.loop = true; out.loopFull = true;
+                s = s.replace('+LOOPFULL', '').trim();
+            }
+            var loopMatch = s.match(/\+LOOP(?::(\d+))?/);
+            if (loopMatch) {
+                out.loop = true;
+                if (loopMatch[1]) out.loopMax = parseInt(loopMatch[1], 10);
+                s = s.replace(loopMatch[0], '').trim();
+            }
+            return s;
+        }
+
+        // Parses ALL supported flags from a region/sub-region name.
+        // Supports features 3, 5, 6, 7, 9, 10, 11, 12 + loop flags.
+        // (Feature 4 SONG END/STOP and feature 8 nosong are marker-only.)
+        function parseRegionFlags(rawName) {
+            var out = {
+                displayName: '', info: null, tags: [],
+                pause: false, skip: false, transition: null,
+                colorHex: null, className: null, durationSec: null,
+                loop: false, loopFull: false, loopMax: null
+            };
+            var s = (rawName || '').trim();
+
+            // Feature 3: {} info text
+            var infoMatch = s.match(/\{([^}]*)\}/);
+            if (infoMatch) { out.info = infoMatch[1].trim(); s = s.replace(infoMatch[0], '').trim(); }
+
+            // Feature 5: +PAUSE
+            if (s.indexOf('+PAUSE') !== -1) { out.pause = true; s = s.replace('+PAUSE', '').trim(); }
+
+            // Feature 11: +SKIP
+            if (s.indexOf('+SKIP') !== -1) { out.skip = true; s = s.replace('+SKIP', '').trim(); }
+
+            // Feature 10: >>> transition
+            var transIdx = s.indexOf('>>>');
+            if (transIdx !== -1) {
+                out.transition = s.slice(transIdx + 3).trim();
+                s = s.slice(0, transIdx).trim();
+            }
+
+            // Feature 6: Tags #tag (strip, pending full feature)
+            var tagMatches = s.match(/#\w+/g);
+            if (tagMatches) {
+                out.tags = tagMatches.map(function(t) { return t.slice(1); });
+                for (var ti = 0; ti < tagMatches.length; ti++) s = s.replace(tagMatches[ti], '');
+                s = s.trim();
+            }
+
+            // Features 7/9/12: Square bracket attributes [attr]
+            var bracketRe = /\[([^\]]+)\]/;
+            var bm;
+            while ((bm = bracketRe.exec(s)) !== null) {
+                var attr = bm[1].trim();
+                s = (s.slice(0, bm.index) + s.slice(bm.index + bm[0].length)).trim();
+                var attrLow = attr.toLowerCase();
+                if (/^\d+:\d+$/.test(attrLow)) {
+                    var tp = attrLow.split(':');
+                    out.durationSec = parseInt(tp[0]) * 60 + parseInt(tp[1]);
+                } else if (attrLow.charAt(0) === '.') {
+                    out.className = attrLow.slice(1);
+                } else if (MARKER_COLORS[attrLow]) {
+                    out.colorHex = MARKER_COLORS[attrLow];
+                }
+                bracketRe = /\[([^\]]+)\]/;
+            }
+
+            // Loop flags (+LOOP, +LOOPFULL, +LOOP:N)
+            s = _applyLoopFlags(s, out);
+
+            out.displayName = s.trim();
+            return out;
+        }
+
+        function parseMarkerName(rawName) {
+            var r = {
+                raw: rawName, ignored: false, isSection: false,
+                isSongEnd: false, isStop: false,
+                displayName: '', info: null, tags: [],
+                durationSec: null, nosong: false,
+                colorHex: null, className: null,
+                pause: false, skip: false, transition: null,
+                loop: false, loopFull: false, loopMax: null
+            };
+
+            var s = (rawName || '').trim();
+
+            // Feature 13: Ignored (* prefix)
+            if (s.charAt(0) === '*') { r.ignored = true; return r; }
+
+            // Feature 2: Section (> prefix)
+            if (s.charAt(0) === '>') { r.isSection = true; s = s.slice(1).trim(); }
+
+            // Feature 3: Info in curly braces {}
+            var infoMatch = s.match(/\{([^}]*)\}/);
+            if (infoMatch) { r.info = infoMatch[1].trim(); s = s.replace(infoMatch[0], '').trim(); }
+
+            // Feature 5: +PAUSE flag
+            if (s.indexOf('+PAUSE') !== -1) { r.pause = true; s = s.replace('+PAUSE', '').trim(); }
+
+            // Feature 11: +SKIP flag
+            if (s.indexOf('+SKIP') !== -1) { r.skip = true; s = s.replace('+SKIP', '').trim(); }
+
+            // Feature 10: >>> transition target
+            var transIdx = s.indexOf('>>>');
+            if (transIdx !== -1) {
+                r.transition = s.slice(transIdx + 3).trim();
+                s = s.slice(0, transIdx).trim();
+            }
+
+            // Feature 6: Tags #tag (strip, pending full feature)
+            var tagMatches = s.match(/#\w+/g);
+            if (tagMatches) {
+                r.tags = tagMatches.map(function(t) { return t.slice(1); });
+                for (var ti = 0; ti < tagMatches.length; ti++) s = s.replace(tagMatches[ti], '');
+                s = s.trim();
+            }
+
+            // Features 7/8/9/12: Square bracket attributes [attr]
+            var bracketRe = /\[([^\]]+)\]/;
+            var bm;
+            while ((bm = bracketRe.exec(s)) !== null) {
+                var attr = bm[1].trim();
+                s = (s.slice(0, bm.index) + s.slice(bm.index + bm[0].length)).trim();
+                var attrLow = attr.toLowerCase();
+                if (attrLow === 'nosong') {
+                    r.nosong = true;
+                } else if (/^\d+:\d+$/.test(attrLow)) {
+                    var tp = attrLow.split(':');
+                    r.durationSec = parseInt(tp[0]) * 60 + parseInt(tp[1]);
+                } else if (attrLow.charAt(0) === '.') {
+                    r.className = attrLow.slice(1);
+                } else if (MARKER_COLORS[attrLow]) {
+                    r.colorHex = MARKER_COLORS[attrLow];
+                }
+            }
+
+            // Loop flags (+LOOP, +LOOPFULL, +LOOP:N) — applies to marker-based sections too
+            s = _applyLoopFlags(s, r);
+
+            r.displayName = s.trim();
+
+            // Feature 4: Special playback command keywords
+            if (r.displayName.toUpperCase() === 'SONG END') r.isSongEnd = true;
+            if (r.displayName.toUpperCase() === 'STOP')     r.isStop    = true;
+
+            return r;
+        }
+
+        // --- 6. HELPERS ---
         function formatTime(s) { var m = Math.floor(s / 60); var sc = Math.round(s % 60); return m + ":" + (sc < 10 ? '0' : '') + sc; }
         function formatTotalTime(s) { var h = Math.floor(s / 3600); var m = Math.floor((s % 3600) / 60); var sc = Math.round(s % 60); return (h > 0 ? h + ":" : "") + (h > 0 && m < 10 ? "0" : "") + m + ":" + (sc < 10 ? "0" : "") + sc; }
 
@@ -3201,7 +4656,9 @@
                 // ---- GRID MODE (compact cards) ----
                 for (var i = 0; i < displayList.length; i++) {
                     var r = displayList[i];
-                    if (!r.skipped) { totalDur += r.duration; activeCount++; }
+                    var rDisplayName = r.displayName || r.name;
+                    // Feature 8: nosong items don't count toward song total
+                    if (!r.skipped && !r.nosong) { totalDur += r.duration; activeCount++; }
                     if (hideSkippedMode && r.skipped) continue;
                     var li = document.createElement("li");
                     li.className = "song-row" + (r.skipped ? " skipped" : "");
@@ -3211,16 +4668,20 @@
                     var styleAttr = "";
                     var classAdds = "";
                     if (mappedColor) {
-                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-bg: ' + mappedColor.bg + ';"';
+                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-dark: ' + mappedColor.bgDark + '; --mapped-theme-color-hover: ' + mappedColor.hover + '; --mapped-theme-color-fill: ' + mappedColor.fill + ';"';
                         classAdds = " has-mapped-color";
                     }
+                    // Feature 8: nosong dimming; Feature 12: custom class
+                    var extraClass = (r.nosong ? " nosong" : "") + (r.className ? " " + r.className : "");
 
-                    li.className = "grid-card" + (r.skipped ? " skipped" : "") + classAdds;
-                    if (mappedColor) li.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-bg: " + mappedColor.bg + ";");
+                    li.className = "grid-card" + (r.skipped ? " skipped" : "") + classAdds + extraClass;
+                    if (mappedColor) li.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-dark: " + mappedColor.bgDark + "; --mapped-theme-color-hover: " + mappedColor.hover + "; --mapped-theme-color-fill: " + mappedColor.fill + ";");
 
+                    // Feature 8: nosong items show no index number
+                    var gridIndex = r.nosong ? '' : (i + 1) + '.';
                     li.innerHTML = '<div class="card-bg-fill" id="bg-' + r.id + '" style="border-radius: var(--radius-card);"></div>'
-                        + '<span class="grid-card-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + (i + 1) + '.</span>'
-                        + '<div class="grid-card-name">' + r.name + '</div>'
+                        + '<span class="grid-card-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + gridIndex + '</span>'
+                        + '<div class="grid-card-name">' + rDisplayName + (r.markerInfo ? '<span class="song-name-info">' + r.markerInfo + '</span>' : '') + '</div>'
                         + '<span class="grid-card-dur" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
                     listEl.appendChild(li);
                 }
@@ -3228,7 +4689,9 @@
                 // ---- LIST MODE (hierarchical) ----
                 for (var i = 0; i < displayList.length; i++) {
                     var r = displayList[i];
-                    if (!r.skipped) { totalDur += r.duration; activeCount++; }
+                    var rDisplayName = r.displayName || r.name;
+                    // Feature 8: nosong items don't count toward song total
+                    if (!r.skipped && !r.nosong) { totalDur += r.duration; activeCount++; }
                     if (hideSkippedMode && r.skipped) continue;
 
                     var subs = g_subRegionMap[r.name] || [];
@@ -3245,9 +4708,11 @@
                     var styleAttr = "";
                     var classAdds = "";
                     if (mappedColor) {
-                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-bg: ' + mappedColor.bg + ';"';
+                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-dark: ' + mappedColor.bgDark + '; --mapped-theme-color-hover: ' + mappedColor.hover + '; --mapped-theme-color-fill: ' + mappedColor.fill + ';"';
                         classAdds = " has-mapped-color";
                     }
+                    // Feature 8/12: nosong + custom class
+                    var extraClass = (r.nosong ? " nosong" : "") + (r.className ? " " + r.className : "");
 
                     var chevClass = "song-chevron" + (hasSubs ? " has-subs" : "") + (isExp ? " open" : "");
                     var chevIcon = hasSubs ? "&#9654;" : "&#9679;";
@@ -3259,26 +4724,45 @@
 
                     // --- Song row ---
                     var rowDiv = document.createElement("div");
-                    rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "") + classAdds;
+                    rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "") + classAdds + extraClass;
                     rowDiv.id = "row-" + r.id;
-                    if (mappedColor) {
-                        rowDiv.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-bg: " + mappedColor.bg + ";");
+                    // Apply color: manual override takes priority over REAPER color
+                    var ovColor = getOverride(r.id).colorHex;
+                    if (ovColor) {
+                        rowDiv.setAttribute("style", buildColorVarsFromHex(ovColor));
+                        rowDiv.classList.add('has-mapped-color');
+                    } else if (mappedColor) {
+                        rowDiv.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-dark: " + mappedColor.bgDark + "; --mapped-theme-color-hover: " + mappedColor.hover + "; --mapped-theme-color-fill: " + mappedColor.fill + ";");
                     }
+
+                    // Feature 8: nosong items show no index number
+                    var songIndex = r.nosong ? '' : (i + 1) + '.';
+                    // Overrides: description, stopAfter, delayAfter
+                    var rov = getOverride(r.id);
+                    var descHtml   = rov.description ? '<span class="song-name-info">— ' + rov.description + '</span>' : '';
+                    var stopHtml   = rov.stopAfter   ? '<span class="song-stop-tag">⏹</span>' : '';
+                    var delayHtml  = (rov.delayAfter > 0 && !rov.stopAfter) ? '<span class="song-delay-tag">+' + rov.delayAfter + 's</span>' : '';
+                    // Feature 3: song-level info text from marker at song start
+                    var songNameHtml = rDisplayName
+                        + (r.markerInfo ? '<span class="song-name-info">' + r.markerInfo + '</span>' : '')
+                        + descHtml;
 
                     rowDiv.innerHTML =
                         '<div class="card-bg-fill" id="bg-' + r.id + '"></div>'
                         + '<div class="drag-handle">⋮⋮</div>'
-                        + '<span class="song-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + (i + 1) + '.</span>'
+                        + '<button class="song-dotmenu-btn" onclick="event.stopPropagation(); openSongMenu(event,\'' + r.id + '\')"><svg width="4" height="18" viewBox="0 0 4 18" fill="currentColor"><circle cx="2" cy="2" r="2"/><circle cx="2" cy="9" r="2"/><circle cx="2" cy="16" r="2"/></svg></button>'
+                        + '<span class="song-index" onclick="event.stopPropagation(); reorderPrompt(\'' + r.id + '\')">' + songIndex + stopHtml + '</span>'
                         + '<button class="' + chevClass + '" id="chev-' + r.id + '" onclick="event.stopPropagation();toggleExpand(\'' + r.id + '\',' + hasSubs + ')">' + chevIcon + '</button>'
                         + '<div class="song-title-area" onclick="playRegion(' + r.start + ',\'' + r.id + '\')">'
-                        + '  <div class="song-name">' + r.name + '</div>'
+                        + '  <div class="song-name">' + songNameHtml + '</div>'
                         + '</div>'
+                        + '<span id="loop-counter-' + r.id + '" class="loop-counter-badge"></span>'
                         + '<div class="song-actions">'
                         + '  <button class="' + chainClass + '" onclick="event.stopPropagation(); toggleChain(\'' + r.id + '\')">' + chainIcon + '</button>'
                         + '  <button class="' + loopClass + '" onclick="event.stopPropagation(); toggleLoop(\'' + r.id + '\')">' + loopIcon + '</button>'
                         + '  <button class="' + skipClass + '" onclick="event.stopPropagation(); toggleSkip(\'' + r.id + '\')">' + skipIcon + '</button>'
                         + '</div>'
-                        + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + '</span>';
+                        + '<span class="song-duration" id="dur-' + r.id + '" data-length="' + formatTime(r.duration) + '">' + formatTime(r.duration) + delayHtml + '</span>';
 
                     li.appendChild(rowDiv);
 
@@ -3295,24 +4779,48 @@
 
                         var scloop = sub.loop ? "sa-btn loop-on" : "sa-btn";
                         var scskip = sub.skipped ? "sa-btn skip-on" : "sa-btn";
-                        var mappedSubColor = getClosestPaletteColor(sub.color || r.color);
+                        // Feature 9: named color on section; user override takes priority
+                        var subOv = getOverride(sub.id);
+                        var mappedSubColor = getClosestPaletteColor(subOv.colorHex || sub.color || r.color);
                         var subStyleAttr = "";
                         var subClassAdds = "";
                         if (mappedSubColor) {
-                            subStyleAttr = 'style="--mapped-theme-color: ' + mappedSubColor.hex + '; --mapped-theme-color-bg: ' + mappedSubColor.bg + ';"';
+                            subStyleAttr = 'style="--mapped-theme-color: ' + mappedSubColor.hex + '; --mapped-theme-color-dark: ' + mappedSubColor.bgDark + '; --mapped-theme-color-hover: ' + mappedSubColor.hover + '; --mapped-theme-color-fill: ' + mappedSubColor.fill + ';"';
                             subClassAdds = " has-mapped-color";
                         }
+                        // Feature 4: STOP entry styling; Feature 11: skipped; Feature 12: custom class
+                        if (sub.markerType === 'stop') subClassAdds += " marker-stop";
+                        if (sub.skipped)               subClassAdds += " skipped";
+                        if (sub.className)             subClassAdds += " " + sub.className;
 
-                        slHtml += '<div class="section-row' + subClassAdds + '" id="subrow-' + sub.id + '"'
-                            + ' onclick="playRegion(' + sub.start + ',\'' + sub.id + '\')" ' + subStyleAttr + '>'
-                            + '<div class="card-bg-fill" id="bg-' + sub.id + '"></div>'
-                            + '<span class="section-row-name">' + sub.sectionName + '</span>'
-                            + '<span class="section-row-dur">' + formatTime(subDur) + '</span>'
+                        // Feature 3: {} info text; Feature 5: +PAUSE badge; note indicator
+                        var nameHtml = sub.sectionName
+                            + (sub.info && sub.markerType !== 'stop' ? '<em class="marker-info">' + sub.info + '</em>' : '')
+                            + (sub.pause ? '<span class="marker-pause-tag">⏸</span>' : '')
+                            + (subOv.description ? '<span class="sub-note-dot" title="' + subOv.description.replace(/"/g, '&quot;') + '"></span>' : '');
+
+                        // Feature 10: >>> transition indicator
+                        if (sub.transition) nameHtml += '<em class="marker-info">→ ' + sub.transition + '</em>';
+
+                        // Feature 4/8: STOP entries have no actions; point-in-time: no duration display
+                        var durHtml = (sub.markerType === 'stop' || subDur < 0.001) ? '' : '<span class="section-row-dur">' + formatTime(subDur) + '</span>';
+                        var subDotBtn = sub.markerType === 'stop' ? '' :
+                            '<button class="sub-dotmenu-btn" onclick="event.stopPropagation(); openSubMenu(event,\'' + sub.id + '\')"><svg width="3" height="14" viewBox="0 0 3 14" fill="currentColor"><circle cx="1.5" cy="1.5" r="1.5"/><circle cx="1.5" cy="7" r="1.5"/><circle cx="1.5" cy="12.5" r="1.5"/></svg></button>';
+                        var actionsHtml = sub.markerType === 'stop' ? '' :
+                            '<span id="loop-counter-sub-' + sub.id + '" class="loop-counter-badge"></span>'
                             + '<div class="section-actions" onclick="event.stopPropagation()">'
                             + '  <button class="sa-btn" onclick="smartStop()">&#9632;</button>'
                             + '  <button class="' + scloop + '" onclick="toggleSubLoop(\'' + sub.id + '\')">&#8635;</button>'
                             + '  <button class="' + scskip + '" onclick="toggleSubSkip(\'' + sub.id + '\')">&#10005;</button>'
-                            + '</div>'
+                            + '</div>';
+
+                        slHtml += '<div class="section-row' + subClassAdds + '" id="subrow-' + sub.id + '"'
+                            + ' onclick="' + (sub.markerType === 'stop' ? '' : 'playRegion(' + sub.start + ',\'' + sub.id + '\')') + '" ' + subStyleAttr + '>'
+                            + '<div class="card-bg-fill" id="bg-' + sub.id + '"></div>'
+                            + subDotBtn
+                            + '<span class="section-row-name">' + nameHtml + '</span>'
+                            + durHtml
+                            + actionsHtml
                             + '</div>';
                     }
 
@@ -3471,9 +4979,10 @@
                         if (document.getElementById('autoScrollToggle').checked && row.scrollIntoView) {
                             row.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
-                        // Update lyrics panel title
-                        document.getElementById("lyrics-song-title").innerText = activeRegion.name;
-                        document.getElementById("chord-label").innerText = activeRegion.name;
+                        // Update lyrics panel title (use displayName if set by Feature 1)
+                        var activeDisplayName = activeRegion.displayName || activeRegion.name;
+                        document.getElementById("lyrics-song-title").innerText = activeDisplayName;
+                        document.getElementById("chord-label").innerText = activeDisplayName;
                         document.getElementById("live-setlist-name").innerText = currentSetlistName;
                     }
                 }
@@ -3519,14 +5028,145 @@
                     }
                 }
 
+                // ── Loop counter badge (fraction N/loopMax) — song row + section row ──
+                var _lcEl    = document.getElementById('loop-counter-' + activeRegion.id);
+                var _lcSubEl = activeSub ? document.getElementById('loop-counter-sub-' + activeSub.id) : null;
+                if (activeSub && activeSub.loop && activeSub.loopMax > 1) {
+                    var _lcState   = window.subStates[activeSub.id] || {};
+                    var _lcCurrent = (_lcState.loopCount || 0) + 1;
+                    var _lcText    = _lcCurrent + '/' + activeSub.loopMax;
+                    if (_lcEl)    { _lcEl.style.display    = 'flex'; _lcEl.textContent    = _lcText; }
+                    if (_lcSubEl) { _lcSubEl.style.display = 'flex'; _lcSubEl.textContent = _lcText; }
+                    window._loopCounterSongId = activeRegion.id;
+                    window._loopCounterSubId  = activeSub.id;
+                } else {
+                    // Clear song-level counter
+                    if (window._loopCounterSongId) {
+                        var _lcOld = document.getElementById('loop-counter-' + window._loopCounterSongId);
+                        if (_lcOld) { _lcOld.style.display = 'none'; _lcOld.textContent = ''; }
+                        window._loopCounterSongId = null;
+                    }
+                    if (_lcEl) { _lcEl.style.display = 'none'; }
+                    // Clear section-level counter
+                    if (window._loopCounterSubId) {
+                        var _lcSubOld = document.getElementById('loop-counter-sub-' + window._loopCounterSubId);
+                        if (_lcSubOld) { _lcSubOld.style.display = 'none'; _lcSubOld.textContent = ''; }
+                        window._loopCounterSubId = null;
+                    }
+                    if (_lcSubEl) { _lcSubEl.style.display = 'none'; }
+                }
+
                 // Live view update
                 if (liveViewOpen) updateLiveView(activeRegion, activeIdx, pct, isLooping);
+
+                // ── Special marker triggers (SONG END, STOP, +PAUSE) ──────────
+                // Deduplicated with window._lastSpecialTriggerPos so each trigger fires once.
+                if (isPlaying && activeRegion) {
+                    var specials = (window.g_specialMarkersMap || {})[activeRegion.name] || [];
+                    for (var sp = 0; sp < specials.length; sp++) {
+                        var spm = specials[sp];
+                        var distToSpecial = spm.pos - currentPos;
+                        if (distToSpecial <= 0.15 && distToSpecial > -2 &&
+                            window._lastSpecialTriggerPos !== spm.pos) {
+                            window._lastSpecialTriggerPos = spm.pos;
+                            if (spm.type === 'SONG_END') {
+                                // Feature 4: jump to next song
+                                var nxtSong = findNextValidSong(activeIdx);
+                                if (nxtSong) { wwr_req("SET/POS/" + nxtSong.start); return; }
+                                wwr_req(1016); return; // stop if no next song
+                            } else if (spm.type === 'STOP') {
+                                // Feature 4: stop playback
+                                wwr_req(1016);
+                                var nxtAfterStop = findNextValidSong(activeIdx);
+                                if (nxtAfterStop) { setTimeout(function() { wwr_req("SET/POS/" + nxtAfterStop.start); }, 100); }
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // ── Section-change detection: reset per-section counters ─────────
+                // Resets loop count and one-shot trigger dedup when entering a fresh section.
+                if (activeSub) {
+                    if (window._prevActiveSubId !== activeSub.id) {
+                        window._prevActiveSubId = activeSub.id;
+                        // Reset loop count (user re-entered this section fresh)
+                        var stReset = window.subStates[activeSub.id];
+                        if (stReset) stReset.loopCount = 0;
+                        // Reset one-shot dedup so +PAUSE / >>> fire again on re-entry
+                        window._lastPauseTriggerPos      = undefined;
+                        window._lastTransitionTriggerPos = undefined;
+                        window._lastLoopFireKey          = null;
+                    }
+                }
 
                 // Sub-region End-of-region logic
                 if (activeSub && isPlaying) {
                     var subTimeRem = activeSub.end - currentPos;
+
+                    // Clear loop-fire dedup key when we're safely away from the end boundary
+                    // (meaning we've looped back and are playing through the section again)
+                    if (subTimeRem > 0.5) { window._lastLoopFireKey = null; }
+
                     if (subTimeRem <= 0.2 && subTimeRem > -1) {
-                        if (activeSub.loop) { wwr_req("SET/POS/" + activeSub.start); return; }
+
+                        // ── Loop handling (+LOOP, +LOOPFULL, +LOOP:N) ────────────
+                        if (activeSub.loop) {
+                            var stLoop = window.subStates[activeSub.id] || {};
+
+                            // +LOOP:N — count iterations, stop after loopMax plays
+                            if (activeSub.loopMax && activeSub.loopMax > 1) {
+                                // Dedup guard: only fire once per approach to this end boundary.
+                                // updatePlaybackUI runs at ~100ms; without this, multiple ticks
+                                // can fire before REAPER responds to SET/POS, causing double-increment.
+                                var loopFireKey = activeSub.id + ':' + activeSub.end;
+                                if (window._lastLoopFireKey !== loopFireKey) {
+                                    window._lastLoopFireKey = loopFireKey;
+                                    var lc = (stLoop.loopCount || 0) + 1; // increment for this loop
+                                    if (lc < activeSub.loopMax) {
+                                        stLoop.loopCount = lc;
+                                        wwr_req("SET/POS/" + activeSub.start); return;
+                                    } else {
+                                        // Played loopMax times — disable loop and continue
+                                        stLoop.loopCount = 0;
+                                        stLoop.loop      = false;
+                                        activeSub.loop   = false;   // reflect immediately this tick
+                                        lastRenderChecksum = "";     // re-render to update loop button
+                                        window._lastLoopFireKey = null;
+                                        // fall through to queued / next section logic below
+                                    }
+                                }
+                                // If dedup key already set: a jump was already issued this cycle —
+                                // fall through silently (REAPER will move position soon)
+                            }
+                            // +LOOPFULL — loop takes absolute priority; queued region waits
+                            else if (activeSub.loopFull) {
+                                wwr_req("SET/POS/" + activeSub.start); return;
+                            }
+                            // +LOOP — respect queued region; loop only if nothing queued
+                            else if (!queuedRegion) {
+                                wwr_req("SET/POS/" + activeSub.start); return;
+                            }
+                            // (if queuedRegion exists and not loopFull, fall through to queued)
+                        }
+
+                        // Feature 5: +PAUSE — pause at end of section (fires once per entry)
+                        if (activeSub.pause) {
+                            if (window._lastPauseTriggerPos !== activeSub.end) {
+                                window._lastPauseTriggerPos = activeSub.end;
+                                wwr_req(1008); // REAPER: toggle pause
+                                return;
+                            }
+                        }
+
+                        // Feature 10: >>> transition — jump to named section (fires once per entry)
+                        if (activeSub.transitionPos !== undefined) {
+                            if (window._lastTransitionTriggerPos !== activeSub.end) {
+                                window._lastTransitionTriggerPos = activeSub.end;
+                                wwr_req("SET/POS/" + activeSub.transitionPos); return;
+                            }
+                        }
+
                         if (queuedRegion) {
                             wwr_req("SET/POS/" + queuedRegion.start); queuedRegion = null;
                             var qEls = document.querySelectorAll('.queued');
@@ -3546,6 +5186,27 @@
                         for (var q = 0; q < qEls.length; q++) qEls[q].classList.remove('queued');
                         return;
                     }
+                    // Per-song overrides: stopAfter / delayAfter
+                    var _rov = getOverride(activeRegion.id);
+                    if (_rov.stopAfter) {
+                        wwr_req(1016);
+                        var _nrs = findNextValidSong(activeIdx);
+                        if (_nrs) { setTimeout(function() { wwr_req("SET/POS/" + _nrs.start); }, 150); }
+                        return;
+                    }
+                    if (_rov.delayAfter > 0) {
+                        var _nrd = findNextValidSong(activeIdx);
+                        if (_nrd) {
+                            wwr_req(1016);
+                            (function(nxt, delaySec) {
+                                setTimeout(function() {
+                                    wwr_req("SET/POS/" + nxt.start);
+                                    setTimeout(function() { wwr_req(1007); }, 80);
+                                }, delaySec * 1000);
+                            })(_nrd, _rov.delayAfter);
+                            return;
+                        }
+                    }
                     var shouldPlayNext = activeRegion.chain || !document.getElementById('autoStopToggle').checked;
                     if (shouldPlayNext) {
                         var nextR = findNextValidSong(activeIdx);
@@ -3564,10 +5225,10 @@
                     var cSection = document.getElementById('cw-songname-section');
                     var cNext = document.getElementById('cw-songname-next');
                     var cNameFallback = document.getElementById('cw-content-songname');
-                    var songName = (activeIdx >= 0) ? displayList[activeIdx].name : '\u2014';
+                    var songName = (activeIdx >= 0) ? (displayList[activeIdx].displayName || displayList[activeIdx].name) : '\u2014';
                     var subName = activeSub ? activeSub.sectionName : '';
                     var nextSong = findNextValidSong(activeIdx);
-                    var nextName = nextSong ? nextSong.name : '(End)';
+                    var nextName = nextSong ? (nextSong.displayName || nextSong.name) : '(End)';
                     if (cTitle) cTitle.innerText = songName;
                     if (cSection) cSection.innerText = subName;
                     if (cNext) cNext.innerText = 'Next\u2192 ' + nextName;
@@ -3580,7 +5241,12 @@
                 // No active region
                 if (liveViewOpen) {
                     document.getElementById("live-song-name").innerText = "—";
-                    document.getElementById("live-sub-region").innerText = "";
+                    var _lsn = document.getElementById("live-sub-region-name"); if (_lsn) _lsn.textContent = '';
+                    var _llc = document.getElementById("live-loop-counter"); if (_llc) { _llc.style.display = 'none'; _llc.textContent = ''; }
+                    var _lsa = document.getElementById("live-sub-arrow");     if (_lsa) _lsa.style.display = 'none';
+                    var _lsx = document.getElementById("live-sub-next-name"); if (_lsx) { _lsx.style.display = 'none'; _lsx.textContent = ''; }
+                    var _lsb = document.getElementById("live-sub-progress-bar"); if (_lsb) _lsb.classList.remove("visible");
+                    var _lsf = document.getElementById("live-sub-progress-fill"); if (_lsf) { _lsf.style.width = '0%'; }
                     document.getElementById("live-next-name").innerText = "—";
                     document.getElementById("live-progress-fill").style.width = "0%";
                     document.getElementById("live-time-rem").innerText = "—";
@@ -3973,6 +5639,71 @@
         }
         initChordsPrefs();
 
+        // --- APPEARANCE FILTERS (brightness / contrast / saturation on .app-content) ---
+        var g_appearance = { brightness: 100, contrast: 100, saturation: 100 };
+
+        function openAppearanceModal() {
+            document.getElementById('appearance-modal-overlay').classList.add('open');
+            closeSidebar();
+        }
+
+        function closeAppearanceModal() {
+            document.getElementById('appearance-modal-overlay').classList.remove('open');
+        }
+
+        function _applyAppearanceFilter() {
+            var b = g_appearance.brightness / 100;
+            var c = g_appearance.contrast   / 100;
+            var s = g_appearance.saturation / 100;
+            var target = document.querySelector('.app-content');
+            if (target) {
+                target.style.filter = (b === 1 && c === 1 && s === 1)
+                    ? ''
+                    : 'brightness(' + b + ') contrast(' + c + ') saturate(' + s + ')';
+            }
+        }
+
+        function updateAppearanceSlider(type, val) {
+            val = parseInt(val, 10);
+            g_appearance[type] = val;
+            var lbl = document.getElementById('appearance-val-' + type);
+            if (lbl) lbl.innerText = val + '%';
+            _applyAppearanceFilter();
+            try { localStorage.setItem('reaset_appearance', JSON.stringify(g_appearance)); } catch(e) {}
+        }
+
+        function resetAppearance() {
+            g_appearance = { brightness: 100, contrast: 100, saturation: 100 };
+            ['brightness', 'contrast', 'saturation'].forEach(function(type) {
+                var slider = document.getElementById('appearance-slider-' + type);
+                var lbl    = document.getElementById('appearance-val-'    + type);
+                if (slider) slider.value = 100;
+                if (lbl)    lbl.innerText = '100%';
+            });
+            _applyAppearanceFilter();
+            try { localStorage.removeItem('reaset_appearance'); } catch(e) {}
+        }
+
+        function initAppearance() {
+            try {
+                var saved = JSON.parse(localStorage.getItem('reaset_appearance'));
+                if (saved && typeof saved === 'object') {
+                    if (saved.brightness != null) g_appearance.brightness = saved.brightness;
+                    if (saved.contrast   != null) g_appearance.contrast   = saved.contrast;
+                    if (saved.saturation != null) g_appearance.saturation = saved.saturation;
+                }
+            } catch(e) {}
+            ['brightness', 'contrast', 'saturation'].forEach(function(type) {
+                var slider = document.getElementById('appearance-slider-' + type);
+                var lbl    = document.getElementById('appearance-val-'    + type);
+                var val    = g_appearance[type];
+                if (slider) slider.value  = val;
+                if (lbl)    lbl.innerText = val + '%';
+            });
+            _applyAppearanceFilter();
+        }
+        initAppearance();
+
         // F9: Export/Import all app data to/from JSON
         function exportAllData() {
             var allData = {};
@@ -4196,9 +5927,78 @@
             document.getElementById("live-song-name").innerText = activeRegion ? activeRegion.name : "—";
             // Sub-region in live view
             var subs = activeRegion ? g_subRegionMap[activeRegion.name] : null;
-            var activeSub = "";
-            if (subs) { for (var s = 0; s < subs.length; s++) { if (currentPos >= subs[s].start && currentPos < subs[s].end) { activeSub = subs[s].sectionName; break; } } }
-            document.getElementById("live-sub-region").innerText = activeSub;
+            var liveActiveSub = null;
+            if (subs) { for (var s = 0; s < subs.length; s++) { if (currentPos >= subs[s].start && currentPos < subs[s].end) { liveActiveSub = subs[s]; break; } } }
+            // Find next sub-region (skip STOP entries and skipped ones)
+            var liveNextSub = null;
+            if (subs) {
+                if (liveActiveSub) {
+                    // Inside a sub-region: find the one that follows it
+                    for (var sn = 0; sn < subs.length; sn++) {
+                        if (subs[sn].id === liveActiveSub.id) {
+                            for (var sn2 = sn + 1; sn2 < subs.length; sn2++) {
+                                if (subs[sn2].markerType !== 'stop' && !subs[sn2].skipped) {
+                                    liveNextSub = subs[sn2]; break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                } else {
+                    // Not inside any sub-region yet: show the first upcoming one
+                    for (var sn3 = 0; sn3 < subs.length; sn3++) {
+                        if (subs[sn3].start > currentPos && subs[sn3].markerType !== 'stop' && !subs[sn3].skipped) {
+                            liveNextSub = subs[sn3]; break;
+                        }
+                    }
+                }
+            }
+
+            var liveSubNameEl   = document.getElementById("live-sub-region-name");
+            var liveLoopCountEl = document.getElementById("live-loop-counter");
+            var liveSubArrowEl  = document.getElementById("live-sub-arrow");
+            var liveSubNextEl   = document.getElementById("live-sub-next-name");
+            if (liveSubNameEl)  liveSubNameEl.textContent  = liveActiveSub ? (liveActiveSub.sectionName || '') : '';
+            // Next section arrow + name
+            if (liveSubArrowEl && liveSubNextEl) {
+                if (liveNextSub) {
+                    liveSubArrowEl.style.display = 'inline';
+                    liveSubNextEl.style.display  = 'inline';
+                    liveSubNextEl.textContent    = liveNextSub.sectionName || '';
+                } else {
+                    liveSubArrowEl.style.display = 'none';
+                    liveSubNextEl.style.display  = 'none';
+                    liveSubNextEl.textContent    = '';
+                }
+            }
+            if (liveLoopCountEl) {
+                if (liveActiveSub && liveActiveSub.loop && liveActiveSub.loopMax > 1) {
+                    var _llc = window.subStates[liveActiveSub.id] || {};
+                    liveLoopCountEl.textContent = ((_llc.loopCount || 0) + 1) + '/' + liveActiveSub.loopMax;
+                    liveLoopCountEl.style.display = 'inline';
+                } else {
+                    liveLoopCountEl.style.display = 'none';
+                    liveLoopCountEl.textContent = '';
+                }
+            }
+            // Sub-region progress bar
+            var liveSubBar  = document.getElementById("live-sub-progress-bar");
+            var liveSubFill = document.getElementById("live-sub-progress-fill");
+            if (liveSubBar && liveSubFill) {
+                if (liveActiveSub && liveActiveSub.duration > 0) {
+                    var subPct = ((currentPos - liveActiveSub.start) / liveActiveSub.duration) * 100;
+                    subPct = Math.min(100, Math.max(0, subPct));
+                    liveSubFill.style.width = subPct + "%";
+                    // Color: same pipeline as setlist body (getClosestPaletteColor maps raw → theme hex)
+                    var _rawSubColor = getOverride(liveActiveSub.id).colorHex || liveActiveSub.color;
+                    var _mappedSub   = getClosestPaletteColor(_rawSubColor);
+                    liveSubFill.style.background = _mappedSub ? _mappedSub.hex : '#ffffff';
+                    liveSubBar.classList.add("visible");
+                } else {
+                    liveSubFill.style.width = "0%";
+                    liveSubBar.classList.remove("visible");
+                }
+            }
             // Progress
             document.getElementById("live-progress-fill").style.width = pct + "%";
             var rem = activeRegion ? (activeRegion.end - currentPos) : 0; if (rem < 0) rem = 0;
@@ -4364,6 +6164,21 @@
 
         // --- 17. KEYBOARD ---
         document.addEventListener('keydown', function (event) {
+            // Don't intercept shortcuts when typing in form fields
+            var _tag = document.activeElement ? document.activeElement.tagName : '';
+            if (_tag === 'INPUT' || _tag === 'SELECT') return;
+            if (_tag === 'TEXTAREA') {
+                // Allow Escape to blur without saving, Enter to save + blur
+                if (event.code === 'Escape') { document.activeElement.blur(); event.preventDefault(); }
+                if (event.code === 'Enter') {
+                    var _ta = document.activeElement;
+                    event.preventDefault();
+                    // Fire the onchange handler by dispatching a change event, then blur
+                    _ta.dispatchEvent(new Event('change'));
+                    _ta.blur();
+                }
+                return;
+            }
             var activeIdx = -1;
             for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
             switch (event.code) {
