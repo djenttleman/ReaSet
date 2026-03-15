@@ -9,6 +9,8 @@
 - [5) Installation](#5-installation)
 - [6) Usage setup](#6-usage-setup)
 - [7) Usage Manual](#7-interactive-usage-manual)
+  - [Display Filters](#display-filters)
+  - [Region Name Command Reference](#region-name-command-reference)
 - [8) Keyboard Shortcuts](#8-keyboard-shortcuts)
 - [9) Quick troubleshooting](#9-quick-troubleshooting)
 
@@ -45,9 +47,14 @@ Main goals:
 - 🎯 Song states: active, queued, skipped, loop, chain.
 - ⏯️ On-screen transport controls.
 - 💾 JSON export/import.
-- 🧠 Local persistence via `localStorage`.
+- 🧠 Local persistence via `localStorage`, isolated per REAPER project.
 - 🎤 Lyrics panel + 🎸 chords panel.
-- 🎨 Visual customization (themes/fonts/sizes/chord color).
+- 🎨 Visual customization (themes/fonts/sizes/chord color/display filters).
+- 🗂️ Nested sub-regions with individual loop, skip, color and notes overrides.
+- 🏷️ Inline command system — control behavior directly from REAPER region names.
+- 🔢 Fractional loop counter badge (e.g. `2/4`) shown live on the active section.
+- 🖥️ Live View with sub-region progress bar, next section indicator and loop counter.
+- 🌗 Real-time display filters: brightness, contrast and saturation via sidebar sliders.
 
 Main file:
 - `ReaSet.html`
@@ -198,6 +205,66 @@ Copy to REAPER web folder (where `main.js` is located):
 - **&#8635; (Loop)**: Activates infinite looping over the bounded region or currently selected sub-section segment.
 - **&#10005; (Skip)**: Strikethroughs the track, completely ignoring it from linear continuous playback chains.
 
+### Display Filters
+Located under **Settings — Appearance** in the sidebar. Three independent real-time sliders apply a CSS filter to the setlist body:
+- **Luminance** — 50% to 150% (default 100%)
+- **Contrast** — 50% to 150% (default 100%)
+- **Saturation** — 0% to 200% (default 100%)
+
+Values persist across sessions. A "Reset" button restores all three to default.
+
+### Region Name Command Reference
+ReaSet parses special inline commands written directly in REAPER region and marker names. Multiple commands can be combined freely. The remaining text after parsing is the display name.
+
+**Example:**
+```
+Chorus {pre-chorus} +LOOP:4 [green] [.bold] [1:20]
+```
+
+#### `+` Commands — Playback behavior
+
+| Command | Description |
+|---|---|
+| `+PAUSE` | Pauses playback at the end of the section. |
+| `+SKIP` | Marks the section as skipped by default. Appears struck through. |
+| `+LOOP` | Enables infinite looping for the section. |
+| `+LOOP:N` | Repeats the section exactly **N** times, then continues. Shows a live `X/N` badge. |
+| `+LOOPFULL` | Loop with absolute priority — any queued region waits until the loop finishes. |
+
+#### `[]` Square brackets — Appearance & duration
+
+| Command | Description |
+|---|---|
+| `[colorname]` | Assigns a palette color to the card. |
+| `[mm:ss]` | Overrides the displayed duration of the section. |
+| `[nosong]` | Excludes the item from song count and numbering. Shown dimmed. |
+| `[.classname]` | Applies a CSS style class to the name. |
+
+Available colors: `gray` · `red` · `orange` · `amber` · `yellow` · `lime` · `green` · `emerald` · `teal` · `cyan` · `sky` · `blue` · `indigo` · `violet` · `purple` · `fuchsia` · `pink` · `rose`
+
+Available classes: `.bold` · `.dim` · `.italic` · `.loud`
+
+#### `{}` Curly braces — Informational text
+
+| Command | Description |
+|---|---|
+| `{text}` | Displays auxiliary italic text next to the section name. Not shown in Live View or Canvas. |
+
+#### Special prefixes — Markers only
+
+| Command | Description |
+|---|---|
+| `>` | Converts the marker into a sub-section of the active song. |
+| `*` | Ignores the marker entirely — it will not appear in the app. |
+| `>>> TargetName` | Auto-jumps to the region whose name matches `TargetName` when this section ends. |
+
+#### Reserved names
+
+| Name | Description |
+|---|---|
+| `STOP` | Stop playback marker. |
+| `SONG END` | Alias for `STOP`. |
+
 ---
 
 ## 8) Keyboard Shortcuts
@@ -251,6 +318,8 @@ ReaSet inherently supports the following global keyboard bindings to streamline 
 - [5) Instalación](#5-instalación)
 - [6) Configuración de uso](#6-configuración-de-uso)
 - [7) Manual de uso](#7-manual-de-uso-interactivo)
+  - [Filtros de pantalla](#filtros-de-pantalla)
+  - [Referencia de comandos en nombres de región](#referencia-de-comandos-en-nombres-de-región)
 - [8) Atajos de teclado](#8-atajos-de-teclado)
 - [9) Solución rápida de problemas](#9-solución-rápida-de-problemas)
 
@@ -287,9 +356,14 @@ Objetivo principal:
 - 🎯 Estado por canción: activa, en cola, omitida, loop, chain.
 - ⏯️ Controles de transporte en pantalla.
 - 💾 Exportación/importación de setlists en JSON.
-- 🧠 Persistencia local vía `localStorage`.
+- 🧠 Persistencia local vía `localStorage`, aislada por proyecto de REAPER.
 - 🎤 Panel de letras + 🎸 panel de acordes.
-- 🎨 Personalización visual (temas, tipografías, tamaños, color de acordes).
+- 🎨 Personalización visual (temas, tipografías, tamaños, color de acordes, filtros de pantalla).
+- 🗂️ Regiones anidadas con loop, skip, color y notas individuales por sección.
+- 🏷️ Sistema de comandos inline — controla comportamiento directamente desde los nombres de región en REAPER.
+- 🔢 Badge de loop fraccionario (ej. `2/4`) visible en tiempo real sobre la sección activa.
+- 🖥️ Live View con barra de progreso de sub-región, indicador de sección siguiente y contador de loops.
+- 🌗 Filtros de pantalla en tiempo real: luminancia, contraste y saturación desde la sidebar.
 
 Archivo principal:
 - `ReaSet.html`
@@ -439,6 +513,66 @@ Copiar en la carpeta web de REAPER (donde existe `main.js`):
 - **&#9632; / &#8677; (Follow Action)**: Alterna si la canción se detiene al final o continúa sin pausas hacia la siguiente en la lista.
 - **&#8635; (Loop)**: Bloquea un ciclo infinito sobre la región actual o la sub-sección seleccionada.
 - **&#10005; (Skip)**: Marca la canción con una línea tachada y se la saltará de la lista de reproducción continua.
+
+### Filtros de pantalla
+Disponibles en **Settings — Appearance** dentro de la sidebar. Tres sliders independientes aplican un filtro CSS en tiempo real al cuerpo del setlist:
+- **Luminancia** — 50% a 150% (por defecto 100%)
+- **Contraste** — 50% a 150% (por defecto 100%)
+- **Saturación** — 0% a 200% (por defecto 100%)
+
+Los valores persisten entre sesiones. El botón "Restablecer valores" devuelve todo al 100%.
+
+### Referencia de comandos en nombres de región
+ReaSet interpreta comandos especiales escritos directamente en los nombres de región y marcadores de REAPER. Se pueden combinar libremente. El texto que queda tras parsear todos los comandos es el nombre que se muestra en la app.
+
+**Ejemplo:**
+```
+Chorus {pre-coro} +LOOP:4 [green] [.bold] [1:20]
+```
+
+#### Comandos `+` — Comportamiento de reproducción
+
+| Comando | Descripción |
+|---|---|
+| `+PAUSE` | Pausa la reproducción al llegar al final de la sección. |
+| `+SKIP` | Marca la sección como omitida por defecto. Aparece tachada. |
+| `+LOOP` | Activa el loop infinito de la sección. |
+| `+LOOP:N` | Repite la sección exactamente **N** veces y luego continúa. Muestra un badge `X/N` en vivo. |
+| `+LOOPFULL` | Loop con prioridad absoluta — si hay una canción en cola, espera a que el loop termine. |
+
+#### `[]` Corchetes — Apariencia y duración
+
+| Comando | Descripción |
+|---|---|
+| `[color]` | Asigna un color de la paleta a la tarjeta. |
+| `[mm:ss]` | Sobreescribe la duración mostrada de la sección. |
+| `[nosong]` | Excluye el elemento del conteo y numeración de canciones. Aparece en opacidad reducida. |
+| `[.clase]` | Aplica una clase CSS de estilo al nombre. |
+
+Colores disponibles: `gray` · `red` · `orange` · `amber` · `yellow` · `lime` · `green` · `emerald` · `teal` · `cyan` · `sky` · `blue` · `indigo` · `violet` · `purple` · `fuchsia` · `pink` · `rose`
+
+Clases disponibles: `.bold` · `.dim` · `.italic` · `.loud`
+
+#### `{}` Llaves — Texto informativo
+
+| Comando | Descripción |
+|---|---|
+| `{texto}` | Muestra texto auxiliar en cursiva junto al nombre de la sección. No aparece en Live View ni Canvas. |
+
+#### Prefijos especiales — Solo marcadores
+
+| Comando | Descripción |
+|---|---|
+| `>` | Convierte el marcador en una sub-sección de la canción activa. |
+| `*` | Ignora completamente el marcador — no aparece en la app. |
+| `>>> NombreDestino` | Salta automáticamente a la región cuyo nombre coincida con `NombreDestino` al terminar esta sección. |
+
+#### Palabras reservadas
+
+| Nombre | Descripción |
+|---|---|
+| `STOP` | Marcador de parada de reproducción. |
+| `SONG END` | Alias de `STOP`. |
 
 ---
 
