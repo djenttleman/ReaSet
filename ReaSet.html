@@ -4792,6 +4792,19 @@
             // Used in updatePlaybackUI for real-time playback triggers.
             window.g_specialMarkersMap = window.g_specialMarkersMap || {};
 
+            // Pre-pass: build boundary position maps for semantic marker-song assignment.
+            // A marker sitting at song_A.end = song_B.start would pass the ±ε range check
+            // for BOTH songs. These maps give _markerBelongsToSong() the context it needs
+            // to decide which song truly owns the marker (name match or keyword heuristic).
+            var _mkrBndStart = {}; // Math.round(song.start * 1000) → song
+            var _mkrBndEnd   = {}; // Math.round(song.end   * 1000) → song
+            for (var _bk in mainMap) {
+                if (!mainMap.hasOwnProperty(_bk)) continue;
+                var _bs = mainMap[_bk];
+                _mkrBndStart[Math.round(_bs.start * 1000)] = _bs;
+                _mkrBndEnd  [Math.round(_bs.end   * 1000)] = _bs;
+            }
+
             for (var songKey in mainMap) {
                 if (!mainMap.hasOwnProperty(songKey)) continue;
                 var song = mainMap[songKey];
@@ -4814,7 +4827,8 @@
                 var inside = [];
                 for (var mi = 0; mi < g_markers.length; mi++) {
                     var mkr = g_markers[mi];
-                    if (mkr.pos >= song.start - 0.001 && mkr.pos <= song.end + 0.001) inside.push(mkr);
+                    if (mkr.pos >= song.start - 0.001 && mkr.pos <= song.end + 0.001 &&
+                        _markerBelongsToSong(mkr, song, _mkrBndStart, _mkrBndEnd)) inside.push(mkr);
                 }
                 if (inside.length === 0) continue;
                 inside.sort(function (a, b) { return a.pos - b.pos; });
@@ -5219,6 +5233,64 @@
             if (r.displayName.toUpperCase() === 'STOP')     r.isStop    = true;
 
             return r;
+        }
+
+        // ── Semantic marker-song boundary assignment ──────────────────────────
+        // When a marker sits exactly at the junction of two adjacent songs
+        // (song_A.end ≈ mkr.pos ≈ song_B.start) the range check in Pass 3 would
+        // include it in both songs. This function resolves the ambiguity via three
+        // ordered rules, applied only when the position is a true boundary:
+        //   1. Name match  — if the marker's display name equals a candidate song's
+        //                    display name (case-insensitive) → belongs to that song.
+        //   2. "End" words — fin, end, outro, salida, cierre, coda, fade, etc.
+        //                    → belongs to the song ENDING here (song_A).
+        //   3. "Start" words — inicio, start, intro, entrada, apertura, etc.
+        //                    → belongs to the song STARTING here (song_B).
+        //   4. Default     — no keyword match → assign to the song STARTING here,
+        //                    since boundary markers most commonly name the incoming section.
+        // startMap / endMap are { Math.round(song.pos * 1000) → song } built once
+        // per syncRegions() call in the Pass-3 pre-pass.
+        function _markerBelongsToSong(mkr, song, startMap, endMap) {
+            var EPS = 0.001;
+            var pk     = Math.round(mkr.pos * 1000);
+            var atStart = Math.abs(mkr.pos - song.start) < EPS;
+            var atEnd   = Math.abs(mkr.pos - song.end)   < EPS;
+
+            // Not touching either boundary of this song → always include
+            if (!atStart && !atEnd) return true;
+
+            // Identify which songs bound this position
+            var songStartingHere = startMap[pk]; // song whose .start ≈ mkr.pos
+            var songEndingHere   = endMap[pk];   // song whose .end   ≈ mkr.pos
+
+            // Ambiguous only when two DIFFERENT songs meet here (one starts, one ends)
+            if (!songStartingHere || !songEndingHere || songStartingHere === songEndingHere) {
+                return true; // unambiguous — a single song owns this position
+            }
+
+            // Build a clean lower-case display name for matching
+            var parsed    = mkr.parsed || {};
+            var nameLower = ((parsed.displayName || mkr.name) + '').toLowerCase().trim();
+            if (nameLower.charAt(0) === '>') nameLower = nameLower.slice(1).trim(); // strip > prefix
+
+            // Rule 1: marker name matches a candidate song's display name
+            var sStartName = (songStartingHere.displayName || songStartingHere.name || '').toLowerCase();
+            var sEndName   = (songEndingHere.displayName   || songEndingHere.name   || '').toLowerCase();
+            if (sStartName && nameLower === sStartName) return song === songStartingHere;
+            if (sEndName   && nameLower === sEndName)   return song === songEndingHere;
+
+            // Rule 2: "end / fin / outro / salida / cierre" keywords → song ENDING here
+            if (/\b(end|fin|final|finale|salida|cierre|outro|coda|fade|out|ending|close|closing|closure|exit|terminaci[oó]n)\b/i.test(nameLower)) {
+                return song === songEndingHere;
+            }
+
+            // Rule 3: "start / inicio / intro / entrada / apertura" keywords → song STARTING here
+            if (/\b(start|inicio|intro|comienzo|entrada|apertura|opening|begin|beginning|abrir|open|arranque|kickoff)\b/i.test(nameLower)) {
+                return song === songStartingHere;
+            }
+
+            // Default: ambiguous marker with no keyword → song STARTING here
+            return song === songStartingHere;
         }
 
         // --- 6. HELPERS ---
@@ -5974,10 +6046,20 @@
                         }
                     }
                     if (document.getElementById('autoStopToggle').checked && !activeRegion.chain) {
+                        // If the user just explicitly played a new song (playRegion was called
+                        // within the last 500ms), skip the STOP entirely. The stale transport
+                        // response that triggered this tick was from BEFORE the user's click;
+                        // sending STOP now would race with the user's already-dispatched PLAY
+                        // and kill the new song's playback.
+                        if (window._playRegionLocked && Date.now() < window._playRegionLocked) { return; }
                         window._endOfRegionLocked = Date.now() + 400; // lock before any async
                         wwr_req(1016);
                         var nextR2 = findNextValidSong(activeIdx);
-                        if (nextR2) { setTimeout(function () { wwr_req("SET/POS/" + nextR2.start); triggerMidi(); }, 100); }
+                        if (nextR2) { setTimeout(function () {
+                            // Skip repositioning if user started a new song during the 100ms delay.
+                            if (window._playRegionLocked && Date.now() < window._playRegionLocked) { return; }
+                            wwr_req("SET/POS/" + nextR2.start); triggerMidi();
+                        }, 100); }
                         return;
                     }
                 }
@@ -6132,6 +6214,21 @@
         function playRegion(start, id) {
             var queueMode = document.getElementById('queueModeToggle').checked;
             if (!isPlaying || !queueMode) {
+                // Guard against stale transport responses: when the user clicks a song, the
+                // XHR with SET/POS+PLAY dispatches immediately. A pending transport response
+                // (still showing the OLD position near the previous song's end) may arrive
+                // milliseconds later, trigger autoStop, and dispatch a STOP that arrives at
+                // REAPER AFTER the PLAY — killing the user-initiated playback.
+                // Setting this flag for 500ms tells the autoStop block to skip its STOP if
+                // the user just explicitly started a new song.
+                window._playRegionLocked   = Date.now() + 500;
+                // Separate flag consumed ONLY by triggerMidi()'s internal STOP guard.
+                // We cannot reuse _playRegionLocked here because cueRegion() also sets
+                // it — cue must let its own triggerMidi() STOP fire (it stops REAPER
+                // intentionally after the brief MIDI-arm play). This flag is set only
+                // by playRegion() so triggerMidi()'s cleanup STOP won't race with a
+                // user's explicit PLAY when autoStop pre-positioned to the next song.
+                window._playbackInitiated  = Date.now() + 500;
                 wwr_req("SET/POS/" + start); wwr_req(1007); queuedRegion = null;
                 var all = document.querySelectorAll('.queued');
                 for (var i = 0; i < all.length; i++) all[i].classList.remove('queued');
@@ -6161,9 +6258,24 @@
         }
         function triggerMidi() {
             if (!document.getElementById('initSongMidiToggle').checked) return;
-            wwr_req(1007); setTimeout(function () { wwr_req(1016); }, 100);
+            wwr_req(1007);
+            setTimeout(function () {
+                // If the user explicitly started playback (playRegion) after this
+                // MIDI-arm PLAY was sent, skip the cleanup STOP — it would arrive at
+                // REAPER after the user's PLAY and kill their song.
+                // Note: cueRegion() sets _playRegionLocked but NOT _playbackInitiated,
+                // so cue's triggerMidi() STOP still fires correctly.
+                if (window._playbackInitiated && Date.now() < window._playbackInitiated) { return; }
+                wwr_req(1016);
+            }, 100);
         }
-        function cueRegion(start, id) { wwr_req(1016); wwr_req("SET/POS/" + start); flashRow(id); triggerMidi(); }
+        function cueRegion(start, id) {
+            // Set the same lock as playRegion so autoStop's pending 100ms setTimeout
+            // (from a stale transport response) cannot override our cued position
+            // or fire a conflicting triggerMidi PLAY+STOP on top of ours.
+            window._playRegionLocked = Date.now() + 500;
+            wwr_req(1016); wwr_req("SET/POS/" + start); flashRow(id); triggerMidi();
+        }
         function smartStop() {
             var activeIdx = -1;
             for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
