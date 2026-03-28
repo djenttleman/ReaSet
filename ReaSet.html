@@ -2976,6 +2976,403 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
+        /* ══ MIDI MODAL ══════════════════════════════════════════════ */
+        #midi-modal-overlay {
+            position: fixed; inset: 0; z-index: 3500;
+            background: rgba(0,0,0,0.65); backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center;
+        }
+        #midi-modal-overlay.open { display: flex; }
+        .midi-modal {
+            background: #1c1c1e;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 22px;
+            padding: 24px 24px 20px;
+            width: 360px;
+            max-height: 82vh;
+            overflow-y: auto;
+            box-shadow: 0 28px 72px rgba(0,0,0,0.85);
+            animation: ctxFadeIn 0.18s ease;
+        }
+        .midi-modal-title {
+            margin: 0 0 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+        .midi-status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+        .midi-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #555;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+        .midi-dot.active { background: #34c759; }
+        .midi-dot.error  { background: #ff453a; }
+        .midi-section-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+        }
+        .midi-learn-box {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .midi-action-select {
+            width: 100%;
+            background: rgba(255,255,255,0.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            padding: 7px 30px 7px 10px;
+            margin-bottom: 10px;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .midi-action-select option { background: #1c1c1e; }
+        .midi-learn-btn {
+            width: 100%;
+            padding: 9px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+        .midi-learn-btn:hover { background: rgba(255,255,255,0.16); }
+        .midi-learn-btn.listening {
+            background: #ff9f0a;
+            color: #000;
+            animation: midiBlink 0.75s ease-in-out infinite;
+        }
+        @keyframes midiBlink {
+            0%,100% { opacity: 1; }
+            50%      { opacity: 0.55; }
+        }
+        .midi-listen-status {
+            font-size: 12px;
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+        .midi-mappings-list { max-height: 210px; overflow-y: auto; }
+        .midi-mapping-row {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 12px;
+            gap: 6px;
+        }
+        .midi-mapping-row:last-child { border-bottom: none; }
+        .midi-mapping-key {
+            color: rgba(255,255,255,0.45);
+            font-family: monospace;
+            font-size: 11px;
+            background: rgba(255,255,255,0.07);
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .midi-mapping-action {
+            color: rgba(255,255,255,0.8);
+            flex: 1;
+        }
+        .midi-mapping-del {
+            background: none;
+            border: none;
+            color: rgba(255,80,80,0.6);
+            cursor: pointer;
+            font-size: 15px;
+            padding: 0 2px;
+            line-height: 1;
+        }
+        .midi-mapping-del:hover { color: #ff453a; }
+        .midi-clear-btn {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(255,60,60,0.25);
+            border-radius: 8px;
+            background: rgba(255,60,60,0.07);
+            color: rgba(255,100,100,0.75);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .midi-clear-btn:hover { background: rgba(255,60,60,0.18); color: #ff453a; }
+        .midi-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 14px;
+        }
+        .midi-close-btn {
+            padding: 8px 22px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.07);
+            color: rgba(255,255,255,0.75);
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .midi-close-btn:hover { background: rgba(255,255,255,0.13); }
+        .midi-indicator {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #444;
+            display: inline-block;
+            margin-left: 5px;
+            vertical-align: middle;
+            transition: background 0.25s;
+        }
+        .midi-indicator.active { background: #34c759; }
+        .midi-hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 12px 0; }
+
+        /* ══ LIVE VIEW — CONFIG BUTTON & PANEL ══════════════════════ */
+        #live-config-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 10px;
+            padding: 7px 13px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.55);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+            z-index: 10;
+            line-height: 1;
+        }
+        #live-config-btn:hover {
+            background: rgba(255,255,255,0.17);
+            color: rgba(255,255,255,0.88);
+        }
+        #live-config-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        #live-config-panel {
+            position: absolute;
+            bottom: 62px;
+            left: 40px;
+            background: #1c1c1e;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 16px;
+            padding: 14px 16px 12px;
+            min-width: 230px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.85);
+            display: none;
+            z-index: 20;
+            animation: ctxFadeIn 0.15s ease;
+        }
+        #live-config-panel.open { display: block; }
+
+        .lcp-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.32);
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .lcp-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            gap: 12px;
+        }
+        .lcp-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.72);
+            flex: 1;
+            line-height: 1.3;
+        }
+        .lcp-label.new-item {
+            color: rgba(255,200,60,0.85);
+        }
+        /* Toggle switch */
+        .lcp-toggle {
+            position: relative;
+            width: 34px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        .lcp-toggle input { display: none; }
+        .lcp-toggle-track {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.14);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .lcp-toggle input:checked + .lcp-toggle-track { background: #34c759; }
+        .lcp-toggle-track::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        .lcp-toggle input:checked + .lcp-toggle-track::after { transform: translateX(14px); }
+        .lcp-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.07);
+            margin: 6px 0;
+        }
+        .lcp-note {
+            font-size: 10px;
+            color: rgba(255,200,60,0.65);
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        /* ══ LIVE VIEW — MAPA DE REGIONES ════════════════════════════ */
+
+        /* Outer wrapper: hides/shows the whole map + arc zone */
+        #live-region-map-wrap {
+            width: 100%;
+            max-width: 700px;
+            flex-shrink: 0;
+            position: relative;
+            display: none;           /* controlled by applyLiveSettings */
+            padding-top: 34px;       /* space for the arc above the bar */
+        }
+
+        /* SVG arc connector layer — sits in the padding-top space */
+        #live-region-map-connectors {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 34px;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        /* The colored bar itself — always visible inside wrap */
+        #live-region-map {
+            width: 100%;
+            height: 46px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+        /* Song-color base layer */
+        #live-region-map-base {
+            position: absolute;
+            inset: 0;
+            background: #3a3a3c;
+            opacity: 0.55;
+        }
+        /* Segment container */
+        #live-region-map-track {
+            position: absolute;
+            inset: 0;
+        }
+        /* Individual sub-region segment */
+        .lrm-segment {
+            position: absolute;
+            top: 0; bottom: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            transition: background 0.3s;
+        }
+        .lrm-segment:last-child { border-right: none; }
+        .lrm-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.93);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+            pointer-events: none;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.65);
+            max-width: 100%;
+            line-height: 1;
+        }
+        /* "Played" fill — brightens what has passed */
+        #live-region-map-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            background: rgba(255,255,255,0.2);
+            transition: width 0.1s linear;
+            pointer-events: none;
+            z-index: 2;
+        }
+        /* Skipped-over segments (between >>> source and target) */
+        .lrm-segment.skipped-over {
+            filter: brightness(0.38) saturate(0.18);
+            opacity: 0.72;
+        }
+
+        /* Looping segment pulse */
+        @keyframes lrmPulse {
+            0%, 100% { filter: brightness(1);    box-shadow: none; }
+            50%       { filter: brightness(1.45); box-shadow: inset 0 0 0 2px rgba(255,255,255,0.6), 0 0 10px rgba(255,255,255,0.2); }
+        }
+        .lrm-segment.looping {
+            animation: lrmPulse 1.1s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        /* Playhead cursor line */
+        #live-region-map-cursor {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.88);
+            pointer-events: none;
+            z-index: 3;
+            transform: translateX(-50%);
+            transition: left 0.1s linear;
+            box-shadow: 0 0 7px rgba(255,255,255,0.55);
+        }
+
     </style>
 </head>
 
@@ -3053,6 +3450,10 @@
                 STOP</button>
             <button id="footer-loop-btn" class="t-btn t-btn-loop" onclick="toggleCurrentLoop()">↻ Loop</button>
             <button class="t-btn t-btn-sync" onclick="wwr_start()">SYNC</button>
+            <span id="native-loop-indicator" title="ReaSet NativeLoop conectado"
+                  style="display:none; color:#34c759; font-size:10px; font-weight:700;
+                         letter-spacing:0.5px; align-self:center; padding:0 4px;
+                         opacity:0.8;">⬡ NL</span>
         </div>
     </div>
 
@@ -3138,6 +3539,24 @@
                 </label>
                 Grid View
             </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Settings &mdash; MIDI <span id="midi-sidebar-indicator" class="midi-indicator"></span></div>
+            <button class="sidebar-action-btn sab-slate" onclick="openMidiModal()">
+                <span class="sab-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1.5" y="5.5" width="15" height="7" rx="3.5" stroke="white" stroke-opacity="0.85" stroke-width="1.4"/>
+                        <circle cx="5" cy="9" r="1.2" fill="white" fill-opacity="0.85"/>
+                        <circle cx="9" cy="9" r="1.2" fill="white" fill-opacity="0.85"/>
+                        <circle cx="13" cy="9" r="1.2" fill="white" fill-opacity="0.85"/>
+                        <line x1="5" y1="5.5" x2="5" y2="3.5" stroke="white" stroke-opacity="0.85" stroke-width="1.4" stroke-linecap="round"/>
+                        <line x1="9" y1="5.5" x2="9" y2="3.5" stroke="white" stroke-opacity="0.85" stroke-width="1.4" stroke-linecap="round"/>
+                        <line x1="13" y1="5.5" x2="13" y2="3.5" stroke="white" stroke-opacity="0.85" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                MIDI Learn
+            </button>
         </div>
 
         <div class="sidebar-section">
@@ -3310,6 +3729,55 @@
         </div>
     </div>
 
+    <!-- MIDI LEARN MODAL -->
+    <div id="midi-modal-overlay" onclick="if(event.target===this)closeMidiModal()">
+        <div class="midi-modal">
+            <div class="midi-modal-title">MIDI Learn</div>
+
+            <!-- Status row -->
+            <div class="midi-status-row">
+                <span class="midi-dot" id="midi-status-dot"></span>
+                <span id="midi-status-text">Inicializando…</span>
+            </div>
+
+            <!-- Learn section -->
+            <div class="midi-learn-box">
+                <div class="midi-section-label">Acción a asignar</div>
+                <select id="midi-action-select" class="midi-action-select">
+                    <option value="play">▶ Play</option>
+                    <option value="stop">■ Stop</option>
+                    <option value="play_pause">⏸ Play / Pause</option>
+                    <option value="next_song">→ Canción siguiente</option>
+                    <option value="prev_song">← Canción anterior</option>
+                    <option value="next_section">↓ Sección siguiente</option>
+                    <option value="prev_section">↑ Sección anterior</option>
+                    <option value="toggle_loop">⟳ Toggle Loop (canción activa)</option>
+                    <option value="restart_song">↺ Reiniciar canción</option>
+                    <option value="toggle_skip">⊘ Toggle Skip (canción activa)</option>
+                </select>
+                <button id="midi-learn-btn" class="midi-learn-btn" onclick="toggleMidiLearn()">
+                    Escuchar siguiente nota / CC…
+                </button>
+                <div id="midi-listen-status" class="midi-listen-status"></div>
+            </div>
+
+            <hr class="midi-hr">
+
+            <!-- Current mappings -->
+            <div class="midi-section-label" style="margin-bottom:8px">Asignaciones activas</div>
+            <div id="midi-mappings-list" class="midi-mappings-list">
+                <div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:12px 0">
+                    Sin asignaciones todavía
+                </div>
+            </div>
+            <button class="midi-clear-btn" onclick="clearAllMidiMappings()">Borrar todas las asignaciones</button>
+
+            <div class="midi-modal-footer">
+                <button class="midi-close-btn" onclick="closeMidiModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- LYRICS PANEL -->
     <div id="lyrics-panel">
         <div class="panel-header">
@@ -3333,7 +3801,7 @@
     <div id="live-view">
         <button class="chord-close-btn" onclick="closeLiveView()"
             style="position:absolute; top:30px; right:40px;">✕</button>
-        <p class="live-now-label">LIVE <span class="live-indicator">●</span> <span id="live-show-time"
+        <p class="live-now-label" id="live-now-label">LIVE <span class="live-indicator">●</span> <span id="live-show-time"
                 style="font-family: monospace; margin-left: 6px; letter-spacing: 1px;">00:00</span></p>
         <p class="live-setlist-name" id="live-setlist-name" style="margin-bottom: 14px;"></p>
         <h2 class="live-song-name" id="live-song-name">—</h2>
@@ -3344,11 +3812,25 @@
         <div id="live-sub-progress-bar">
             <div id="live-sub-progress-fill"></div>
         </div>
+
+        <!-- MAPA DE REGIONES -->
+        <div id="live-region-map-wrap">
+            <!-- SVG arc connectors float above the bar (outside overflow:hidden) -->
+            <div id="live-region-map-connectors"></div>
+            <!-- Colored bar with overflow:hidden to clip segments -->
+            <div id="live-region-map">
+                <div id="live-region-map-base"></div>
+                <div id="live-region-map-track"></div>
+                <div id="live-region-map-fill"></div>
+                <div id="live-region-map-cursor"></div>
+            </div>
+        </div>
+
         <p class="live-time" id="live-time-rem">—</p>
-        <div class="live-next-wrap">
+        <div class="live-next-wrap" id="live-next-wrap">
             <p class="live-next" style="margin-top:0;">Up Next: <span id="live-next-name">—</span></p>
         </div>
-        <div class="live-transport">
+        <div class="live-transport" id="live-transport-bar">
             <button class="lt-btn lt-ghost" onclick="liveNav('prev')">⏮</button>
             <button class="lt-btn lt-stop" onmousedown="handleMainStopPress(this)"
                 onmouseup="handleMainStopRelease(this)" ontouchstart="handleMainStopPress(this)"
@@ -3358,6 +3840,20 @@
             <button class="lt-btn lt-ghost" onclick="liveNav('next', event)">⏭</button>
             <button class="lt-btn lt-ghost" id="live-loop-btn" onclick="toggleCurrentLoop(event)">↻ Loop</button>
         </div>
+        <!-- Live View config panel -->
+        <div id="live-config-panel">
+            <div class="lcp-title">Elementos visibles</div>
+            <div id="live-config-items"><!-- populated by JS --></div>
+        </div>
+        <!-- Live View config button -->
+        <button id="live-config-btn" onclick="toggleLiveConfig()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7" cy="7" r="2.2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.9 2.9l1.05 1.05M10.05 10.05l1.05 1.05M2.9 11.1l1.05-1.05M10.05 3.95l1.05-1.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            Vista
+        </button>
+
         <div class="live-size-ctrl"
             style="position:absolute; bottom:20px; right:40px; color:var(--text2); display:flex; gap:12px; font-weight:700;">
             <span class="live-size-label" style="padding-top:2px;">SIZE</span>
@@ -3516,13 +4012,23 @@
         }
 
         // --- 1. REAPER CONNECTION ---
+        // Guard: wwr_req / wwr_req_recur are injected by REAPER's web server.
+        // Outside that context (standalone browser, Claude viewer) they don't exist.
+        // Stub them so the UI renders without console errors when previewing layout.
+        if (typeof wwr_req       === 'undefined') { window.wwr_req       = function() {}; }
+        if (typeof wwr_req_recur === 'undefined') { window.wwr_req_recur = function() {}; }
+        if (typeof wwr_start     === 'undefined') { window.wwr_start     = function() {}; }
+
         // Batched recur like X-Raym: lyrics+chords+regions each on their own poll
-        wwr_req_recur("TRANSPORT", 100);
+        wwr_req_recur("TRANSPORT", 33);  // ~30fps — tighter timing for loop count accuracy
         wwr_req_recur("REGION", 1000);
         wwr_req_recur("MARKER", 1000);
         // X-Raym exact approach: poll PROJEXTSTATE every 10ms batched
         wwr_req_recur("GET/PROJEXTSTATE/XR_Lyrics/text;GET/PROJEXTSTATE/XR_Lyrics/next", 10);
         wwr_req_recur("GET/PROJEXTSTATE/XR_Chords/text", 200);
+        // Auto-detect ReaSet_NativeLoop.lua: one-shot probe, plus refresh every 10s
+        wwr_req("GET/EXTSTATE/ReaSet/nativeLoopReady");
+        wwr_req_recur("GET/EXTSTATE/ReaSet/nativeLoopReady", 10000);
         wwr_start();
 
         // --- 2. STATE ---
@@ -3952,7 +4458,10 @@
                             return {
                                 name:   t[1],           // raw REAPER name (for keying)
                                 id:     'mkr_' + t[2],
-                                pos:    parseFloat(t[3]),
+                                // Use parseFloatDigits (same 6-decimal rounding as region start/end)
+                                // so boundary comparisons like mkr.pos >= song.start are exact
+                                // even when REAPER serialises the same position with extra precision.
+                                pos:    parseFloatDigits(t[3]),
                                 color:  hexColor,
                                 parsed: parsed          // all parsed attributes
                             };
@@ -3964,6 +4473,20 @@
                             lastRenderChecksum = '';
                             syncRegions();
                         }
+                        break;
+                    case "EXTSTATE":
+                        // Auto-detection: ReaSet_NativeLoop.lua writes "ReaSet/nativeLoopReady=1"
+                        if (tok[1] === "ReaSet" && tok[2] === "nativeLoopReady") {
+                            var nlReady = (tok[3] === "1");
+                            if (nlReady !== window.REASET_NATIVE_LOOP) {
+                                window.REASET_NATIVE_LOOP = nlReady;
+                                var nlInd = document.getElementById("native-loop-indicator");
+                                if (nlInd) nlInd.style.display = nlReady ? "inline" : "none";
+                            }
+                        }
+                        // NOTE: nativeLoop=done is intentionally NOT handled here.
+                        // _nativeLoopSubId stays armed until the playhead physically leaves
+                        // the sub-region — prevents JS from re-jumping after Lua finishes.
                         break;
                 }
             }
@@ -4003,32 +4526,61 @@
             }
         }
 
-        // --- MOCK INJECTION ---
-        window.addEventListener('load', function () {
-            if (location.protocol === 'file:') {
-                window.g_regions = [
-                    // Song 1: sections defined via NESTED REGIONS (legacy / existing behaviour)
-                    ["REGION", "Main Song",  "id1",  "10.0",  "60.0",  "16711680"],
-                    ["REGION", "Intro",      "id2",  "10.0",  "20.0",  "65280"],
-                    ["REGION", "Verse 1",    "id3",  "20.0",  "40.0",  "65280"],
-                    ["REGION", "Chorus",     "id4",  "40.0",  "60.0",  "65280"],
-                    // Song 2: sections defined via MARKERS (new behaviour)
-                    // Markers have end == start  → duration = 0
-                    ["REGION", "Second Song", "id5",  "70.0", "130.0", "16711680"],
-                    ["REGION", "Verso 1",     "mkr1", "70.0",  "70.0", "255"],     // marker at song start
-                    ["REGION", "Verso 2",     "mkr2", "95.0",  "95.0", "255"],     // marker mid-song
-                    ["REGION", "Coro",        "mkr3", "112.0","112.0", "255"],     // marker near end
-                    // Song 3: no sections at all
-                    ["REGION", "Third Song",  "id6", "140.0", "190.0", "0"]
-                ];
-                window.displayList = [];
-                window.subStates = {};
-                window.syncRegions();
-            }
-        });
-
         // Global state for nested sections: loop, skipped
         window.subStates = window.subStates || {};
+
+        // ── Native REAPER loop via ReaSet_NativeLoop.lua ─────────────────────────────
+        // AUTO-DETECTED — no manual flag or Action ID needed.
+        // ReaSet_NativeLoop.lua writes ExtState "ReaSet/nativeLoopReady=1" on boot
+        // and refreshes it every ~5 s. wwr_onreply() reads the EXTSTATE reply and
+        // sets window.REASET_NATIVE_LOOP = true automatically.
+        // Falls back to JS loop silently when the script is not installed.
+        window.REASET_NATIVE_LOOP = false;
+
+        // Tracks which sub-region ID currently has native loop armed.
+        // Null when idle. Cleared on section-change or loop toggle-off.
+        window._nativeLoopSubId = null;
+        // Set by syncRegions when a +LOOP flag is added to an active region/marker
+        // name in real time. updatePlaybackUI consumes this in its next tick to arm
+        // the native loop without waiting for a section-change event.
+        window._pendingNativeLoopArm = null;
+
+        // Signal the background script to start a native loop session.
+        // The script picks up the ExtState values on its next defer() tick.
+        // loopMax = 0 means infinite (cancelled via "off" or stop).
+        function _reaperNativeLoopOn(start, end, loopMax, subId) {
+            if (!window.REASET_NATIVE_LOOP) return;
+            wwr_req("SET/EXTSTATEPERSIST/ReaSet/loopStart/" + start.toFixed(5));
+            wwr_req("SET/EXTSTATEPERSIST/ReaSet/loopEnd/"   + end.toFixed(5));
+            // Always send 0 (infinite) — JS counts crossings and sends 'off' when done.
+            // This decouples Lua's counting from JS's counting and avoids double-count bugs.
+            wwr_req("SET/EXTSTATEPERSIST/ReaSet/loopMax/0");
+            wwr_req("SET/EXTSTATEPERSIST/ReaSet/nativeLoop/on");
+            window._nativeLoopSubId = subId || null;
+            window._nlPrevPos       = null;   // reset crossing detector for new session
+            window._nlCrossings     = 0;
+        }
+        // Cancel native loop and guarantee Repeat is disabled in the SAME HTTP batch
+        // as any subsequent SET/POS jump. Without SET/REPEAT/0 here, REAPER's audio
+        // engine can fire another Repeat jump before the async Lua cleanup runs,
+        // causing the "buffering / last-second repeating" effect at song transitions.
+        function _reaperNativeLoopOff() {
+            if (!window.REASET_NATIVE_LOOP) return;
+            if (!window._nativeLoopSubId) return;
+            wwr_req("SET/REPEAT/0");                               // synchronous: same HTTP batch as next SET/POS
+            wwr_req("SET/EXTSTATEPERSIST/ReaSet/nativeLoop/off");  // async: Lua cleans up region + loop points
+            window._nativeLoopSubId = null;
+        }
+        // Helper: find a sub-region object by ID across all songs in g_subRegionMap
+        function _findSubById(id) {
+            for (var _sn in g_subRegionMap) {
+                var _subs = g_subRegionMap[_sn];
+                for (var _si = 0; _si < _subs.length; _si++) {
+                    if (_subs[_si].id === id) return _subs[_si];
+                }
+            }
+            return null;
+        }
 
         // Color Mapping Palette
         var THEME_PALETTE = [
@@ -4083,6 +4635,7 @@
             for (var i = 0; i < g_regions.length; i++) {
                 var r = g_regions[i];
                 if (r.length <= 4) continue;
+                if (r[1] === "ReaSet Loop") continue;  // temp region created by NativeLoop.lua — ignore in setlist
 
                 var rStart    = parseFloat(r[3]);
                 var rEnd      = parseFloat(r[4]);
@@ -4092,9 +4645,11 @@
 
                 var rawColor = r.length > 5 ? parseInt(r[5]) : 0;
                 var cssColor = null;
-                if (rawColor > 0) {
-                    cssColor = '#' + (rawColor & 0xFFFFFF).toString(16);
-                    while (cssColor.length < 7) cssColor = "#0" + cssColor.substr(1);
+                if (rawColor !== 0) {
+                    // Mask to 24 bits (handles negative signed ints from some platforms).
+                    // REAPER's Web Remote normalises region colors to RGB before sending.
+                    var _c = (rawColor & 0xFFFFFF).toString(16);
+                    cssColor = '#' + ('000000' + _c).slice(-6);
                 }
 
                 // Parse flags from the region name so display is clean for ALL regions
@@ -4166,6 +4721,15 @@
                                     window.subStates[entry.id].loop         = rFlags.loop;
                                     window.subStates[entry.id]._loopDefault = rFlags.loop;
                                     lastRenderChecksum = ''; // force re-render (loop button update)
+                                    // If loop was just enabled in real-time and native loop is available,
+                                    // queue an arm request for the next updatePlaybackUI tick.
+                                    // (section-change guard won't fire because the sub ID hasn't changed)
+                                    if (rFlags.loop && window.REASET_NATIVE_LOOP &&
+                                        window._nativeLoopSubId !== entry.id) {
+                                        window._pendingNativeLoopArm = entry.id;
+                                    } else if (!rFlags.loop) {
+                                        window._pendingNativeLoopArm = null;
+                                    }
                                 }
                                 // Feature 11: +SKIP default (first time only)
                                 if (rFlags.skip && !window.subStates[entry.id]._skipInit) {
@@ -4231,21 +4795,42 @@
             for (var songKey in mainMap) {
                 if (!mainMap.hasOwnProperty(songKey)) continue;
                 var song = mainMap[songKey];
-                if (subMap[song.name]) continue;  // region sub-sections take priority
+                // Track whether region-based sub-sections already exist for this song
+                // (populated by Pass 2). We still need to scan markers for special triggers
+                // (SONG_END / STOP) even when region sub-sections exist, so we can no
+                // longer skip the entire song — we just block creating NEW section entries.
+                var _hasRegionSubs = !!subMap[song.name];
 
-                // Collect all markers in [song.start, song.end)
+                // Collect all markers in [song.start - ε, song.end + ε].
+                // ε = 0.001 s (1 ms) handles two cases:
+                //   • Start boundary: REAPER sometimes serialises region-start and marker
+                //     position with different decimal precision; after parseFloatDigits
+                //     rounding a marker that is nominally AT song.start may land just below
+                //     it (e.g. song.start = 5.123457, mkr.pos = 5.12345 → excluded without ε).
+                //   • End boundary: same asymmetry can push a boundary marker just past
+                //     song.end (complements the <= fix; ε is small enough to never pull in
+                //     a marker that genuinely belongs to an adjacent song).
+                // This tolerance matches Feature 1's own 0.001 s window.
                 var inside = [];
                 for (var mi = 0; mi < g_markers.length; mi++) {
                     var mkr = g_markers[mi];
-                    if (mkr.pos >= song.start && mkr.pos < song.end) inside.push(mkr);
+                    if (mkr.pos >= song.start - 0.001 && mkr.pos <= song.end + 0.001) inside.push(mkr);
                 }
                 if (inside.length === 0) continue;
                 inside.sort(function (a, b) { return a.pos - b.pos; });
 
                 // --- Feature 1: first marker at song.start (non-section) → override song display name
+                // Only applies when no region sub-sections exist; when they do, the region
+                // names already serve as the canonical display names.
+                // NOTE: the marker is intentionally NOT removed from `inside`. It must also
+                // become a section so that a marker at the song's startpoint appears as a
+                // nested sub-section just like any other marker inside the song.
+                // Removing it here (the old behaviour) was the root cause of startpoint
+                // markers being silently dropped from the section list.
                 var firstM = inside[0];
                 var fp = firstM.parsed || parseMarkerName(firstM.name);
-                if (!fp.ignored && !fp.isSection && !fp.isSongEnd && !fp.isStop &&
+                if (!_hasRegionSubs &&
+                    !fp.ignored && !fp.isSection && !fp.isSongEnd && !fp.isStop &&
                     Math.abs(firstM.pos - song.start) < 0.001) {
                     song.displayName = fp.displayName;
                     song.markerInfo  = fp.info;
@@ -4256,12 +4841,12 @@
                         song.duration = fp.durationSec;
                         song.end      = song.start + fp.durationSec;
                     }
-                    // Do NOT add this marker as a section
-                    inside = inside.slice(1);
-                    if (inside.length === 0) continue;
+                    // marker stays in `inside` → processed as a section below
                 }
 
-                // Separate special markers (SONG END, STOP, ignored) from section markers
+                // Separate special markers (SONG END, STOP, ignored) from section markers.
+                // Section markers are only collected when no region sub-sections exist
+                // (region sub-sections take structural priority over marker-based sections).
                 var specials = [];
                 var sectionMkrs = [];
                 for (var fi = 0; fi < inside.length; fi++) {
@@ -4270,13 +4855,19 @@
                     fm.parsed = p; // cache
                     if (p.ignored)   continue;
                     if (p.isSongEnd || p.isStop) { specials.push(fm); continue; }
-                    sectionMkrs.push(fm);
+                    if (!_hasRegionSubs) sectionMkrs.push(fm);
                 }
 
-                // Store special markers for playback triggers
+                // ALWAYS store special markers for playback triggers — this must happen
+                // even for songs that already have region sub-sections, because SONG_END
+                // and STOP triggers fire during playback regardless of section source.
                 window.g_specialMarkersMap[song.name] = specials.map(function(sm) {
                     return { pos: sm.pos, type: sm.parsed.isSongEnd ? 'SONG_END' : 'STOP', info: sm.parsed.info };
                 });
+
+                // If region sub-sections already handle this song's structure, we're done —
+                // special markers have been stored above; no marker-based sections needed.
+                if (_hasRegionSubs) continue;
 
                 // Build sections from > section markers
                 var sections = [];
@@ -4315,6 +4906,13 @@
                             window.subStates[secId].loop         = p.loop || false;
                             window.subStates[secId]._loopDefault = p.loop || false;
                             lastRenderChecksum = '';
+                            // Queue native loop arm if loop was just enabled in real-time
+                            if ((p.loop || false) && window.REASET_NATIVE_LOOP &&
+                                window._nativeLoopSubId !== secId) {
+                                window._pendingNativeLoopArm = secId;
+                            } else if (!(p.loop || false)) {
+                                window._pendingNativeLoopArm = null;
+                            }
                         }
                         window.subStates[secId].loopFull = p.loopFull || false;
                         window.subStates[secId].loopMax  = p.loopMax  || null;
@@ -4664,18 +5262,14 @@
                     li.className = "song-row" + (r.skipped ? " skipped" : "");
                     li.id = "row-" + r.id; li.setAttribute("data-id", r.id);
                     li.setAttribute("onclick", "playRegion(" + r.start + ",'" + r.id + "')");
-                    var mappedColor = getClosestPaletteColor(r.color);
-                    var styleAttr = "";
-                    var classAdds = "";
-                    if (mappedColor) {
-                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-dark: ' + mappedColor.bgDark + '; --mapped-theme-color-hover: ' + mappedColor.hover + '; --mapped-theme-color-fill: ' + mappedColor.fill + ';"';
-                        classAdds = " has-mapped-color";
-                    }
+                    // Use REAPER color directly (exact hex, no palette snap)
+                    var reapColor = r.color || null;
+                    var classAdds = reapColor ? " has-mapped-color" : "";
                     // Feature 8: nosong dimming; Feature 12: custom class
                     var extraClass = (r.nosong ? " nosong" : "") + (r.className ? " " + r.className : "");
 
                     li.className = "grid-card" + (r.skipped ? " skipped" : "") + classAdds + extraClass;
-                    if (mappedColor) li.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-dark: " + mappedColor.bgDark + "; --mapped-theme-color-hover: " + mappedColor.hover + "; --mapped-theme-color-fill: " + mappedColor.fill + ";");
+                    if (reapColor) li.setAttribute("style", buildColorVarsFromHex(reapColor));
 
                     // Feature 8: nosong items show no index number
                     var gridIndex = r.nosong ? '' : (i + 1) + '.';
@@ -4704,13 +5298,9 @@
                     var loopClass = r.loop ? "sa-btn loop-on" : "sa-btn";
                     var skipIcon = "&#10005;";
                     var skipClass = r.skipped ? "sa-btn skip-on" : "sa-btn";
-                    var mappedColor = getClosestPaletteColor(r.color);
-                    var styleAttr = "";
-                    var classAdds = "";
-                    if (mappedColor) {
-                        styleAttr = 'style="--mapped-theme-color: ' + mappedColor.hex + '; --mapped-theme-color-dark: ' + mappedColor.bgDark + '; --mapped-theme-color-hover: ' + mappedColor.hover + '; --mapped-theme-color-fill: ' + mappedColor.fill + ';"';
-                        classAdds = " has-mapped-color";
-                    }
+                    // Use REAPER color directly (exact hex, no palette snap)
+                    var reapColor = r.color || null;
+                    var classAdds = reapColor ? " has-mapped-color" : "";
                     // Feature 8/12: nosong + custom class
                     var extraClass = (r.nosong ? " nosong" : "") + (r.className ? " " + r.className : "");
 
@@ -4726,13 +5316,13 @@
                     var rowDiv = document.createElement("div");
                     rowDiv.className = "song-row" + (r.skipped ? " skipped" : "") + (isExp ? " expanded" : "") + classAdds + extraClass;
                     rowDiv.id = "row-" + r.id;
-                    // Apply color: manual override takes priority over REAPER color
+                    // Apply color: manual override > REAPER region color (both use exact hex)
                     var ovColor = getOverride(r.id).colorHex;
                     if (ovColor) {
                         rowDiv.setAttribute("style", buildColorVarsFromHex(ovColor));
                         rowDiv.classList.add('has-mapped-color');
-                    } else if (mappedColor) {
-                        rowDiv.setAttribute("style", "--mapped-theme-color: " + mappedColor.hex + "; --mapped-theme-color-dark: " + mappedColor.bgDark + "; --mapped-theme-color-hover: " + mappedColor.hover + "; --mapped-theme-color-fill: " + mappedColor.fill + ";");
+                    } else if (reapColor) {
+                        rowDiv.setAttribute("style", buildColorVarsFromHex(reapColor));
                     }
 
                     // Feature 8: nosong items show no index number
@@ -4880,11 +5470,11 @@
             var activeIdx = -1;
             for (var i = 0; i < displayList.length; i++) {
                 var r = displayList[i];
-                if (currentPos >= r.start && currentPos <= r.end) {
+                if (currentPos >= r.start && currentPos < r.end) {
                     var subs = g_subRegionMap[r.name] || [];
                     var activeSub = null;
                     for (var s = 0; s < subs.length; s++) {
-                        if (currentPos >= subs[s].start && currentPos <= subs[s].end) { activeSub = subs[s]; break; }
+                        if (currentPos >= subs[s].start && currentPos < subs[s].end) { activeSub = subs[s]; break; }
                     }
                     if (activeSub) {
                         toggleSubLoop(activeSub.id); return;
@@ -4894,7 +5484,26 @@
             }
         }
         function toggleSubLoop(id) {
-            if (window.subStates[id]) { window.subStates[id].loop = !window.subStates[id].loop; lastRenderChecksum = ""; syncRegions(); }
+            if (window.subStates[id]) {
+                window.subStates[id].loop = !window.subStates[id].loop;
+                var isNowOn = window.subStates[id].loop;
+                if (!isNowOn && window._nativeLoopSubId === id) {
+                    // Turning loop OFF → cancel native loop immediately
+                    _reaperNativeLoopOff();
+                } else if (isNowOn && window.REASET_NATIVE_LOOP &&
+                           window._nativeLoopSubId !== id) {
+                    // Turning loop ON while already inside this section:
+                    // The section-change guard (_prevActiveSubId === id) will NOT re-fire
+                    // because the sub-region ID hasn't changed, so _reaperNativeLoopOn()
+                    // would never be called from updatePlaybackUI — arm it explicitly here.
+                    var _tslSub = _findSubById(id);
+                    if (_tslSub) {
+                        var _tslMax = (_tslSub.loopMax && _tslSub.loopMax > 1) ? _tslSub.loopMax : 0;
+                        _reaperNativeLoopOn(_tslSub.start, _tslSub.end, _tslMax, id);
+                    }
+                }
+                lastRenderChecksum = ""; syncRegions();
+            }
         }
         function toggleSubSkip(id) {
             if (window.subStates[id]) { window.subStates[id].skipped = !window.subStates[id].skipped; lastRenderChecksum = ""; syncRegions(); }
@@ -4929,7 +5538,7 @@
             var activeIdx = -1;
             for (var j = 0; j < displayList.length; j++) {
                 var r = displayList[j];
-                if (currentPos >= r.start && currentPos <= r.end) { activeIdx = j; break; }
+                if (currentPos >= r.start && currentPos < r.end) { activeIdx = j; break; }
             }
             var activeRegion = (activeIdx !== -1) ? displayList[activeIdx] : null;
 
@@ -5071,11 +5680,15 @@
                             window._lastSpecialTriggerPos = spm.pos;
                             if (spm.type === 'SONG_END') {
                                 // Feature 4: jump to next song
+                                // Cancel any active native loop BEFORE jumping so REAPER's Repeat
+                                // cannot fire a conflicting jump back into the loop region.
+                                _reaperNativeLoopOff();
                                 var nxtSong = findNextValidSong(activeIdx);
                                 if (nxtSong) { wwr_req("SET/POS/" + nxtSong.start); return; }
                                 wwr_req(1016); return; // stop if no next song
                             } else if (spm.type === 'STOP') {
                                 // Feature 4: stop playback
+                                _reaperNativeLoopOff();
                                 wwr_req(1016);
                                 var nxtAfterStop = findNextValidSong(activeIdx);
                                 if (nxtAfterStop) { setTimeout(function() { wwr_req("SET/POS/" + nxtAfterStop.start); }, 100); }
@@ -5086,18 +5699,70 @@
                 }
 
                 // ── Section-change detection: reset per-section counters ─────────
-                // Resets loop count and one-shot trigger dedup when entering a fresh section.
                 if (activeSub) {
                     if (window._prevActiveSubId !== activeSub.id) {
                         window._prevActiveSubId = activeSub.id;
-                        // Reset loop count (user re-entered this section fresh)
+
+                        // Cancel native loop when genuinely entering a DIFFERENT section.
+                        // _nativeLoopSubId stays set while still inside the looping section
+                        // (even after Lua finishes), so the JS end-of-region guard keeps firing
+                        // and prevents JS from re-jumping the playhead after Repeat stops.
+                        if (window._nativeLoopSubId &&
+                            window._nativeLoopSubId !== activeSub.id) {
+                            _reaperNativeLoopOff();
+                        }
+
+                        // Reset loop count (re-entered section fresh)
                         var stReset = window.subStates[activeSub.id];
-                        if (stReset) stReset.loopCount = 0;
+                        if (stReset) {
+                            stReset.loopCount      = 0;
+                            stReset._loopExhausted = false;
+                        }
+                        // Reset native-loop crossing counter for fresh entry
+                        window._nlCrossings = 0;
+                        window._nlPrevPos   = null;
+
+                        // Arm native loop — ONLY if not already armed for this sub-region.
+                        // Prevents re-arming on every REAPER Repeat-driven return to the section start.
+                        if (window.REASET_NATIVE_LOOP && activeSub.loop &&
+                            window._nativeLoopSubId !== activeSub.id) {
+                            var _nlMax = (activeSub.loopMax && activeSub.loopMax > 1) ? activeSub.loopMax : 0;
+                            _reaperNativeLoopOn(activeSub.start, activeSub.end, _nlMax, activeSub.id);
+                        }
+                        // Consume pending arm flag (cleared by syncRegions when +LOOP
+                        // is already matching the active section — no need to re-arm).
+                        if (window._pendingNativeLoopArm === activeSub.id) {
+                            window._pendingNativeLoopArm = null;
+                        }
+
                         // Reset one-shot dedup so +PAUSE / >>> fire again on re-entry
                         window._lastPauseTriggerPos      = undefined;
                         window._lastTransitionTriggerPos = undefined;
                         window._lastLoopFireKey          = null;
                     }
+                } else {
+                    // Playhead is outside every sub-section (gap, song-level space, or
+                    // transport repositioned before the first section). Clear the cached
+                    // sub-section ID so the NEXT entry into any sub-section is treated as
+                    // a fresh section-change and correctly re-arms the native loop.
+                    if (window._prevActiveSubId !== null) {
+                        window._prevActiveSubId = null;
+                        // Also cancel any stale native loop arm that may still be pending
+                        // (e.g. loop exhausted and transport jumped back before the section).
+                        if (window._nativeLoopSubId) _reaperNativeLoopOff();
+                    }
+                }
+
+                // ── Pending native-loop arm (real-time +LOOP added to region/marker name) ──
+                // syncRegions sets _pendingNativeLoopArm when it detects a +LOOP flag was
+                // just added to the active section. The section-change guard (_prevActiveSubId)
+                // won't fire again (same section), so we consume the flag here every tick.
+                if (activeSub && window._pendingNativeLoopArm === activeSub.id &&
+                    window.REASET_NATIVE_LOOP && activeSub.loop &&
+                    window._nativeLoopSubId !== activeSub.id) {
+                    var _paMax = (activeSub.loopMax && activeSub.loopMax > 1) ? activeSub.loopMax : 0;
+                    _reaperNativeLoopOn(activeSub.start, activeSub.end, _paMax, activeSub.id);
+                    window._pendingNativeLoopArm = null;
                 }
 
                 // Sub-region End-of-region logic
@@ -5108,43 +5773,95 @@
                     // (meaning we've looped back and are playing through the section again)
                     if (subTimeRem > 0.5) { window._lastLoopFireKey = null; }
 
+                    // ── Native-loop crossing detector (runs every tick, outside subTimeRem gate) ──
+                    // After REAPER's Repeat jump, currentPos ≈ sub.start → subTimeRem = sub.duration
+                    // which is >> 0.2, so putting this inside subTimeRem<=0.2 means it NEVER fires.
+                    // We detect crossings here by watching for a position discontinuity:
+                    //   prev tick was near the loop end → now near the loop start = REAPER jumped.
+                    if (window._nativeLoopSubId === activeSub.id &&
+                        activeSub.loop && activeSub.loopMax && activeSub.loopMax > 1) {
+
+                        var _nlPrev = window._nlPrevPos;
+                        if (_nlPrev !== null && _nlPrev !== undefined &&
+                            _nlPrev    >= activeSub.end   - 0.35 &&   // prev tick: near end
+                            currentPos <= activeSub.start + 0.5) {    // this tick: near start = crossed
+
+                            window._nlCrossings = (window._nlCrossings || 0) + 1;
+
+                            // Update visual counter (e.g. shows "2/4" after 1st crossing)
+                            var _stNL = window.subStates[activeSub.id] || {};
+                            _stNL.loopCount = window._nlCrossings;
+                            window.subStates[activeSub.id] = _stNL;
+                            lastRenderChecksum = ""; // force UI redraw
+
+                            // loopMax plays = loopMax-1 crossings.
+                            // On the (loopMax-1)th crossing, disable Repeat so the final pass
+                            // plays naturally to the end without another jump.
+                            if (window._nlCrossings >= activeSub.loopMax - 1) {
+                                // Mark exhausted BEFORE clearing _nativeLoopSubId so the
+                                // JS +LOOP:N fallback (subTimeRem block) sees _loopExhausted=true
+                                // and does NOT fire a second loop.
+                                // Keep loopCount at current value so UI shows "4/4" during final pass.
+                                // Section-change detection will reset it to 0 on the next section entry.
+                                _stNL._loopExhausted = true;
+                                lastRenderChecksum   = "";
+                                _reaperNativeLoopOff(); // sends "off" to Lua, clears _nativeLoopSubId
+                                window._nlCrossings  = 0;
+                            }
+                        }
+                        window._nlPrevPos = currentPos; // always track for next-tick comparison
+                    }
+
                     if (subTimeRem <= 0.2 && subTimeRem > -1) {
 
                         // ── Loop handling (+LOOP, +LOOPFULL, +LOOP:N) ────────────
                         if (activeSub.loop) {
                             var stLoop = window.subStates[activeSub.id] || {};
 
+                            // Native loop mode: REAPER's Repeat handles all jumps.
+                            // Crossing counting runs above (every tick). Just block SET/POS here.
+                            if (window._nativeLoopSubId === activeSub.id) {
+                                return; // never issue SET/POS in native mode
+                            }
+
                             // +LOOP:N — count iterations, stop after loopMax plays
                             if (activeSub.loopMax && activeSub.loopMax > 1) {
-                                // Dedup guard: only fire once per approach to this end boundary.
-                                // updatePlaybackUI runs at ~100ms; without this, multiple ticks
-                                // can fire before REAPER responds to SET/POS, causing double-increment.
-                                var loopFireKey = activeSub.id + ':' + activeSub.end;
-                                if (window._lastLoopFireKey !== loopFireKey) {
-                                    window._lastLoopFireKey = loopFireKey;
-                                    var lc = (stLoop.loopCount || 0) + 1; // increment for this loop
-                                    if (lc < activeSub.loopMax) {
-                                        stLoop.loopCount = lc;
-                                        wwr_req("SET/POS/" + activeSub.start); return;
-                                    } else {
-                                        // Played loopMax times — disable loop and continue
-                                        stLoop.loopCount = 0;
-                                        stLoop.loop      = false;
-                                        activeSub.loop   = false;   // reflect immediately this tick
-                                        lastRenderChecksum = "";     // re-render to update loop button
-                                        window._lastLoopFireKey = null;
-                                        // fall through to queued / next section logic below
+                                if (stLoop._loopExhausted) {
+                                    // Loop already completed this pass — skip, fall through to >>> and queued logic.
+                                    // _loopExhausted resets to false when playback re-enters this section.
+                                } else {
+                                    // Dedup guard: only fire once per approach to this end boundary.
+                                    // updatePlaybackUI runs at ~100ms; without this, multiple ticks
+                                    // can fire before REAPER responds to SET/POS, causing double-increment.
+                                    var loopFireKey = activeSub.id + ':' + activeSub.end;
+                                    if (window._lastLoopFireKey !== loopFireKey) {
+                                        window._lastLoopFireKey = loopFireKey;
+                                        var lc = (stLoop.loopCount || 0) + 1; // increment for this loop
+                                        if (lc < activeSub.loopMax) {
+                                            stLoop.loopCount = lc;
+                                            wwr_req("SET/POS/" + activeSub.start); return;
+                                        } else {
+                                            // Played loopMax times — mark exhausted and fall through.
+                                            // loop stays true so the button remains active and
+                                            // re-entry resets _loopExhausted for the next pass.
+                                            stLoop.loopCount      = 0;
+                                            stLoop._loopExhausted = true;
+                                            lastRenderChecksum    = "";
+                                            window._lastLoopFireKey = null;
+                                            // fall through to >>> / queued / next section logic below
+                                        }
                                     }
+                                    // If dedup key already set: jump already issued — fall through silently
                                 }
-                                // If dedup key already set: a jump was already issued this cycle —
-                                // fall through silently (REAPER will move position soon)
                             }
                             // +LOOPFULL — loop takes absolute priority; queued region waits
                             else if (activeSub.loopFull) {
+                                if (window._nativeLoopSubId === activeSub.id) { return; } // Lua handling
                                 wwr_req("SET/POS/" + activeSub.start); return;
                             }
                             // +LOOP — respect queued region; loop only if nothing queued
                             else if (!queuedRegion) {
+                                if (window._nativeLoopSubId === activeSub.id) { return; } // Lua handling
                                 wwr_req("SET/POS/" + activeSub.start); return;
                             }
                             // (if queuedRegion exists and not loopFull, fall through to queued)
@@ -5178,7 +5895,43 @@
 
                 // End-of-region logic
                 var timeRem = activeRegion.end - currentPos;
-                if (timeRem <= 0.2 && timeRem > -1 && isPlaying) {
+                // Reset end-of-region dedup when safely inside the region.
+                // This allows the trigger to re-arm after a song loop (region.loop)
+                // jumps the playhead back to the start.
+                // Guard: do NOT reset while _endOfRegionLocked is active. When A.end === B.start,
+                // entering B causes timeRem(B) >> 0.5which would erase A's dedup key and allow
+                // the end-of-A trigger to fire again before REAPER processes the stop/jump.
+                if (timeRem > 0.5 &&
+                    !(window._endOfRegionLocked && Date.now() < window._endOfRegionLocked)) {
+                    window._lastRegionEndTrigger = null;
+                }
+                // Clamp lower bound to -0.1 s: if the cursor is more than 100ms past the
+                // region end it has clearly moved on; firing again here would be a false positive.
+                if (timeRem <= 0.2 && timeRem > -0.1 && isPlaying) {
+                    // Dedup guard: fire once per region end. Without this, the 0.2s
+                    // window fires ~6 times at 33ms poll rate — each tick emitting a
+                    // SET/POS or stop command, causing REAPER to seek backward
+                    // repeatedly and producing the "stuck / last-second repeating" bug.
+                    if (window._lastRegionEndTrigger === activeRegion.id) { return; }
+                    // Time-based lock: autoStop / stopAfter set this for ~400 ms after firing.
+                    // Guards against the stop → reposition → triggerMidi-PLAY sequence
+                    // resetting _lastRegionEndTrigger (via timeRem > 0.5 in the next region)
+                    // while REAPER still briefly reports isPlaying = true.
+                    if (window._endOfRegionLocked && Date.now() < window._endOfRegionLocked) { return; }
+                    window._lastRegionEndTrigger = activeRegion.id;
+                    // If native loop is active for THIS region, let the Lua script handle the jump —
+                    // do NOT cancel it here. _reaperNativeLoopOff only runs when moving away from
+                    // the current region (outgoing jump), so native loop keeps working correctly.
+                    if (activeRegion.loop && window._nativeLoopSubId === activeRegion.id) {
+                        // Native loop: Lua (ReaSet_NativeLoop.lua) handles Repeat + region jump.
+                        // Nothing to do from JS — just return and let REAPER loop natively.
+                        return;
+                    }
+                    // Cancel any active native loop before any outgoing jump.
+                    // SET/REPEAT/0 is included in _reaperNativeLoopOff, so it lands
+                    // in the same HTTP batch as the SET/POS below — preventing REAPER's
+                    // Repeat from firing a conflicting jump before Lua cleanup runs.
+                    _reaperNativeLoopOff();
                     if (activeRegion.loop) { wwr_req("SET/POS/" + activeRegion.start); return; }
                     if (queuedRegion) {
                         wwr_req("SET/POS/" + queuedRegion.start); queuedRegion = null;
@@ -5189,6 +5942,7 @@
                     // Per-song overrides: stopAfter / delayAfter
                     var _rov = getOverride(activeRegion.id);
                     if (_rov.stopAfter) {
+                        window._endOfRegionLocked = Date.now() + 400; // lock before any async
                         wwr_req(1016);
                         var _nrs = findNextValidSong(activeIdx);
                         if (_nrs) { setTimeout(function() { wwr_req("SET/POS/" + _nrs.start); }, 150); }
@@ -5197,6 +5951,7 @@
                     if (_rov.delayAfter > 0) {
                         var _nrd = findNextValidSong(activeIdx);
                         if (_nrd) {
+                            window._endOfRegionLocked = Date.now() + 400; // lock before async — same guard as autoStop/shouldPlayNext
                             wwr_req(1016);
                             (function(nxt, delaySec) {
                                 setTimeout(function() {
@@ -5210,12 +5965,20 @@
                     var shouldPlayNext = activeRegion.chain || !document.getElementById('autoStopToggle').checked;
                     if (shouldPlayNext) {
                         var nextR = findNextValidSong(activeIdx);
-                        if (nextR) { wwr_req("SET/POS/" + nextR.start); return; }
+                        if (nextR) {
+                            // Lock for 400ms: prevents the dedup reset (timeRem > 0.5 in region B)
+                            // from allowing a second end-of-A trigger when A.end === B.start.
+                            window._endOfRegionLocked = Date.now() + 400;
+                            wwr_req("SET/POS/" + nextR.start);
+                            return;
+                        }
                     }
                     if (document.getElementById('autoStopToggle').checked && !activeRegion.chain) {
+                        window._endOfRegionLocked = Date.now() + 400; // lock before any async
                         wwr_req(1016);
                         var nextR2 = findNextValidSong(activeIdx);
                         if (nextR2) { setTimeout(function () { wwr_req("SET/POS/" + nextR2.start); triggerMidi(); }, 100); }
+                        return;
                     }
                 }
 
@@ -5403,7 +6166,7 @@
         function cueRegion(start, id) { wwr_req(1016); wwr_req("SET/POS/" + start); flashRow(id); triggerMidi(); }
         function smartStop() {
             var activeIdx = -1;
-            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
             var target = null;
             if (activeIdx !== -1) target = displayList[activeIdx].start;
             else if (displayList.length > 0) target = displayList[0].start;
@@ -5413,7 +6176,7 @@
             if (isPlaying) { wwr_req(1008); }
             else {
                 var activeIdx = -1;
-                for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+                for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
                 if (activeIdx === -1 && displayList.length > 0) playRegion(displayList[0].start, displayList[0].id);
                 else wwr_req(1007);
             }
@@ -5734,7 +6497,7 @@
         // F12: Canvas navigation helper
         function canvasNav(dir) {
             var activeIdx = -1;
-            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
             var target = null;
             if (dir === 'next') { target = findNextValidSong(activeIdx); }
             else if (dir === 'prev') {
@@ -5914,12 +6677,15 @@
             document.getElementById("live-view").classList.add("open");
             document.getElementById("live-setlist-name").innerText = currentSetlistName;
             var tl = document.getElementById('tab-btn-live'); if (tl) tl.classList.add('active');
+            _lrmLastSongId = null; // force region map rebuild on open
+            applyLiveSettings();
             updatePlaybackUI();
         }
         function closeLiveView() {
             liveViewOpen = false;
             document.getElementById("live-view").classList.remove("open");
             var tl = document.getElementById('tab-btn-live'); if (tl) tl.classList.remove('active');
+            closeLiveConfig();
             updateTopTabs();
         }
         function updateLiveView(activeRegion, activeIdx, pct, isLooping) {
@@ -5999,10 +6765,14 @@
                     liveSubBar.classList.remove("visible");
                 }
             }
-            // Progress
+            // Progress bars
             document.getElementById("live-progress-fill").style.width = pct + "%";
             var rem = activeRegion ? (activeRegion.end - currentPos) : 0; if (rem < 0) rem = 0;
             document.getElementById("live-time-rem").innerText = "-" + formatTime(rem);
+            // Mapa de Regiones
+            if (g_liveSettings && g_liveSettings.showRegionMap) {
+                updateLiveRegionMap(activeRegion, pct, liveActiveSub, isLooping);
+            }
             // Next song
             var nxt = activeIdx !== -1 ? findNextValidSong(activeIdx) : null;
             document.getElementById("live-next-name").innerText = nxt ? nxt.name : "(end of setlist)";
@@ -6016,7 +6786,7 @@
         function liveNav(dir, e) {
             if (e) e.stopPropagation();
             var activeIdx = -1;
-            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
             var target = null;
             if (dir === "next") { target = findNextValidSong(activeIdx); }
             else if (dir === "prev") {
@@ -6180,7 +6950,7 @@
                 return;
             }
             var activeIdx = -1;
-            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos <= r.end) { activeIdx = i; break; } }
+            for (var i = 0; i < displayList.length; i++) { var r = displayList[i]; if (currentPos >= r.start && currentPos < r.end) { activeIdx = i; break; } }
             switch (event.code) {
                 case 'Escape':
                     event.preventDefault();
@@ -6217,6 +6987,650 @@
                     break;
             }
         });
+
+        // ══════════════════════════════════════════════════════════
+        // MIDI MODULE — Web MIDI API (Phase 1)
+        // ══════════════════════════════════════════════════════════
+
+        var g_midiAccess   = null;
+        var g_midiMappings = {};        // { "ch:type:data1" : "action_id" }
+        var g_midiLearnActive = false;
+        var g_midiLearnTimeout = null;
+
+        // ── Human-readable labels ──────────────────────────────────
+        var MIDI_ACTION_LABELS = {
+            'play':          '▶ Play',
+            'stop':          '■ Stop',
+            'play_pause':    '⏸ Play / Pause',
+            'next_song':     '→ Canción siguiente',
+            'prev_song':     '← Canción anterior',
+            'next_section':  '↓ Sección siguiente',
+            'prev_section':  '↑ Sección anterior',
+            'toggle_loop':   '⟳ Toggle Loop',
+            'restart_song':  '↺ Reiniciar canción',
+            'toggle_skip':   '⊘ Toggle Skip'
+        };
+
+        // ── Action dispatcher ──────────────────────────────────────
+        var MIDI_ACTIONS = {
+            'play':         function() { wwr_req(1007); },
+            'stop':         function() { wwr_req(1016); },
+            'play_pause':   function() { togglePlay(); },
+            'next_song':    function() { midiNextSong(); },
+            'prev_song':    function() { midiPrevSong(); },
+            'next_section': function() { midiNextSection(); },
+            'prev_section': function() { midiPrevSection(); },
+            'toggle_loop':  function() { toggleCurrentLoop(null); },
+            'restart_song': function() { midiRestartSong(); },
+            'toggle_skip':  function() { midiToggleSkipActive(); }
+        };
+
+        // ── Navigation helpers ─────────────────────────────────────
+        function midiGetActiveIdx() {
+            for (var i = 0; i < displayList.length; i++) {
+                var r = displayList[i];
+                if (currentPos >= r.start && currentPos < r.end) return i;
+            }
+            return -1;
+        }
+
+        function midiNextSong() {
+            var idx  = midiGetActiveIdx();
+            var next = findNextValidSong(idx);
+            if (next) cueRegion(next.start, next.id);
+        }
+
+        function midiPrevSong() {
+            var idx  = midiGetActiveIdx();
+            var prev = findPrevValidSong(idx);
+            if (prev) cueRegion(prev.start, prev.id);
+        }
+
+        function midiNextSection() {
+            var idx = midiGetActiveIdx();
+            if (idx === -1) return;
+            var song = displayList[idx];
+            var subs = g_subRegionMap[song.name] || [];
+            var subIdx = -1;
+            for (var s = 0; s < subs.length; s++) {
+                if (currentPos >= subs[s].start && currentPos < subs[s].end) { subIdx = s; break; }
+            }
+            for (var s2 = subIdx + 1; s2 < subs.length; s2++) {
+                var ss = window.subStates && window.subStates[subs[s2].id];
+                if (!ss || !ss.skipped) {
+                    wwr_req('SET/POS/' + subs[s2].start);
+                    if (isPlaying) wwr_req(1007);
+                    return;
+                }
+            }
+        }
+
+        function midiPrevSection() {
+            var idx = midiGetActiveIdx();
+            if (idx === -1) return;
+            var song = displayList[idx];
+            var subs = g_subRegionMap[song.name] || [];
+            var subIdx = subs.length;
+            for (var s = 0; s < subs.length; s++) {
+                if (currentPos >= subs[s].start && currentPos < subs[s].end) { subIdx = s; break; }
+            }
+            for (var s2 = subIdx - 1; s2 >= 0; s2--) {
+                var ss = window.subStates && window.subStates[subs[s2].id];
+                if (!ss || !ss.skipped) {
+                    wwr_req('SET/POS/' + subs[s2].start);
+                    if (isPlaying) wwr_req(1007);
+                    return;
+                }
+            }
+        }
+
+        function midiRestartSong() {
+            var idx = midiGetActiveIdx();
+            if (idx === -1) return;
+            wwr_req('SET/POS/' + displayList[idx].start);
+            if (isPlaying) wwr_req(1007);
+        }
+
+        function midiToggleSkipActive() {
+            var idx = midiGetActiveIdx();
+            if (idx !== -1) toggleSkip(displayList[idx].id);
+        }
+
+        // ── MIDI message handler ───────────────────────────────────
+        function onMidiMessage(event) {
+            var d = event.data;
+            if (!d || d.length < 2) return;
+
+            var status  = d[0];
+            var data1   = d[1];
+            var data2   = d.length > 2 ? d[2] : 0;
+            var type    = status >> 4;    // 9=NoteOn, 8=NoteOff, 11=CC, 12=PC
+            var channel = status & 0x0F;
+
+            // Ignore NoteOff (type 8) and NoteOn with velocity 0
+            if (type === 8) return;
+            if (type === 9 && data2 === 0) return;
+
+            var key = channel + ':' + type + ':' + data1;
+
+            if (g_midiLearnActive) {
+                assignMidiLearn(key, channel, type, data1);
+                return;
+            }
+
+            if (g_midiMappings[key] && MIDI_ACTIONS[g_midiMappings[key]]) {
+                MIDI_ACTIONS[g_midiMappings[key]]();
+            }
+        }
+
+        function onMidiStateChange(event) {
+            updateMidiStatusUI();
+        }
+
+        // ── Init ───────────────────────────────────────────────────
+        function initMidi() {
+            if (!navigator.requestMIDIAccess) {
+                setMidiStatusUI('error', 'Web MIDI API no disponible en este navegador');
+                return;
+            }
+            navigator.requestMIDIAccess({ sysex: false }).then(function(access) {
+                g_midiAccess = access;
+                access.inputs.forEach(function(port) {
+                    port.onmidimessage = onMidiMessage;
+                });
+                access.onstatechange = function(e) {
+                    // Re-attach listener on new devices
+                    if (e.port && e.port.type === 'input' && e.port.state === 'connected') {
+                        e.port.onmidimessage = onMidiMessage;
+                    }
+                    updateMidiStatusUI();
+                };
+                loadMidiMappings();
+                updateMidiStatusUI();
+            }, function(err) {
+                setMidiStatusUI('error', 'Acceso MIDI denegado: ' + err.message);
+            });
+        }
+
+        // ── Persistence ────────────────────────────────────────────
+        function saveMidiMappings() {
+            try { localStorage.setItem('reaset_midi_mappings', JSON.stringify(g_midiMappings)); } catch(e) {}
+        }
+        function loadMidiMappings() {
+            try {
+                var saved = localStorage.getItem('reaset_midi_mappings');
+                if (saved) g_midiMappings = JSON.parse(saved);
+            } catch(e) { g_midiMappings = {}; }
+            renderMidiMappingsList();
+        }
+
+        // ── MIDI Learn ─────────────────────────────────────────────
+        function toggleMidiLearn() {
+            if (g_midiLearnActive) {
+                cancelMidiLearn();
+            } else {
+                startMidiLearn();
+            }
+        }
+
+        function startMidiLearn() {
+            if (!g_midiAccess) {
+                document.getElementById('midi-listen-status').innerText = 'MIDI no inicializado. Recarga la página.';
+                return;
+            }
+            g_midiLearnActive = true;
+            var btn = document.getElementById('midi-learn-btn');
+            btn.classList.add('listening');
+            btn.innerText = 'Escuchando… (toca una nota o mueve un CC)';
+            document.getElementById('midi-listen-status').innerText = '';
+
+            // Auto-cancel after 10s
+            g_midiLearnTimeout = setTimeout(function() {
+                cancelMidiLearn();
+                document.getElementById('midi-listen-status').innerText = 'Tiempo agotado. Inténtalo de nuevo.';
+            }, 10000);
+        }
+
+        function cancelMidiLearn() {
+            g_midiLearnActive = false;
+            if (g_midiLearnTimeout) { clearTimeout(g_midiLearnTimeout); g_midiLearnTimeout = null; }
+            var btn = document.getElementById('midi-learn-btn');
+            if (btn) {
+                btn.classList.remove('listening');
+                btn.innerText = 'Escuchar siguiente nota / CC…';
+            }
+        }
+
+        function assignMidiLearn(key, channel, type, data1) {
+            if (g_midiLearnTimeout) { clearTimeout(g_midiLearnTimeout); g_midiLearnTimeout = null; }
+            g_midiLearnActive = false;
+
+            var actionId = document.getElementById('midi-action-select').value;
+            g_midiMappings[key] = actionId;
+            saveMidiMappings();
+            renderMidiMappingsList();
+
+            var btn = document.getElementById('midi-learn-btn');
+            if (btn) {
+                btn.classList.remove('listening');
+                btn.innerText = 'Escuchar siguiente nota / CC…';
+            }
+
+            var typeNames = { 9: 'Note', 11: 'CC', 12: 'PC' };
+            var typeName  = typeNames[type] || 'Msg';
+            var chLabel   = 'Ch' + (channel + 1);
+            document.getElementById('midi-listen-status').innerText =
+                '✓ Asignado: ' + typeName + ' ' + data1 + ' (' + chLabel + ') → ' + (MIDI_ACTION_LABELS[actionId] || actionId);
+        }
+
+        function deleteMidiMapping(key) {
+            delete g_midiMappings[key];
+            saveMidiMappings();
+            renderMidiMappingsList();
+        }
+
+        function clearAllMidiMappings() {
+            if (!confirm('¿Borrar todas las asignaciones MIDI?')) return;
+            g_midiMappings = {};
+            saveMidiMappings();
+            renderMidiMappingsList();
+        }
+
+        // ── UI ─────────────────────────────────────────────────────
+        function renderMidiMappingsList() {
+            var list = document.getElementById('midi-mappings-list');
+            if (!list) return;
+            var keys = Object.keys(g_midiMappings);
+            if (keys.length === 0) {
+                list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:12px 0">Sin asignaciones todavía</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < keys.length; i++) {
+                var k   = keys[i];
+                var act = g_midiMappings[k];
+                var parts = k.split(':');
+                var ch   = parseInt(parts[0],10) + 1;
+                var type = parseInt(parts[1],10);
+                var data1 = parts[2];
+                var typeName = type === 9 ? 'Note' : type === 11 ? 'CC' : type === 12 ? 'PC' : 'Msg';
+                var keyLabel = typeName + data1 + ' Ch' + ch;
+                var actLabel = MIDI_ACTION_LABELS[act] || act;
+                // escape key for use in onclick
+                var escapedKey = k.replace(/'/g, "\\'");
+                html += '<div class="midi-mapping-row">'
+                      + '<span class="midi-mapping-key">' + keyLabel + '</span>'
+                      + '<span class="midi-mapping-action">' + actLabel + '</span>'
+                      + '<button class="midi-mapping-del" onclick="deleteMidiMapping(\'' + escapedKey + '\')">✕</button>'
+                      + '</div>';
+            }
+            list.innerHTML = html;
+        }
+
+        function updateMidiStatusUI() {
+            var dot  = document.getElementById('midi-status-dot');
+            var text = document.getElementById('midi-status-text');
+            var ind  = document.getElementById('midi-sidebar-indicator');
+            if (!dot || !text) return;
+            if (!g_midiAccess) {
+                setMidiStatusUI('error', 'No inicializado');
+                return;
+            }
+            var inputs = [];
+            g_midiAccess.inputs.forEach(function(p) { if (p.state === 'connected') inputs.push(p.name); });
+            if (inputs.length === 0) {
+                dot.className  = 'midi-dot';
+                if (ind) ind.className = 'midi-indicator';
+                text.innerText = 'Ningún dispositivo MIDI conectado';
+            } else {
+                dot.className  = 'midi-dot active';
+                if (ind) ind.className = 'midi-indicator active';
+                text.innerText = inputs.join(', ');
+            }
+        }
+
+        function setMidiStatusUI(state, msg) {
+            var dot  = document.getElementById('midi-status-dot');
+            var text = document.getElementById('midi-status-text');
+            var ind  = document.getElementById('midi-sidebar-indicator');
+            if (dot)  dot.className  = 'midi-dot' + (state === 'error' ? ' error' : state === 'active' ? ' active' : '');
+            if (ind)  ind.className  = 'midi-indicator' + (state === 'active' ? ' active' : '');
+            if (text) text.innerText = msg;
+        }
+
+        function openMidiModal() {
+            document.getElementById('midi-modal-overlay').classList.add('open');
+            updateMidiStatusUI();
+            renderMidiMappingsList();
+            closeSidebar();
+        }
+
+        function closeMidiModal() {
+            cancelMidiLearn();
+            document.getElementById('midi-modal-overlay').classList.remove('open');
+            document.getElementById('midi-listen-status').innerText = '';
+        }
+
+        // ── Boot ───────────────────────────────────────────────────
+        initMidi();
+
+        // ══════════════════════════════════════════════════════════
+
+        // ══════════════════════════════════════════════════════════
+        // LIVE VIEW — VISIBILITY SETTINGS & MAPA DE REGIONES
+        // ══════════════════════════════════════════════════════════
+
+        // ── Fallback color palette for sub-regions without a color ──
+        var LRM_PALETTE = [
+            '#c0392b','#d35400','#b7950b','#1e8449','#117a65',
+            '#1a5276','#6c3483','#784212','#1f618d','#7d6608'
+        ];
+
+        // ── Settings state ─────────────────────────────────────────
+        var g_liveSettings = {
+            showHeader:       true,   // LIVE label + show timer
+            showSetlistName:  true,   // setlist name
+            showSongName:     true,   // big song title
+            showSubRegion:    true,   // active section row
+            showProgressBars: true,   // classic progress bars (song + section)
+            showTimeRem:      true,   // remaining time
+            showUpNext:       true,   // "Up Next"
+            showTransport:    true,   // transport buttons
+            showRegionMap:    false,  // Mapa de Regiones (new)
+        };
+
+        // ── Config panel definitions ───────────────────────────────
+        var LIVE_CFG_DEFS = [
+            { key: 'showHeader',       label: 'Cabecera LIVE + reloj' },
+            { key: 'showSetlistName',  label: 'Nombre del setlist' },
+            { key: 'showSongName',     label: 'Nombre de canción' },
+            { key: 'showSubRegion',    label: 'Sección activa' },
+            null,
+            { key: 'showProgressBars', label: 'Barras de progreso' },
+            { key: 'showRegionMap',    label: 'Mapa de Regiones ✦', isNew: true },
+            null,
+            { key: 'showTimeRem',      label: 'Tiempo restante' },
+            { key: 'showUpNext',       label: 'Siguiente canción' },
+            { key: 'showTransport',    label: 'Controles de transporte' },
+        ];
+
+        // ── Persistence ────────────────────────────────────────────
+        function saveLiveSettings() {
+            try { localStorage.setItem('reaset_live_settings', JSON.stringify(g_liveSettings)); } catch(e) {}
+        }
+        function loadLiveSettings() {
+            try {
+                var saved = localStorage.getItem('reaset_live_settings');
+                if (saved) {
+                    var parsed = JSON.parse(saved);
+                    for (var k in parsed) { if (k in g_liveSettings) g_liveSettings[k] = !!parsed[k]; }
+                }
+            } catch(e) {}
+        }
+
+        // ── Apply settings to DOM ──────────────────────────────────
+        function applyLiveSettings() {
+            var s   = g_liveSettings;
+            var _el = function(id) { return document.getElementById(id); };
+            var _show = function(elem, visible) {
+                if (elem) elem.style.display = visible ? '' : 'none';
+            };
+
+            _show(_el('live-now-label'),    s.showHeader);
+            _show(_el('live-setlist-name'), s.showSetlistName);
+            _show(_el('live-song-name'),    s.showSongName);
+            _show(_el('live-sub-region'),   s.showSubRegion);
+            _show(_el('live-time-rem'),     s.showTimeRem);
+            _show(_el('live-next-wrap'),    s.showUpNext);
+            _show(_el('live-transport-bar'),s.showTransport);
+
+            // Region map replaces normal progress bars when active
+            var mapOn = s.showRegionMap;
+            _show(_el('live-progress-bar'),     !mapOn && s.showProgressBars);
+            _show(_el('live-sub-progress-bar'), !mapOn && s.showProgressBars);
+            // Control the wrapper (which includes arc zone + bar)
+            var wrapEl = _el('live-region-map-wrap');
+            if (wrapEl) wrapEl.style.display = mapOn ? 'block' : 'none';
+        }
+
+        function toggleLiveSetting(key) {
+            g_liveSettings[key] = !g_liveSettings[key];
+            saveLiveSettings();
+            applyLiveSettings();
+            renderLiveConfigItems();
+        }
+
+        // ── Config panel UI ────────────────────────────────────────
+        function renderLiveConfigItems() {
+            var container = document.getElementById('live-config-items');
+            if (!container) return;
+            var html = '';
+            for (var i = 0; i < LIVE_CFG_DEFS.length; i++) {
+                var def = LIVE_CFG_DEFS[i];
+                if (def === null) { html += '<div class="lcp-divider"></div>'; continue; }
+                var checked = g_liveSettings[def.key] ? ' checked' : '';
+                var labelClass = def.isNew ? ' class="lcp-label new-item"' : ' class="lcp-label"';
+                var note = '';
+                if (def.key === 'showRegionMap' && g_liveSettings.showRegionMap) {
+                    note = '<div class="lcp-note">Reemplaza barras de progreso</div>';
+                }
+                html += '<div class="lcp-row">'
+                      + '<div>'
+                      + '<span' + labelClass + '>' + def.label + '</span>'
+                      + note
+                      + '</div>'
+                      + '<label class="lcp-toggle">'
+                      + '<input type="checkbox"' + checked + ' onchange="toggleLiveSetting(\'' + def.key + '\')">'
+                      + '<span class="lcp-toggle-track"></span>'
+                      + '</label>'
+                      + '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleLiveConfig() {
+            var panel = document.getElementById('live-config-panel');
+            var btn   = document.getElementById('live-config-btn');
+            if (!panel) return;
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                if (btn) btn.classList.remove('active');
+            } else {
+                renderLiveConfigItems();
+                panel.classList.add('open');
+                if (btn) btn.classList.add('active');
+            }
+        }
+        function closeLiveConfig() {
+            var panel = document.getElementById('live-config-panel');
+            var btn   = document.getElementById('live-config-btn');
+            if (panel) panel.classList.remove('open');
+            if (btn)   btn.classList.remove('active');
+        }
+
+        // ── Helpers ────────────────────────────────────────────────
+        function _lrmHexToRgba(hex, alpha) {
+            if (!hex || hex.length < 7) return 'rgba(58,58,60,' + alpha + ')';
+            var r = parseInt(hex.slice(1,3), 16);
+            var g = parseInt(hex.slice(3,5), 16);
+            var b = parseInt(hex.slice(5,7), 16);
+            return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+        }
+
+        // ── Mapa de Regiones renderer ──────────────────────────────
+        var _lrmLastSongId = null;
+
+        function updateLiveRegionMap(activeRegion, pct, liveActiveSub, isLooping) {
+            var map    = document.getElementById('live-region-map');
+            var base   = document.getElementById('live-region-map-base');
+            var track  = document.getElementById('live-region-map-track');
+            var fill   = document.getElementById('live-region-map-fill');
+            var cursor = document.getElementById('live-region-map-cursor');
+            if (!map || !fill || !cursor || !track || !base) return;
+
+            // Song base color
+            var songColorRaw = activeRegion ? (getOverride(activeRegion.id).colorHex || activeRegion.color) : null;
+            var songPc  = getClosestPaletteColor(songColorRaw);
+            var songHex = songPc ? songPc.hex : '#3a3a3c';
+            base.style.background = songHex;
+
+            // Rebuild segments only when song changes
+            var songId = activeRegion ? activeRegion.id : '__none__';
+            if (songId !== _lrmLastSongId) {
+                _lrmLastSongId = songId;
+                track.innerHTML = '';
+
+                var subs    = activeRegion ? (g_subRegionMap[activeRegion.name] || []) : [];
+                var songDur = activeRegion ? (activeRegion.end - activeRegion.start) : 0;
+                var segDataArr = []; // {sub, lPct, rPct, segEl}
+
+                if (songDur > 0) {
+                    var idx = 0;
+                    for (var i = 0; i < subs.length; i++) {
+                        var sub = subs[i];
+                        if (sub.duration <= 0) continue;
+                        var ss = window.subStates ? window.subStates[sub.id] : null;
+                        if (ss && ss.skipped) continue;
+
+                        var lPct = ((sub.start - activeRegion.start) / songDur) * 100;
+                        var wPct = (sub.duration / songDur) * 100;
+                        if (lPct < 0)         { wPct += lPct; lPct = 0; }
+                        if (lPct >= 100 || wPct <= 0) continue;
+                        if (lPct + wPct > 100) wPct = 100 - lPct;
+
+                        var subRaw = getOverride(sub.id).colorHex || sub.color;
+                        var subPc  = getClosestPaletteColor(subRaw);
+                        var subHex = subPc ? subPc.hex : LRM_PALETTE[idx % LRM_PALETTE.length];
+
+                        var seg = document.createElement('div');
+                        seg.className = 'lrm-segment';
+                        seg.dataset.subid    = String(sub.id);
+                        seg.style.left       = lPct.toFixed(2) + '%';
+                        seg.style.width      = wPct.toFixed(2) + '%';
+                        seg.style.background = subHex;
+
+                        if (wPct > 3.5) {
+                            var lbl = document.createElement('span');
+                            lbl.className   = 'lrm-label';
+                            lbl.textContent = sub.sectionName || sub.name || '';
+                            seg.appendChild(lbl);
+                        }
+                        track.appendChild(seg);
+                        segDataArr.push({ sub: sub, lPct: lPct, rPct: lPct + wPct, segEl: seg });
+                        idx++;
+                    }
+                }
+
+                // ── >>> Connector: dim intermediate segments + SVG bracket ──
+                var connDiv = document.getElementById('live-region-map-connectors');
+                if (connDiv) {
+                    connDiv.innerHTML = '';
+                    var svgNS  = 'http://www.w3.org/2000/svg';
+                    var barW   = map.offsetWidth || 700;
+                    var arcH   = 30;   // px above bar top
+                    var clr    = 'rgba(255,255,255,0.78)';
+                    var hasArc = false;
+
+                    // Build one shared SVG for all connectors in this song
+                    var svg = document.createElementNS(svgNS, 'svg');
+                    svg.setAttribute('width', '100%');
+                    svg.setAttribute('height', String(arcH + 2));
+                    svg.setAttribute('viewBox', '0 0 ' + barW + ' ' + (arcH + 2));
+                    svg.setAttribute('preserveAspectRatio', 'none');
+                    svg.style.cssText = 'position:absolute;top:0;left:0;overflow:visible;display:block;';
+
+                    for (var ci = 0; ci < segDataArr.length; ci++) {
+                        var src = segDataArr[ci].sub;
+                        if (!src.transition || src.transitionPos === undefined) continue;
+
+                        // Find target segment by start position
+                        var tgtIdx = -1;
+                        for (var cj = 0; cj < segDataArr.length; cj++) {
+                            if (Math.abs(segDataArr[cj].sub.start - src.transitionPos) < 0.05) {
+                                tgtIdx = cj; break;
+                            }
+                        }
+                        if (tgtIdx === -1 || tgtIdx === ci) continue;
+
+                        // Dim segments strictly between source and target
+                        var lo = Math.min(ci, tgtIdx);
+                        var hi = Math.max(ci, tgtIdx);
+                        for (var ck = lo + 1; ck < hi; ck++) {
+                            segDataArr[ck].segEl.classList.add('skipped-over');
+                        }
+
+                        // Bracket connector: ┌───┐ with slightly rounded corners
+                        var x1     = ((segDataArr[ci].lPct    + segDataArr[ci].rPct)    / 2 / 100) * barW;
+                        var x2     = ((segDataArr[tgtIdx].lPct + segDataArr[tgtIdx].rPct) / 2 / 100) * barW;
+                        var baseY  = arcH;      // bottom of bracket legs (at bar top)
+                        var peakY  = 4;         // top of bracket horizontal bar
+                        var arrowH = 7;         // arrowhead height
+                        var r      = Math.min(5, Math.abs(x2 - x1) / 4);  // corner radius
+                        var dir    = x2 > x1 ? 1 : -1;
+
+                        // Path: up source leg → rounded corner → horizontal → rounded corner → down target leg
+                        var d = [
+                            'M',  x1.toFixed(1),              baseY,
+                            'L',  x1.toFixed(1),              (peakY + r).toFixed(1),
+                            'Q',  x1.toFixed(1),              peakY.toFixed(1),
+                                  (x1 + dir * r).toFixed(1),  peakY.toFixed(1),
+                            'L',  (x2 - dir * r).toFixed(1),  peakY.toFixed(1),
+                            'Q',  x2.toFixed(1),              peakY.toFixed(1),
+                                  x2.toFixed(1),              (peakY + r).toFixed(1),
+                            'L',  x2.toFixed(1),              (baseY - arrowH).toFixed(1)
+                        ].join(' ');
+
+                        var pathEl = document.createElementNS(svgNS, 'path');
+                        pathEl.setAttribute('d', d);
+                        pathEl.setAttribute('stroke', clr);
+                        pathEl.setAttribute('stroke-width', '2');
+                        pathEl.setAttribute('fill', 'none');
+                        pathEl.setAttribute('stroke-linecap', 'round');
+                        pathEl.setAttribute('stroke-linejoin', 'round');
+                        svg.appendChild(pathEl);
+
+                        // Arrowhead polygon pointing downward at target
+                        var aw = 4.5;
+                        var arrowEl = document.createElementNS(svgNS, 'polygon');
+                        arrowEl.setAttribute('points',
+                            (x2 - aw).toFixed(1) + ',' + (baseY - arrowH).toFixed(1) + ' ' +
+                            (x2 + aw).toFixed(1) + ',' + (baseY - arrowH).toFixed(1) + ' ' +
+                            x2.toFixed(1)        + ',' + baseY);
+                        arrowEl.setAttribute('fill', clr);
+                        svg.appendChild(arrowEl);
+
+                        // Dot at source end
+                        var dot = document.createElementNS(svgNS, 'circle');
+                        dot.setAttribute('cx', x1.toFixed(1));
+                        dot.setAttribute('cy', String(baseY));
+                        dot.setAttribute('r', '3');
+                        dot.setAttribute('fill', clr);
+                        svg.appendChild(dot);
+
+                        hasArc = true;
+                    }
+
+                    if (hasArc) connDiv.appendChild(svg);
+                }
+            }
+
+            // Update looping pulse on active segment
+            var activeSubId = (isLooping && liveActiveSub) ? String(liveActiveSub.id) : null;
+            var segs = track.querySelectorAll('.lrm-segment');
+            for (var j = 0; j < segs.length; j++) {
+                segs[j].classList.toggle('looping', segs[j].dataset.subid === activeSubId && activeSubId !== null);
+            }
+
+            // Advance fill and cursor
+            var clampedPct = Math.min(100, Math.max(0, pct));
+            fill.style.width  = clampedPct + '%';
+            cursor.style.left = clampedPct + '%';
+        }
+
+        // ── Init ───────────────────────────────────────────────────
+        loadLiveSettings();
+
+        // ══════════════════════════════════════════════════════════
 
         // --- 18. HELP ---
         function showHelp(topic) {
