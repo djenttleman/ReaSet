@@ -3450,7 +3450,7 @@
                 STOP</button>
             <button id="footer-loop-btn" class="t-btn t-btn-loop" onclick="toggleCurrentLoop()">↻ Loop</button>
             <button class="t-btn t-btn-sync" onclick="wwr_start()">SYNC</button>
-            <span id="native-loop-indicator" title="ReaSet NativeLoop conectado"
+            <span id="native-loop-indicator" title="ReaSet NativeLoop connected"
                   style="display:none; color:#34c759; font-size:10px; font-weight:700;
                          letter-spacing:0.5px; align-self:center; padding:0 4px;
                          opacity:0.8;">⬡ NL</span>
@@ -3696,7 +3696,7 @@
 
             <div class="appearance-slider-row">
                 <div class="appearance-slider-label-row">
-                    <span class="appearance-slider-name">Luminancia</span>
+                    <span class="appearance-slider-name">Brightness</span>
                     <span class="appearance-slider-value" id="appearance-val-brightness">100%</span>
                 </div>
                 <input type="range" class="appearance-slider" id="appearance-slider-brightness"
@@ -3706,7 +3706,7 @@
 
             <div class="appearance-slider-row">
                 <div class="appearance-slider-label-row">
-                    <span class="appearance-slider-name">Contraste</span>
+                    <span class="appearance-slider-name">Contrast</span>
                     <span class="appearance-slider-value" id="appearance-val-contrast">100%</span>
                 </div>
                 <input type="range" class="appearance-slider" id="appearance-slider-contrast"
@@ -3716,7 +3716,7 @@
 
             <div class="appearance-slider-row">
                 <div class="appearance-slider-label-row">
-                    <span class="appearance-slider-name">Saturación</span>
+                    <span class="appearance-slider-name">Saturation</span>
                     <span class="appearance-slider-value" id="appearance-val-saturation">100%</span>
                 </div>
                 <input type="range" class="appearance-slider" id="appearance-slider-saturation"
@@ -3725,7 +3725,7 @@
             </div>
 
             <hr class="appearance-divider">
-            <button class="appearance-reset-btn" onclick="resetAppearance()">Restablecer valores</button>
+            <button class="appearance-reset-btn" onclick="resetAppearance()">Restore Values</button>
         </div>
     </div>
 
@@ -3737,26 +3737,26 @@
             <!-- Status row -->
             <div class="midi-status-row">
                 <span class="midi-dot" id="midi-status-dot"></span>
-                <span id="midi-status-text">Inicializando…</span>
+                <span id="midi-status-text">Initializing…</span>
             </div>
 
             <!-- Learn section -->
             <div class="midi-learn-box">
-                <div class="midi-section-label">Acción a asignar</div>
+                <div class="midi-section-label">Action to be assigned</div>
                 <select id="midi-action-select" class="midi-action-select">
                     <option value="play">▶ Play</option>
                     <option value="stop">■ Stop</option>
                     <option value="play_pause">⏸ Play / Pause</option>
-                    <option value="next_song">→ Canción siguiente</option>
-                    <option value="prev_song">← Canción anterior</option>
-                    <option value="next_section">↓ Sección siguiente</option>
-                    <option value="prev_section">↑ Sección anterior</option>
-                    <option value="toggle_loop">⟳ Toggle Loop (canción activa)</option>
-                    <option value="restart_song">↺ Reiniciar canción</option>
-                    <option value="toggle_skip">⊘ Toggle Skip (canción activa)</option>
+                    <option value="next_song">→ Next Song</option>
+                    <option value="prev_song">← Previous Song</option>
+                    <option value="next_section">↓ Next Section</option>
+                    <option value="prev_section">↑ Previous Section</option>
+                    <option value="toggle_loop">⟳ Toggle Loop (Active Song)</option>
+                    <option value="restart_song">↺ Restart Song</option>
+                    <option value="toggle_skip">⊘ Toggle Skip (Active Song)</option>
                 </select>
                 <button id="midi-learn-btn" class="midi-learn-btn" onclick="toggleMidiLearn()">
-                    Escuchar siguiente nota / CC…
+                    Listen for MIDI Note / CC…
                 </button>
                 <div id="midi-listen-status" class="midi-listen-status"></div>
             </div>
@@ -3764,16 +3764,17 @@
             <hr class="midi-hr">
 
             <!-- Current mappings -->
-            <div class="midi-section-label" style="margin-bottom:8px">Asignaciones activas</div>
+            <div class="midi-section-label" style="margin-bottom:8px">Active Assignments</div>
             <div id="midi-mappings-list" class="midi-mappings-list">
                 <div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:12px 0">
-                    Sin asignaciones todavía
+                    No assignments yet
                 </div>
             </div>
-            <button class="midi-clear-btn" onclick="clearAllMidiMappings()">Borrar todas las asignaciones</button>
+
+            <button class="midi-clear-btn" onclick="clearAllMidiMappings()">Delete all assignments</button>
 
             <div class="midi-modal-footer">
-                <button class="midi-close-btn" onclick="closeMidiModal()">Cerrar</button>
+                <button class="midi-close-btn" onclick="closeMidiModal()">Close</button>
             </div>
         </div>
     </div>
@@ -3842,7 +3843,7 @@
         </div>
         <!-- Live View config panel -->
         <div id="live-config-panel">
-            <div class="lcp-title">Elementos visibles</div>
+            <div class="lcp-title">Visible Elements</div>
             <div id="live-config-items"><!-- populated by JS --></div>
         </div>
         <!-- Live View config button -->
@@ -3851,7 +3852,7 @@
                 <circle cx="7" cy="7" r="2.2" stroke="currentColor" stroke-width="1.4"/>
                 <path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.9 2.9l1.05 1.05M10.05 10.05l1.05 1.05M2.9 11.1l1.05-1.05M10.05 3.95l1.05-1.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
             </svg>
-            Vista
+            View
         </button>
 
         <div class="live-size-ctrl"
@@ -3872,7 +3873,7 @@
             <div class="modal-body" id="appConfirmBody"></div>
             <div class="modal-actions">
                 <button class="m-btn m-btn-cancel" onclick="closeAppConfirm(false)">Cancel</button>
-                <button class="m-btn m-btn-danger" id="appConfirmOk" onclick="closeAppConfirm(true)">Confirmar</button>
+                <button class="m-btn m-btn-danger" id="appConfirmOk" onclick="closeAppConfirm(true)">Confirm</button>
             </div>
         </div>
     </div>
@@ -4165,11 +4166,11 @@
                 + '</div></div>'
                 + '<div class="song-ctx-section"><div class="song-ctx-row">'
                 + '<span class="song-ctx-label"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><circle cx="6.5" cy="7.5" r="4.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" fill="none"/><line x1="6.5" y1="7.5" x2="8.5" y2="5.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/><path d="M5 1.5h3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/><path d="M6.5 1.5v1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round"/></svg> Delay after song</span></div>'
-                + '<div class="song-ctx-sublabel">Segundos antes del siguiente</div>'
+                + '<div class="song-ctx-sublabel">Seconds before next song</div>'
                 + '<div class="song-ctx-row"><input type="number" min="0" max="300" step="1" class="song-ctx-input num-input" id="_ctx_delay_' + songId + '" value="' + delayAfter + '" ' + (stopAfter ? 'disabled' : '') + ' placeholder="0" onchange="_ctxSetDelay(\'' + songId + '\',this.value)">'
                 + '<span class="song-ctx-label" style="font-size:11px;color:rgba(255,255,255,0.38)">s</span></div></div>'
                 + '<div class="song-ctx-section">'
-                + '<div class="song-ctx-sublabel"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><rect x="2" y="1.5" width="9" height="10" rx="1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><path d="M4.5 5h4M4.5 7h4M4.5 9h2.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.1" stroke-linecap="round"/></svg> Nota / Descripci\u00f3n</div>'
+                + '<div class="song-ctx-sublabel"><svg width="13" height="13" viewBox="0 0 13 13" style="display:inline;vertical-align:-2px"><rect x="2" y="1.5" width="9" height="10" rx="1.2" stroke="rgba(255,255,255,0.65)" stroke-width="1.2" fill="none"/><path d="M4.5 5h4M4.5 7h4M4.5 9h2.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.1" stroke-linecap="round"/></svg> Note / Description\u00f3n</div>'
                 + '<textarea class="song-ctx-input" rows="2" id="_ctx_desc_' + songId + '" placeholder="Nota sobre la canci\u00f3n\u2026" style="resize:none" onchange="_ctxSetDesc(\'' + songId + '\',this.value)">' + desc + '</textarea>'
                 + '</div>'
                 + '<div class="song-ctx-section"><div class="song-ctx-row">'
@@ -6946,7 +6947,7 @@
             document.getElementById('appConfirmTitle').textContent = title;
             document.getElementById('appConfirmBody').textContent = body;
             var okBtn = document.getElementById('appConfirmOk');
-            okBtn.textContent = okLabel || 'Confirmar';
+            okBtn.textContent = okLabel || 'Confirm';
             okBtn.className = 'app-modal-btn ' + (danger !== false ? 'btn-danger' : 'btn-confirm');
             _confirmCallback = onConfirm;
             document.getElementById('appConfirmOverlay').classList.add('open');
@@ -7114,12 +7115,12 @@
             'play':          '▶ Play',
             'stop':          '■ Stop',
             'play_pause':    '⏸ Play / Pause',
-            'next_song':     '→ Canción siguiente',
-            'prev_song':     '← Canción anterior',
-            'next_section':  '↓ Sección siguiente',
-            'prev_section':  '↑ Sección anterior',
+            'next_song':     '→ Next Song',
+            'prev_song':     '← Previous Song',
+            'next_section':  '↓ Next Section',
+            'prev_section':  '↑ Previous Section',
             'toggle_loop':   '⟳ Toggle Loop',
-            'restart_song':  '↺ Reiniciar canción',
+            'restart_song':  '↺ Restart Song',
             'toggle_skip':   '⊘ Toggle Skip'
         };
 
@@ -7309,7 +7310,7 @@
             var btn = document.getElementById('midi-learn-btn');
             if (btn) {
                 btn.classList.remove('listening');
-                btn.innerText = 'Escuchar siguiente nota / CC…';
+                btn.innerText = 'Listen for MIDI Note / CC…';
             }
         }
 
@@ -7325,14 +7326,14 @@
             var btn = document.getElementById('midi-learn-btn');
             if (btn) {
                 btn.classList.remove('listening');
-                btn.innerText = 'Escuchar siguiente nota / CC…';
+                btn.innerText = 'Listen for MIDI Note / CC…';
             }
 
             var typeNames = { 9: 'Note', 11: 'CC', 12: 'PC' };
             var typeName  = typeNames[type] || 'Msg';
             var chLabel   = 'Ch' + (channel + 1);
             document.getElementById('midi-listen-status').innerText =
-                '✓ Asignado: ' + typeName + ' ' + data1 + ' (' + chLabel + ') → ' + (MIDI_ACTION_LABELS[actionId] || actionId);
+                '✓ Assigned: ' + typeName + ' ' + data1 + ' (' + chLabel + ') → ' + (MIDI_ACTION_LABELS[actionId] || actionId);
         }
 
         function deleteMidiMapping(key) {
@@ -7342,7 +7343,7 @@
         }
 
         function clearAllMidiMappings() {
-            if (!confirm('¿Borrar todas las asignaciones MIDI?')) return;
+            if (!confirm('Delete all MIDI assignments?')) return;
             g_midiMappings = {};
             saveMidiMappings();
             renderMidiMappingsList();
@@ -7385,7 +7386,7 @@
             var ind  = document.getElementById('midi-sidebar-indicator');
             if (!dot || !text) return;
             if (!g_midiAccess) {
-                setMidiStatusUI('error', 'No inicializado');
+                setMidiStatusUI('error', 'Not Initialized');
                 return;
             }
             var inputs = [];
@@ -7393,7 +7394,7 @@
             if (inputs.length === 0) {
                 dot.className  = 'midi-dot';
                 if (ind) ind.className = 'midi-indicator';
-                text.innerText = 'Ningún dispositivo MIDI conectado';
+                text.innerText = 'No MIDI devices are connected';
             } else {
                 dot.className  = 'midi-dot active';
                 if (ind) ind.className = 'midi-indicator active';
@@ -7453,17 +7454,17 @@
 
         // ── Config panel definitions ───────────────────────────────
         var LIVE_CFG_DEFS = [
-            { key: 'showHeader',       label: 'Cabecera LIVE + reloj' },
-            { key: 'showSetlistName',  label: 'Nombre del setlist' },
-            { key: 'showSongName',     label: 'Nombre de canción' },
-            { key: 'showSubRegion',    label: 'Sección activa' },
+            { key: 'showHeader',       label: 'LIVE header + clock' },
+            { key: 'showSetlistName',  label: 'Setlist name' },
+            { key: 'showSongName',     label: 'Song title' },
+            { key: 'showSubRegion',    label: 'Active section' },
             null,
-            { key: 'showProgressBars', label: 'Barras de progreso' },
-            { key: 'showRegionMap',    label: 'Mapa de Regiones ✦', isNew: true },
+            { key: 'showProgressBars', label: 'Progress bars' },
+            { key: 'showRegionMap',    label: 'Map of regions ✦', isNew: true },
             null,
-            { key: 'showTimeRem',      label: 'Tiempo restante' },
-            { key: 'showUpNext',       label: 'Siguiente canción' },
-            { key: 'showTransport',    label: 'Controles de transporte' },
+            { key: 'showTimeRem',      label: 'Time remaining' },
+            { key: 'showUpNext',       label: 'Next song' },
+            { key: 'showTransport',    label: 'Transport controls' },
         ];
 
         // ── Persistence ────────────────────────────────────────────
