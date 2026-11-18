@@ -9,7 +9,7 @@
 <p align="center">
   <a href="README.md">English</a> ·
   <a href="README.es.md"><strong>Español</strong></a> ·
-  <a href="https://reaset.app">Sitio web</a> ·
+  <a href="https://reasetpro.com">Sitio web</a> ·
   <a href="docs/USER_GUIDE.es.md">Guía de usuario</a> ·
   <a href="CHANGELOG.md">Changelog</a>
 </p>
@@ -35,7 +35,7 @@
 | Setlists ilimitados guardados junto al proyecto, orden por arrastre y secciones anidadas. | Auto-stop armado, Stop Hold, modos queue/auto, loops y MIDI Init. | Live View, letras, acordes y sincronización Director/Player de solo lectura. |
 
 > [!TIP]
-> ¿Quieres conocerlo antes de instalar? Visita **[reaset.app](https://reaset.app)** para ver el recorrido visual completo.
+> ¿Quieres conocerlo antes de instalar? Visita **[reasetpro.com](https://reasetpro.com)** para ver el recorrido visual completo.
 
 ## Funciones destacadas
 
@@ -130,5 +130,5 @@ ReaSet v3.0+ es **propietario y de uso gratuito**. Puedes usarlo comercialmente,
 
 <p align="center">
   <strong>Tu setlist. Tu show. En control.</strong><br>
-  <a href="https://reaset.app">reaset.app</a>
+  <a href="https://reasetpro.com">reasetpro.com</a>
 </p>
