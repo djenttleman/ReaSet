@@ -9,7 +9,7 @@
 <p align="center">
   <a href="README.md"><strong>English</strong></a> ·
   <a href="README.es.md">Español</a> ·
-  <a href="https://reaset.app">Website</a> ·
+  <a href="https://reasetpro.com">Website</a> ·
   <a href="docs/USER_GUIDE.md">User guide</a> ·
   <a href="CHANGELOG.md">Changelog</a>
 </p>
@@ -35,7 +35,7 @@
 | Unlimited project-local setlists, drag-and-drop ordering and nested song sections. | Armed auto-stop, Stop Hold, queue/auto modes, looping and MIDI Init. | Live View, lyrics, chords and read-only Director/Player synchronization. |
 
 > [!TIP]
-> Want to see it before installing? Visit **[reaset.app](https://reaset.app)** for the full visual tour.
+> Want to see it before installing? Visit **[reasetpro.com](https://reasetpro.com)** for the full visual tour.
 
 ## Highlights
 
@@ -130,5 +130,5 @@ ReaSet v3.0+ is **proprietary and free to use**. You may use it commercially, on
 
 <p align="center">
   <strong>Your setlist. Your show. In control.</strong><br>
-  <a href="https://reaset.app">reaset.app</a>
+  <a href="https://reasetpro.com">reasetpro.com</a>
 </p>
